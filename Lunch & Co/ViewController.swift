@@ -16,9 +16,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var slicesTextField: UITextField!
     
     var selectedSlices = 1
+    var slicesInThisPie = 0
     var pickerView = UIPickerView()
     var users:[String] = ["JSW", "ME", "AK", "EL", "AS", "YD"]
     var activeTextField = UITextField()
+    var activePizzaView = PizzaView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,38 +32,18 @@ class ViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         dismissKeyBoard()
-        
     }
     
-    
     func setUpTextFields() {
-        
         
         pickerView.delegate = self
         pickerView.dataSource = self
         
-        
-
-        nameTxtFld.inputView = pickerView
-        slicesTextField.inputView = pickerView
-        
-        
         slicesTextField.delegate = self
         nameTxtFld.delegate = self
-
-//        let toolBar1 = UIToolbar()
-//        toolBar1.sizeToFit()
-//        let doneButton1 = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyBoard))
-//        toolBar1.setItems([doneButton1], animated: true)
-//        toolBar1.isUserInteractionEnabled = true
-//
-//        let toolBar2 = UIToolbar()
-//        toolBar2.sizeToFit()
-//        let doneButton2 = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyBoard))
-//        toolBar2.setItems([doneButton2], animated: true)
-//        toolBar2.isUserInteractionEnabled = true
-//        nameTxtFld.inputView = toolBar1
-//        slicesTextField.inputView = toolBar2
+        
+        nameTxtFld.inputView = pickerView
+        slicesTextField.inputView = pickerView
     }
     
     @objc func dismissKeyBoard() {
@@ -69,23 +51,33 @@ class ViewController: UIViewController {
         view.endEditing(true)
     }
     
-    
     func setupPizzaView() {
         
         pizzaView.layer.cornerRadius = pizzaView.frame.height / 2
         pizzaView.clipsToBounds = true
+        activePizzaView = pizzaView
     }
     
-    
-    
-
     @IBAction func submitPressed(_ sender: Any) {
         
+        slicesInThisPie += selectedSlices
         
+        
+        activePizzaView.removeFromSuperview()
+
+
+        let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesInThisPie)
+        activePizzaView = newPizzaView
+        view.addSubview(activePizzaView)
         
     }
     
+    
+    
+    
+    
 }
+
 
 extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -145,10 +137,22 @@ extension ViewController: UITextFieldDelegate {
         
         if textField == self.nameTxtFld {
             nameTxtFld.inputView = pickerView
+            let toolBar = UIToolbar()
+            toolBar.sizeToFit()
+            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyBoard))
+            toolBar.setItems([doneButton], animated: true)
+            toolBar.isUserInteractionEnabled = true
+            textField.inputAccessoryView = toolBar
         }
 
         if textField == self.slicesTextField {
             slicesTextField.inputView = pickerView
+            let toolBar = UIToolbar()
+            toolBar.sizeToFit()
+            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyBoard))
+            toolBar.setItems([doneButton], animated: true)
+            toolBar.isUserInteractionEnabled = true
+            textField.inputAccessoryView = toolBar
         }
         pickerView.reloadAllComponents()
 

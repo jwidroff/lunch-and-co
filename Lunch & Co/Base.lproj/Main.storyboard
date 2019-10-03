@@ -13,36 +13,36 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Lunch___Co" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Lunch_And_Co" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IhU-yN-q1k" customClass="PizzaView" customModule="Lunch___Co" customModuleProvider="target">
-                                <rect key="frame" x="77.5" y="223.5" width="220" height="220"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IhU-yN-q1k" customClass="PizzaView" customModule="Lunch_And_Co" customModuleProvider="target">
+                                <rect key="frame" x="37.5" y="183.5" width="300" height="300"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="791-F9-tFD"/>
-                                    <constraint firstAttribute="height" constant="220" id="vK3-aj-2Eu"/>
+                                    <constraint firstAttribute="height" constant="300" id="FL8-lU-9az"/>
+                                    <constraint firstAttribute="width" constant="300" id="qqL-eJ-nk5"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="H6Q-fD-fFO">
-                                <rect key="frame" x="77.5" y="111.5" width="220" height="104"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="H6Q-fD-fFO">
+                                <rect key="frame" x="37.5" y="85" width="300" height="106"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="isx-W2-vtp">
-                                        <rect key="frame" x="0.0" y="0.0" width="220" height="30"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="isx-W2-vtp">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="1 Slice(s)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YQY-1b-Qkj">
-                                        <rect key="frame" x="0.0" y="37" width="220" height="30"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="1 Slice(s)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YQY-1b-Qkj">
+                                        <rect key="frame" x="0.0" y="38" width="300" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKk-37-oJv">
-                                        <rect key="frame" x="0.0" y="74" width="220" height="30"/>
+                                        <rect key="frame" x="0.0" y="76" width="300" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Submit"/>
                                         <connections>
@@ -50,21 +50,23 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Pa1-F6-vik"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="H6Q-fD-fFO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="65" id="9Np-81-wST"/>
                             <constraint firstItem="IhU-yN-q1k" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EDI-gB-yXY"/>
-                            <constraint firstItem="IhU-yN-q1k" firstAttribute="top" secondItem="H6Q-fD-fFO" secondAttribute="bottom" constant="8" id="Gra-aV-ElG"/>
-                            <constraint firstItem="H6Q-fD-fFO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bZo-Ad-q1T"/>
-                            <constraint firstItem="YQY-1b-Qkj" firstAttribute="width" secondItem="IhU-yN-q1k" secondAttribute="width" id="fUv-WE-Um3"/>
+                            <constraint firstItem="H6Q-fD-fFO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LZV-LV-opl"/>
                             <constraint firstItem="IhU-yN-q1k" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="hio-UL-0fw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="nameTxtFld" destination="isx-W2-vtp" id="LWh-uJ-8Qt"/>
-                        <outlet property="pizzaView" destination="IhU-yN-q1k" id="aRX-Q0-dxx"/>
+                        <outlet property="pizzaView" destination="IhU-yN-q1k" id="UsL-I8-DaC"/>
                         <outlet property="slicesTextField" destination="YQY-1b-Qkj" id="52L-Jm-zgO"/>
                     </connections>
                 </viewController>

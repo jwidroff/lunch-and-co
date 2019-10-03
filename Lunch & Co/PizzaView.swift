@@ -31,9 +31,6 @@ class PizzaView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .red
-        self.layer.cornerRadius = frame.width / 2
-        self.clipsToBounds = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,10 +40,12 @@ class PizzaView: UIView {
     init(frame: CGRect, amount: Int) {
         super.init(frame: frame)
         self.slicesLeft = amount
+        
+        print("PPP")
         self.backgroundColor = UIColor.red
         self.layer.cornerRadius = frame.width / 2
         self.clipsToBounds = true
-        //        draw(frame, amount: amount)
+//                draw(frame, amount: amount)
         
     }
     
@@ -126,11 +125,6 @@ class PizzaView: UIView {
         context.addLine(to: topRight)
         context.strokePath()
         
-        
-        
-        
-        
-        //Remove Slice 1
         
         switch slicesLeft {
             
