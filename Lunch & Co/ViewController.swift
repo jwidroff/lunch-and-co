@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    
     @IBOutlet weak var pizzaView: PizzaView!
     @IBOutlet weak var nameTxtFld: UITextField!
     @IBOutlet weak var slicesTextField: UITextField!
@@ -61,21 +60,11 @@ class ViewController: UIViewController {
     @IBAction func submitPressed(_ sender: Any) {
         
         slicesInThisPie += selectedSlices
-        
-        
         activePizzaView.removeFromSuperview()
-
-
         let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesInThisPie)
         activePizzaView = newPizzaView
         view.addSubview(activePizzaView)
-        
     }
-    
-    
-    
-    
-    
 }
 
 
@@ -83,7 +72,6 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         var amount = Int()
@@ -130,7 +118,6 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 extension ViewController: UITextFieldDelegate {
     
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
         self.activeTextField = textField
@@ -155,20 +142,12 @@ extension ViewController: UITextFieldDelegate {
             textField.inputAccessoryView = toolBar
         }
         pickerView.reloadAllComponents()
-
-//        textField.reloadInputViews()
-
-
     }
-    
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         dismissKeyBoard()
-        
-        
     }
-    
 }
 
 
