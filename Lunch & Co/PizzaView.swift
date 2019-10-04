@@ -44,10 +44,9 @@ class PizzaView: UIView {
         self.slicesToShow = amount
         self.backgroundColor = UIColor.clear
         self.layer.cornerRadius = frame.width / 2
-        gradientColors(color1: .red, color2: .yellow)
+        gradientColors(color1: .yellow, color2: .red)
         let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
         addSubview(slicesView)
-        print("L")
     }
     
     func gradientColors(color1: UIColor, color2: UIColor) {
@@ -140,7 +139,7 @@ class SlicesView: UIView {
         let x = (frame.width - eclipseWidth) / 2
         let y = (frame.height - eclipseHeight) / 2
         let rect = CGRect(x: x, y: y, width: eclipseWidth, height: eclipseHeight)
-        context.setLineWidth(2)
+        context.setLineWidth(1)
         context.addEllipse(in: rect)
         context.strokePath()
         

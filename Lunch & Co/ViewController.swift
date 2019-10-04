@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var nameTxtFld: UITextField!
     @IBOutlet weak var slicesTextField: UITextField!
     
-    var selectedSlices = 0
+    var selectedSlices = 1
     var slicesInThisPie = 0
     var totalSlices = 0
     var pickerView = UIPickerView()
@@ -77,12 +77,24 @@ class ViewController: UIViewController {
     func animateCompletedPie() {
         
         let amountToMove = (view.bounds.maxY - activePizzaView.center.y) / 2 * 1.25
-        let translation = CGAffineTransform(translationX: 0, y: amountToMove)
+        let transform = CGAffineTransform(scaleX: 0.25, y: 0.25)
+        
         let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: 8)
         view.addSubview(newPizzaView)
-        UIView.animate(withDuration: 1.0) {
-            newPizzaView.transform = translation
+        
+        
+        UIView.animate(withDuration: 1.0, animations: {
+            newPizzaView.center.y += amountToMove
+            newPizzaView.transform = transform
+        }) { (true) in
+            UIView.animate(withDuration: 1.0) {
+                let amountToMoveOnBottom:CGFloat = -200
+                newPizzaView.center.x += amountToMoveOnBottom
+            }
         }
+        
+        
+        
     }
     
     func updateNewPie() {
