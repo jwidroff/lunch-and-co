@@ -12,6 +12,9 @@ class PizzaView: UIView {
     
     //TODO: Add gradient to the pizzaView in the center - like a light orange-ish
     
+    //TODO: Need to look up how to draw on top of a CAGradientLayer
+    //TODO: Need to figure out how to show the amount on the pickerView when the pickerView is originally called (AKA if the pickerView first lands on "1", the textView should update eventhough I didnt change anything yet)
+    
     
     var leftCenter = CGPoint()
     var rightCenter = CGPoint()
@@ -25,7 +28,7 @@ class PizzaView: UIView {
     
     var pizzaCenter = CGPoint()
     
-    var slicesLeft = Int()
+    var slicesToShow = Int()
     var label:UILabel?
     
     
@@ -39,22 +42,12 @@ class PizzaView: UIView {
     
     init(frame: CGRect, amount: Int) {
         super.init(frame: frame)
-        self.slicesLeft = amount
+        self.slicesToShow = amount
         
-        print("PPP")
         self.backgroundColor = UIColor.red
         self.layer.cornerRadius = frame.width / 2
         self.clipsToBounds = true
 //                draw(frame, amount: amount)
-        
-    }
-    
-    func changeSlices(amount: Int) {
-        
-        
-        
-        
-        
         
     }
     
@@ -85,21 +78,15 @@ class PizzaView: UIView {
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         
-        
         leftCenter = CGPoint(x: rect.minX, y: rect.midY)
         rightCenter = CGPoint(x: rect.maxX, y: rect.midY)
         topCenter = CGPoint(x: rect.midX, y: rect.minY)
         bottomCenter = CGPoint(x: rect.midX, y: rect.maxY)
-        
         topLeft = CGPoint(x: rect.minX, y: rect.minY)
         bottomRight = CGPoint(x: rect.maxX, y: rect.maxY)
         bottomLeft = CGPoint(x: rect.minX, y: rect.maxY)
         topRight = CGPoint(x: rect.maxX, y: rect.minY)
-        
         pizzaCenter = CGPoint(x: bounds.midX, y: bounds.midY)
-        
-        
-        //       backgroundColor = UIColor.white
         
         guard let context = UIGraphicsGetCurrentContext() else {return}
         context.setLineWidth(5)
@@ -126,7 +113,10 @@ class PizzaView: UIView {
         context.strokePath()
         
         
-        switch slicesLeft {
+        print("slicesToShow \(slicesToShow)")
+        
+        
+        switch slicesToShow {
             
         case 7:
             context.beginPath()
@@ -197,9 +187,7 @@ class PizzaView: UIView {
             context.addLine(to: topLeft)
             context.setFillColor(UIColor.black.cgColor)
             context.fillPath()
-            
-            break
-            
+                        
         default:
             break
         }

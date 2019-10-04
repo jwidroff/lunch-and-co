@@ -14,8 +14,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var nameTxtFld: UITextField!
     @IBOutlet weak var slicesTextField: UITextField!
     
-    var selectedSlices = 1
+    var selectedSlices = 0
     var slicesInThisPie = 0
+    var totalSlices = 0
     var pickerView = UIPickerView()
     var users:[String] = ["JSW", "ME", "AK", "EL", "AS", "YD"]
     var activeTextField = UITextField()
@@ -57,13 +58,51 @@ class ViewController: UIViewController {
         activePizzaView = pizzaView
     }
     
-    @IBAction func submitPressed(_ sender: Any) {
+    func updateSlices() {
         
         slicesInThisPie += selectedSlices
+        totalSlices += selectedSlices
+    }
+    
+    func updateSamePie() {
+        
         activePizzaView.removeFromSuperview()
         let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesInThisPie)
         activePizzaView = newPizzaView
         view.addSubview(activePizzaView)
+    }
+    
+    func animateCompletedPie() {
+        
+        let amountToMove = (view.bounds.maxY - activePizzaView.center.y) / 2 * 1.25
+        let translation = CGAffineTransform(translationX: 0, y: amountToMove)
+        let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: 8)
+        view.addSubview(newPizzaView)
+        UIView.animate(withDuration: 1.0) {
+            newPizzaView.transform = translation
+        }
+    }
+    
+    func updateNewPie() {
+        
+        let remainder = (slicesInThisPie % 8)
+        slicesInThisPie = remainder
+        activePizzaView.removeFromSuperview()
+        let oldPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesInThisPie)
+        view.insertSubview(oldPizzaView, at: 1)
+        activePizzaView = oldPizzaView
+    }
+    
+    @IBAction func submitPressed(_ sender: Any) {
+        
+        updateSlices()
+        
+        if slicesInThisPie < 8 {
+            updateSamePie()
+        } else {
+            animateCompletedPie()
+            updateNewPie()
+        }
     }
 }
 
