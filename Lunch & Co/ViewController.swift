@@ -21,6 +21,9 @@ class ViewController: UIViewController {
     var users:[String] = ["JSW", "ME", "AK", "EL", "AS", "YD"]
     var activeTextField = UITextField()
     var activePizzaView = PizzaView()
+    var orders = [Order]()
+    var confirmedOrder = [Order]()
+    var unconfirmedOrder = [Order]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,9 +95,6 @@ class ViewController: UIViewController {
                 newPizzaView.center.x += amountToMoveOnBottom
             }
         }
-        
-        
-        
     }
     
     func updateNewPie() {
@@ -108,15 +108,47 @@ class ViewController: UIViewController {
         activePizzaView = oldPizzaView
     }
     
+    func updateOrder() {
+        
+        
+        for order in orders {
+            
+            if unconfirmedOrder.count >= 8 {
+                confirmedOrder += unconfirmedOrder
+                unconfirmedOrder = [order]
+
+            } else {
+                unconfirmedOrder.append(order)
+            }
+        }
+        
+        print("Confirmed")
+        print(confirmedOrder.map({$0.name}), confirmedOrder.map({$0.slices}))
+        
+        print("Not Confirmed")
+        print(unconfirmedOrder.map({$0.name}), unconfirmedOrder.map({$0.slices}))
+    }
+    
+    
+    func saveUserOrder() {
+
+        for _ in 1...selectedSlices {
+            let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
+            orders.append(order)
+        }
+    }
+    
     @IBAction func submitPressed(_ sender: Any) {
         
         updateSlices()
+        saveUserOrder()
         
         if slicesInThisPie < 8 {
             updateSamePie()
         } else {
             animateCompletedPie()
             updateNewPie()
+            updateOrder() //MARK: Finish this
         }
     }
 }
