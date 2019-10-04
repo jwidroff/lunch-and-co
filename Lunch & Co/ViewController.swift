@@ -110,15 +110,17 @@ class ViewController: UIViewController {
     
     func updateOrder() {
         
-        
         for order in orders {
             
-            if unconfirmedOrder.count >= 8 {
-                confirmedOrder += unconfirmedOrder
-                unconfirmedOrder = [order]
+            
+            unconfirmedOrder.append(order)
+            print("unconfirmedOrder.count \(unconfirmedOrder.count)")
 
-            } else {
-                unconfirmedOrder.append(order)
+            if unconfirmedOrder.count == 8 {
+                
+                confirmedOrder += unconfirmedOrder
+                unconfirmedOrder = [Order]()
+
             }
         }
         
@@ -126,11 +128,10 @@ class ViewController: UIViewController {
         
         print("Confirmed")
         print(confirmedOrder.map({$0.name}), confirmedOrder.map({$0.slices}))
-        
+        print()
         print("Not Confirmed")
         print(unconfirmedOrder.map({$0.name}), unconfirmedOrder.map({$0.slices}))
     }
-    
     
     func saveUserOrder() {
 
@@ -139,6 +140,33 @@ class ViewController: UIViewController {
             orders.append(order)
         }
     }
+    
+    func buildOrderList() {
+        
+        var orderToShow = [Order]()
+        
+        for order in confirmedOrder {
+            
+            for combinedOrder in orderToShow {
+                
+                if order.name != combinedOrder.name {
+                    
+                    let newOrder = Order(name: order.name ?? "", slices: 1)
+                    orderToShow.append(newOrder)
+                    
+                } else {
+                    
+                    if order.name == combinedOrder.name {
+                        
+                        combinedOrder.slices! += order.slices!
+                    }
+                }
+            }
+        }
+//        confirmedOrder = orderToShow
+//        print(confirmedOrder.map({$0.name})) //Mark: Make sure this works
+    }
+    
     
     @IBAction func submitPressed(_ sender: Any) {
         
@@ -150,7 +178,8 @@ class ViewController: UIViewController {
         } else {
             animateCompletedPie()
             updateNewPie()
-            updateOrder() //MARK: Finish this
+            updateOrder()
+//            buildOrderList()
         }
     }
 }
