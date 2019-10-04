@@ -91,6 +91,7 @@ class ViewController: UIViewController {
         slicesInThisPie = remainder
         activePizzaView.removeFromSuperview()
         let oldPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesInThisPie)
+        oldPizzaView.gradientColors(color1: UIColor.red, color2: UIColor.yellow)
         view.insertSubview(oldPizzaView, at: 1)
         activePizzaView = oldPizzaView
     }

@@ -31,7 +31,6 @@ class PizzaView: UIView {
     var slicesToShow = Int()
     var label:UILabel?
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -43,158 +42,33 @@ class PizzaView: UIView {
     init(frame: CGRect, amount: Int) {
         super.init(frame: frame)
         self.slicesToShow = amount
-        
         self.backgroundColor = UIColor.clear
         self.layer.cornerRadius = frame.width / 2
-        self.clipsToBounds = true
-        let slicesView = SlicesView(frame: bounds, slicesToShow: amount)
+        gradientColors(color1: .red, color2: .yellow)
+        let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
         addSubview(slicesView)
         print("L")
-        
-//                draw(frame, amount: amount)
-        
     }
     
     func gradientColors(color1: UIColor, color2: UIColor) {
         
         let gradient = CAGradientLayer()
-        
-        //These angle the gradient on the X & Y axis (negative numbers can be used too)
         gradient.startPoint = .init(x: 0.0, y: -0.1)
         gradient.endPoint = .init(x: 0.0, y: 1.0)
-        
-        //This is the location of where in the middle the colors are together. (the closer they are together, the less they mesh. If its too far, you cant even notice that its 2 colors so it'll just look like one color that the two colors make)
-        gradient.locations = [0.0, 0.7]
-        
-        //This keeps the gradient within the bounds of the view
+        gradient.locations = [-0.1, 0.55, 1.1]
         gradient.frame = bounds
-        
-        //These are the colors of the gradient(that are being passed in)
-        gradient.colors = [color1.cgColor, color2.cgColor]
-        
-        
-        //This determines the layer of the view you're setting the gradient (the higher up the number is, the more outer of a layer it is - which is why "gradientColors2" wont show up if gradientColors is higher and vise versa)
+        gradient.colors = [color1.cgColor, color2.cgColor, color1.cgColor]
         layer.insertSublayer(gradient, at: 1)
-        //        layer.addSublayer(gradient)
-    }
-    
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
         
-//        leftCenter = CGPoint(x: rect.minX, y: rect.midY)
-//        rightCenter = CGPoint(x: rect.maxX, y: rect.midY)
-//        topCenter = CGPoint(x: rect.midX, y: rect.minY)
-//        bottomCenter = CGPoint(x: rect.midX, y: rect.maxY)
-//        topLeft = CGPoint(x: rect.minX, y: rect.minY)
-//        bottomRight = CGPoint(x: rect.maxX, y: rect.maxY)
-//        bottomLeft = CGPoint(x: rect.minX, y: rect.maxY)
-//        topRight = CGPoint(x: rect.maxX, y: rect.minY)
-//        pizzaCenter = CGPoint(x: bounds.midX, y: bounds.midY)
-//
-//        guard let context = UIGraphicsGetCurrentContext() else {return}
-//        context.setLineWidth(5)
-//        context.setStrokeColor(UIColor.black.cgColor)
-//
-//        context.beginPath()
-//        context.move(to: leftCenter)
-//        context.addLine(to: rightCenter)
-//        context.strokePath()
-//
-//        context.beginPath()
-//        context.move(to: topCenter)
-//        context.addLine(to: bottomCenter)
-//        context.strokePath()
-//
-//        context.beginPath()
-//        context.move(to: topLeft)
-//        context.addLine(to: bottomRight)
-//        context.strokePath()
-//
-//        context.beginPath()
-//        context.move(to: bottomLeft)
-//        context.addLine(to: topRight)
-//        context.strokePath()
-//
-//
-//        print("slicesToShow \(slicesToShow)")
-        
-        
-//        switch slicesToShow {
-//
-//        case 7:
-//            context.beginPath()
-//            context.move(to: leftCenter)
-//            context.addLine(to: pizzaCenter)
-//            context.addLine(to: topLeft)
-//            context.setFillColor(UIColor.black.cgColor)
-//            context.fillPath()
-//        case 6:
-//            context.beginPath()
-//            context.move(to: leftCenter)
-//            context.addLine(to: pizzaCenter)
-//            context.addLine(to: topCenter)
-//            context.addLine(to: topLeft)
-//            context.setFillColor(UIColor.black.cgColor)
-//            context.fillPath()
-//        case 5:
-//            context.beginPath()
-//            context.move(to: leftCenter)
-//            context.addLine(to: pizzaCenter)
-//            context.addLine(to: topRight)
-//            context.addLine(to: topLeft)
-//            context.setFillColor(UIColor.black.cgColor)
-//            context.fillPath()
-//        case 4:
-//            context.beginPath()
-//            context.move(to: leftCenter)
-//            context.addLine(to: rightCenter)
-//            context.addLine(to: topRight)
-//            context.addLine(to: topLeft)
-//            context.setFillColor(UIColor.black.cgColor)
-//            context.fillPath()
-//        case 3:
-//            context.beginPath()
-//            context.move(to: leftCenter)
-//            context.addLine(to: pizzaCenter)
-//            context.addLine(to: bottomRight)
-//            context.addLine(to: topRight)
-//            context.addLine(to: topLeft)
-//            context.setFillColor(UIColor.black.cgColor)
-//            context.fillPath()
-//        case 2:
-//            context.beginPath()
-//            context.move(to: leftCenter)
-//            context.addLine(to: pizzaCenter)
-//            context.addLine(to: bottomCenter)
-//            context.addLine(to: bottomRight)
-//            context.addLine(to: topRight)
-//            context.addLine(to: topLeft)
-//            context.setFillColor(UIColor.black.cgColor)
-//            context.fillPath()
-//        case 1:
-//            context.beginPath()
-//            context.move(to: leftCenter)
-//            context.addLine(to: pizzaCenter)
-//            context.addLine(to: bottomLeft)
-//            context.addLine(to: bottomRight)
-//            context.addLine(to: topRight)
-//            context.addLine(to: topLeft)
-//            context.setFillColor(UIColor.black.cgColor)
-//            context.fillPath()
-//
-//        case 0:
-//            context.beginPath()
-//            context.move(to: bottomLeft)
-//            context.addLine(to: bottomRight)
-//            context.addLine(to: topRight)
-//            context.addLine(to: topLeft)
-//            context.setFillColor(UIColor.black.cgColor)
-//            context.fillPath()
-//
-//        default:
-//            break
-//        }
+        let gradient2 = CAGradientLayer()
+        gradient2.startPoint = .init(x: -0.1, y: 0.0)
+        gradient2.endPoint = .init(x: 1.0, y: 0.0)
+        gradient2.locations = [-0.1, 0.55, 1.1]
+        gradient2.frame = bounds
+        gradient2.colors = [color1.cgColor, UIColor.clear.cgColor, color1.cgColor]
+        layer.insertSublayer(gradient2, at: 1)
+        layer.cornerRadius = frame.width / 2
+        clipsToBounds = true
     }
 }
 
@@ -215,7 +89,7 @@ class SlicesView: UIView {
     
     init(frame: CGRect, slicesToShow: Int) {
         super.init(frame: frame)
-        self.backgroundColor = .red
+        self.backgroundColor = .clear
         self.slicesToShow = slicesToShow
     }
     
