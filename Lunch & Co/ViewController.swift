@@ -122,6 +122,8 @@ class ViewController: UIViewController {
             }
         }
         
+        orders = [Order]()
+        
         print("Confirmed")
         print(confirmedOrder.map({$0.name}), confirmedOrder.map({$0.slices}))
         
