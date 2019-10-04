@@ -53,17 +53,17 @@ class PizzaView: UIView {
     func gradientColors(color1: UIColor, color2: UIColor) {
         
         let gradient = CAGradientLayer()
-        gradient.startPoint = .init(x: 0.0, y: -0.1)
+        gradient.startPoint = .init(x: 0.0, y: 0.0)
         gradient.endPoint = .init(x: 0.0, y: 1.0)
-        gradient.locations = [-0.1, 0.55, 1.1]
+        gradient.locations = [-0.1, 0.5, 1.1]
         gradient.frame = bounds
         gradient.colors = [color1.cgColor, color2.cgColor, color1.cgColor]
         layer.insertSublayer(gradient, at: 1)
         
         let gradient2 = CAGradientLayer()
-        gradient2.startPoint = .init(x: -0.1, y: 0.0)
+        gradient2.startPoint = .init(x: 0.0, y: 0.0)
         gradient2.endPoint = .init(x: 1.0, y: 0.0)
-        gradient2.locations = [-0.1, 0.55, 1.1]
+        gradient2.locations = [-0.1, 0.5, 1.1]
         gradient2.frame = bounds
         gradient2.colors = [color1.cgColor, UIColor.clear.cgColor, color1.cgColor]
         layer.insertSublayer(gradient2, at: 1)
@@ -110,7 +110,7 @@ class SlicesView: UIView {
         let topRight = CGPoint(x: bounds.maxX, y: bounds.minY)
         let pizzaCenter = CGPoint(x: bounds.midX, y: bounds.midY)
         
-        context.setLineWidth(5)
+        context.setLineWidth(3)
         context.setStrokeColor(UIColor.black.cgColor)
         
         context.beginPath()
@@ -131,6 +131,17 @@ class SlicesView: UIView {
         context.beginPath()
         context.move(to: bottomLeft)
         context.addLine(to: topRight)
+        context.strokePath()
+        
+        
+        
+        let eclipseHeight = frame.height / 10 * 9
+        let eclipseWidth = frame.width / 10 * 9
+        let x = (frame.width - eclipseWidth) / 2
+        let y = (frame.height - eclipseHeight) / 2
+        let rect = CGRect(x: x, y: y, width: eclipseWidth, height: eclipseHeight)
+        context.setLineWidth(2)
+        context.addEllipse(in: rect)
         context.strokePath()
         
         switch slicesToShow {
