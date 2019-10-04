@@ -44,6 +44,8 @@ class ViewController: UIViewController {
         
         nameTxtFld.inputView = pickerView
         slicesTextField.inputView = pickerView
+        
+        users.sort { $0.lowercased() < $1.lowercased() }
     }
     
     @objc func dismissKeyBoard() {
