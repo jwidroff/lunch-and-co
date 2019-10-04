@@ -44,9 +44,13 @@ class PizzaView: UIView {
         super.init(frame: frame)
         self.slicesToShow = amount
         
-        self.backgroundColor = UIColor.red
+        self.backgroundColor = UIColor.clear
         self.layer.cornerRadius = frame.width / 2
         self.clipsToBounds = true
+        let slicesView = SlicesView(frame: bounds, slicesToShow: amount)
+        addSubview(slicesView)
+        print("L")
+        
 //                draw(frame, amount: amount)
         
     }
@@ -78,17 +82,160 @@ class PizzaView: UIView {
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         
-        leftCenter = CGPoint(x: rect.minX, y: rect.midY)
-        rightCenter = CGPoint(x: rect.maxX, y: rect.midY)
-        topCenter = CGPoint(x: rect.midX, y: rect.minY)
-        bottomCenter = CGPoint(x: rect.midX, y: rect.maxY)
-        topLeft = CGPoint(x: rect.minX, y: rect.minY)
-        bottomRight = CGPoint(x: rect.maxX, y: rect.maxY)
-        bottomLeft = CGPoint(x: rect.minX, y: rect.maxY)
-        topRight = CGPoint(x: rect.maxX, y: rect.minY)
-        pizzaCenter = CGPoint(x: bounds.midX, y: bounds.midY)
+//        leftCenter = CGPoint(x: rect.minX, y: rect.midY)
+//        rightCenter = CGPoint(x: rect.maxX, y: rect.midY)
+//        topCenter = CGPoint(x: rect.midX, y: rect.minY)
+//        bottomCenter = CGPoint(x: rect.midX, y: rect.maxY)
+//        topLeft = CGPoint(x: rect.minX, y: rect.minY)
+//        bottomRight = CGPoint(x: rect.maxX, y: rect.maxY)
+//        bottomLeft = CGPoint(x: rect.minX, y: rect.maxY)
+//        topRight = CGPoint(x: rect.maxX, y: rect.minY)
+//        pizzaCenter = CGPoint(x: bounds.midX, y: bounds.midY)
+//
+//        guard let context = UIGraphicsGetCurrentContext() else {return}
+//        context.setLineWidth(5)
+//        context.setStrokeColor(UIColor.black.cgColor)
+//
+//        context.beginPath()
+//        context.move(to: leftCenter)
+//        context.addLine(to: rightCenter)
+//        context.strokePath()
+//
+//        context.beginPath()
+//        context.move(to: topCenter)
+//        context.addLine(to: bottomCenter)
+//        context.strokePath()
+//
+//        context.beginPath()
+//        context.move(to: topLeft)
+//        context.addLine(to: bottomRight)
+//        context.strokePath()
+//
+//        context.beginPath()
+//        context.move(to: bottomLeft)
+//        context.addLine(to: topRight)
+//        context.strokePath()
+//
+//
+//        print("slicesToShow \(slicesToShow)")
+        
+        
+//        switch slicesToShow {
+//
+//        case 7:
+//            context.beginPath()
+//            context.move(to: leftCenter)
+//            context.addLine(to: pizzaCenter)
+//            context.addLine(to: topLeft)
+//            context.setFillColor(UIColor.black.cgColor)
+//            context.fillPath()
+//        case 6:
+//            context.beginPath()
+//            context.move(to: leftCenter)
+//            context.addLine(to: pizzaCenter)
+//            context.addLine(to: topCenter)
+//            context.addLine(to: topLeft)
+//            context.setFillColor(UIColor.black.cgColor)
+//            context.fillPath()
+//        case 5:
+//            context.beginPath()
+//            context.move(to: leftCenter)
+//            context.addLine(to: pizzaCenter)
+//            context.addLine(to: topRight)
+//            context.addLine(to: topLeft)
+//            context.setFillColor(UIColor.black.cgColor)
+//            context.fillPath()
+//        case 4:
+//            context.beginPath()
+//            context.move(to: leftCenter)
+//            context.addLine(to: rightCenter)
+//            context.addLine(to: topRight)
+//            context.addLine(to: topLeft)
+//            context.setFillColor(UIColor.black.cgColor)
+//            context.fillPath()
+//        case 3:
+//            context.beginPath()
+//            context.move(to: leftCenter)
+//            context.addLine(to: pizzaCenter)
+//            context.addLine(to: bottomRight)
+//            context.addLine(to: topRight)
+//            context.addLine(to: topLeft)
+//            context.setFillColor(UIColor.black.cgColor)
+//            context.fillPath()
+//        case 2:
+//            context.beginPath()
+//            context.move(to: leftCenter)
+//            context.addLine(to: pizzaCenter)
+//            context.addLine(to: bottomCenter)
+//            context.addLine(to: bottomRight)
+//            context.addLine(to: topRight)
+//            context.addLine(to: topLeft)
+//            context.setFillColor(UIColor.black.cgColor)
+//            context.fillPath()
+//        case 1:
+//            context.beginPath()
+//            context.move(to: leftCenter)
+//            context.addLine(to: pizzaCenter)
+//            context.addLine(to: bottomLeft)
+//            context.addLine(to: bottomRight)
+//            context.addLine(to: topRight)
+//            context.addLine(to: topLeft)
+//            context.setFillColor(UIColor.black.cgColor)
+//            context.fillPath()
+//
+//        case 0:
+//            context.beginPath()
+//            context.move(to: bottomLeft)
+//            context.addLine(to: bottomRight)
+//            context.addLine(to: topRight)
+//            context.addLine(to: topLeft)
+//            context.setFillColor(UIColor.black.cgColor)
+//            context.fillPath()
+//
+//        default:
+//            break
+//        }
+    }
+}
+
+
+
+class SlicesView: UIView {
+    
+    var slicesToShow = Int()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+//        self.backgroundColor = .red
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    init(frame: CGRect, slicesToShow: Int) {
+        super.init(frame: frame)
+        self.backgroundColor = .red
+        self.slicesToShow = slicesToShow
+    }
+    
+    // Only override draw() if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func draw(_ rect: CGRect) {
+        
         
         guard let context = UIGraphicsGetCurrentContext() else {return}
+        
+        let leftCenter = CGPoint(x: bounds.minX, y: bounds.midY)
+        let rightCenter = CGPoint(x: bounds.maxX, y: bounds.midY)
+        let topCenter = CGPoint(x: bounds.midX, y: bounds.minY)
+        let bottomCenter = CGPoint(x: bounds.midX, y: bounds.maxY)
+        let topLeft = CGPoint(x: bounds.minX, y: bounds.minY)
+        let bottomRight = CGPoint(x: bounds.maxX, y: bounds.maxY)
+        let bottomLeft = CGPoint(x: bounds.minX, y: bounds.maxY)
+        let topRight = CGPoint(x: bounds.maxX, y: bounds.minY)
+        let pizzaCenter = CGPoint(x: bounds.midX, y: bounds.midY)
+        
         context.setLineWidth(5)
         context.setStrokeColor(UIColor.black.cgColor)
         
@@ -111,10 +258,6 @@ class PizzaView: UIView {
         context.move(to: bottomLeft)
         context.addLine(to: topRight)
         context.strokePath()
-        
-        
-        print("slicesToShow \(slicesToShow)")
-        
         
         switch slicesToShow {
             
@@ -187,7 +330,7 @@ class PizzaView: UIView {
             context.addLine(to: topLeft)
             context.setFillColor(UIColor.black.cgColor)
             context.fillPath()
-                        
+            
         default:
             break
         }
