@@ -114,7 +114,7 @@ class ViewController: UIViewController {
             
             
             unconfirmedOrder.append(order)
-            print("unconfirmedOrder.count \(unconfirmedOrder.count)")
+//            print("unconfirmedOrder.count \(unconfirmedOrder.count)")
 
             if unconfirmedOrder.count == 8 {
                 
@@ -126,11 +126,11 @@ class ViewController: UIViewController {
         
         orders = [Order]()
         
-        print("Confirmed")
-        print(confirmedOrder.map({$0.name}), confirmedOrder.map({$0.slices}))
-        print()
-        print("Not Confirmed")
-        print(unconfirmedOrder.map({$0.name}), unconfirmedOrder.map({$0.slices}))
+//        print("Confirmed")
+//        print(confirmedOrder.map({$0.name}), confirmedOrder.map({$0.slices}))
+//        print()
+//        print("Not Confirmed")
+//        print(unconfirmedOrder.map({$0.name}), unconfirmedOrder.map({$0.slices}))
     }
     
     func saveUserOrder() {
@@ -141,30 +141,36 @@ class ViewController: UIViewController {
         }
     }
     
+
     func buildOrderList() {
         
         var orderToShow = [Order]()
-        
+
+//        print("order before buildOrderList \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
+
         for order in confirmedOrder {
             
-            for combinedOrder in orderToShow {
+            if !orderToShow.contains(where: { (orderX) -> Bool in
+                orderX.name == order.name
+            }) {
                 
-                if order.name != combinedOrder.name {
+                orderToShow.append(order)
+                
+            } else {
+                
+                for orderX in orderToShow {
                     
-                    let newOrder = Order(name: order.name ?? "", slices: 1)
-                    orderToShow.append(newOrder)
-                    
-                } else {
-                    
-                    if order.name == combinedOrder.name {
-                        
-                        combinedOrder.slices! += order.slices!
+                    if orderX.name == order.name {
+                        orderX.slices! += 1
                     }
                 }
             }
         }
-//        confirmedOrder = orderToShow
-//        print(confirmedOrder.map({$0.name})) //Mark: Make sure this works
+        
+        confirmedOrder = orderToShow
+        orderToShow = [Order]() //This may not be necessary
+        
+        print("Order to show - \(confirmedOrder.map({$0.name}),confirmedOrder.map({$0.slices}))")
     }
     
     
@@ -179,7 +185,7 @@ class ViewController: UIViewController {
             animateCompletedPie()
             updateNewPie()
             updateOrder()
-//            buildOrderList()
+            buildOrderList()
         }
     }
 }
