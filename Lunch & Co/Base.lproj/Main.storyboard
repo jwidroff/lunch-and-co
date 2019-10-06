@@ -54,6 +54,14 @@
                                     <constraint firstAttribute="width" constant="300" id="Pa1-F6-vik"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ujh-eC-oEG">
+                                <rect key="frame" x="37" y="33" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="infoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7m5-dn-ctl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -65,6 +73,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="infoButton" destination="Ujh-eC-oEG" id="Enl-lb-flM"/>
                         <outlet property="nameTxtFld" destination="isx-W2-vtp" id="LWh-uJ-8Qt"/>
                         <outlet property="pizzaView" destination="IhU-yN-q1k" id="UsL-I8-DaC"/>
                         <outlet property="slicesTextField" destination="YQY-1b-Qkj" id="52L-Jm-zgO"/>

@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var pizzaView: PizzaView!
     @IBOutlet weak var nameTxtFld: UITextField!
     @IBOutlet weak var slicesTextField: UITextField!
+    @IBOutlet weak var infoButton: UIButton!
     
     var selectedSlices = 1
     var slicesInThisPie = 0
@@ -25,9 +26,11 @@ class ViewController: UIViewController {
     var confirmedOrder = [Order]()
     var unconfirmedOrder = [Order]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        infoButton.layer.cornerRadius = infoButton.frame.width / 2
         setupPizzaView()
         setUpTextFields()
     }
@@ -112,25 +115,16 @@ class ViewController: UIViewController {
         
         for order in orders {
             
-            
             unconfirmedOrder.append(order)
-//            print("unconfirmedOrder.count \(unconfirmedOrder.count)")
 
             if unconfirmedOrder.count == 8 {
                 
                 confirmedOrder += unconfirmedOrder
                 unconfirmedOrder = [Order]()
-
             }
         }
         
         orders = [Order]()
-        
-//        print("Confirmed")
-//        print(confirmedOrder.map({$0.name}), confirmedOrder.map({$0.slices}))
-//        print()
-//        print("Not Confirmed")
-//        print(unconfirmedOrder.map({$0.name}), unconfirmedOrder.map({$0.slices}))
     }
     
     func saveUserOrder() {
@@ -146,14 +140,13 @@ class ViewController: UIViewController {
         
         var orderToShow = [Order]()
 
-//        print("order before buildOrderList \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
-
         for order in confirmedOrder {
             
             if !orderToShow.contains(where: { (orderX) -> Bool in
                 orderX.name == order.name
             }) {
                 
+                order.confirmed = true
                 orderToShow.append(order)
                 
             } else {
@@ -170,7 +163,31 @@ class ViewController: UIViewController {
         confirmedOrder = orderToShow
         orderToShow = [Order]() //This may not be necessary
         
-        print("Order to show - \(confirmedOrder.map({$0.name}),confirmedOrder.map({$0.slices}))")
+        
+        
+        
+        for order in unconfirmedOrder {
+            
+            if !orderToShow.contains(where: { (orderX) -> Bool in
+                orderX.name == order.name
+            }) {
+                
+//                order.confirmed = true
+                orderToShow.append(order)
+                
+            } else {
+                
+                for orderX in orderToShow {
+                    
+                    if orderX.name == order.name {
+                        orderX.slices! += 1
+                    }
+                }
+            }
+        }
+        
+        unconfirmedOrder = orderToShow
+        orderToShow = [Order]()
     }
     
     
@@ -188,6 +205,48 @@ class ViewController: UIViewController {
             buildOrderList()
         }
     }
+    
+    
+    @IBAction func infoButton(_ sender: UIButton) {
+        
+        //MARK: Why doesnt this work?
+        
+        let x = view.bounds.midX
+        let y = view.bounds.midY
+        let width = view.frame.width / 10 * 8
+        let height = view.frame.height / 10 * 8
+        
+        let infoViewFrame = CGRect(x: x, y: y, width: width, height: height)
+        
+        
+        let infoView = InfoView(frame: infoViewFrame, confirmedOrders: confirmedOrder, unconfirmedOrders: unconfirmedOrder)
+        infoView.center = view.center
+        infoView.backgroundColor = .green
+        view.addSubview(infoView)
+        
+        
+        
+        
+//
+//        infoButton = UIView(frame: rect)
+//        infoButton.center = view.center
+//        
+//        infoButton.backgroundColor = .gray
+//        view.addSubview(infoButton)
+//        
+//        let tableView = UITableView()
+//        tableView.frame = infoButton.frame
+//        self.view.addSubview(tableView)
+//        
+//        tableView.delegate = self
+//        tableView.dataSource = self
+        
+        
+        
+    }
+    
+    
+    
 }
 
 

@@ -14,7 +14,9 @@ class PizzaView: UIView {
     
     //TODO: Need to look up how to draw on top of a CAGradientLayer
     //TODO: Need to figure out how to show the amount on the pickerView when the pickerView is originally called (AKA if the pickerView first lands on "1", the textView should update eventhough I didnt change anything yet)
-    
+    //TODO: Make the pizza's come in as an animation, one by one.
+    //TODO: Need to make it that a user can delete their order
+    //TODO: Need to set up userDefaults
     
     var leftCenter = CGPoint()
     var rightCenter = CGPoint()
@@ -79,7 +81,6 @@ class SlicesView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.backgroundColor = .red
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -92,8 +93,6 @@ class SlicesView: UIView {
         self.slicesToShow = slicesToShow
     }
     
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         
         
