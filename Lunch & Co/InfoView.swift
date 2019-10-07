@@ -53,6 +53,20 @@ class InfoView: UIView {
     }
     
     
+    
+//    func prepareCell() {
+//        
+//        
+//        
+//        
+//        
+//        
+//        
+//    }
+    
+    
+    
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -83,5 +97,43 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        //MARK: Pick back up here - trying to get the unconfirmed and confirmed orders to have their own titles
+        
+        print(orders.map({$0.confirmed}))
+        
+        
+        var title = ""
+        
+        
+
+        if orders[section].confirmed == true {
+            title = "Confirmed"
+        } else {
+            title = "Unconfirmed"
+        }
+        
+        return title
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+
+    
+    
     
 }
+
+
+
+
+
+
+
+

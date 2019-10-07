@@ -209,44 +209,16 @@ class ViewController: UIViewController {
     
     @IBAction func infoButton(_ sender: UIButton) {
         
-        //MARK: Why doesnt this work?
-        
         let x = view.bounds.midX
         let y = view.bounds.midY
         let width = view.frame.width / 10 * 8
         let height = view.frame.height / 10 * 8
-        
         let infoViewFrame = CGRect(x: x, y: y, width: width, height: height)
-        
-        
         let infoView = InfoView(frame: infoViewFrame, confirmedOrders: confirmedOrder, unconfirmedOrders: unconfirmedOrder)
         infoView.center = view.center
         infoView.backgroundColor = .green
         view.addSubview(infoView)
-        
-        
-        
-        
-//
-//        infoButton = UIView(frame: rect)
-//        infoButton.center = view.center
-//        
-//        infoButton.backgroundColor = .gray
-//        view.addSubview(infoButton)
-//        
-//        let tableView = UITableView()
-//        tableView.frame = infoButton.frame
-//        self.view.addSubview(tableView)
-//        
-//        tableView.delegate = self
-//        tableView.dataSource = self
-        
-        
-        
     }
-    
-    
-    
 }
 
 
