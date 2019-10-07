@@ -11,6 +11,7 @@ import UIKit
 class InfoView: UIView {
 
     //Add navigationController to be able to go back and forth between different orders on different days
+    //Need to add an back button to close the popup
 
     var ordersFormatted = [OrderFormatted]()
     let tableView = UITableView()
@@ -58,7 +59,6 @@ class InfoView: UIView {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.sectionIndexBackgroundColor = .black
 //        tableView.color = .black
 
     }

@@ -17,6 +17,7 @@ class PizzaView: UIView {
     //TODO: Make the pizza's come in as an animation, one by one.
     //TODO: Need to make it that a user can delete their order
     //TODO: Need to set up userDefaults
+    //TODO: Need to figure out how to not lose the corner radius throughout animations
     
     var leftCenter = CGPoint()
     var rightCenter = CGPoint()
@@ -46,7 +47,8 @@ class PizzaView: UIView {
         self.slicesToShow = amount
         self.backgroundColor = UIColor.clear
         self.layer.cornerRadius = frame.width / 2
-        gradientColors(color1: .yellow, color2: .red)
+        self.clipsToBounds = true
+        gradientColors(color1: .orange, color2: .red)
         let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
         addSubview(slicesView)
     }

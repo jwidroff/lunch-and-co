@@ -74,10 +74,103 @@ class ViewController: UIViewController {
     
     func updateSamePie() {
         
-        activePizzaView.removeFromSuperview()
-        let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesInThisPie)
-        activePizzaView = newPizzaView
-        view.addSubview(activePizzaView)
+        let originalSlices = slicesInThisPie - selectedSlices
+        
+        var numberofAnimationsLeft = selectedSlices
+        
+        UIView.animate(withDuration: 0.25, animations: {
+
+            if numberofAnimationsLeft != 0 {
+                self.activePizzaView.removeFromSuperview()
+                let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + 1)
+                self.activePizzaView = newPizzaView
+                self.view.addSubview(self.activePizzaView)
+                numberofAnimationsLeft -= 1
+            }
+
+        }) { (true) in
+
+            UIView.animate(withDuration: 0.25, animations: {
+
+                if numberofAnimationsLeft != 0 {
+                    self.activePizzaView.removeFromSuperview()
+                    let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + 2)
+                    self.activePizzaView = newPizzaView
+                    self.view.addSubview(self.activePizzaView)
+                    numberofAnimationsLeft -= 1
+                }
+
+            }, completion: { (true) in
+
+                UIView.animate(withDuration: 0.25, animations: {
+                    if numberofAnimationsLeft != 0 {
+                        self.activePizzaView.removeFromSuperview()
+                        let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + 3)
+                        self.activePizzaView = newPizzaView
+                        self.view.addSubview(self.activePizzaView)
+                        numberofAnimationsLeft -= 1
+                    }
+
+                }, completion: { (true) in
+
+                    UIView.animate(withDuration: 0.25, animations: {
+                        if numberofAnimationsLeft != 0 {
+                            self.activePizzaView.removeFromSuperview()
+                            let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + 4)
+                            self.activePizzaView = newPizzaView
+                            self.view.addSubview(self.activePizzaView)
+                            numberofAnimationsLeft -= 1
+                        }
+
+                    }, completion: { (true) in
+                        UIView.animate(withDuration: 0.25, animations: {
+                            if numberofAnimationsLeft != 0 {
+                                self.activePizzaView.removeFromSuperview()
+                                let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + 5)
+                                self.activePizzaView = newPizzaView
+                                self.view.addSubview(self.activePizzaView)
+                                numberofAnimationsLeft -= 1
+                            }
+
+                        }, completion: { (true) in
+
+                            UIView.animate(withDuration: 0.25, animations: {
+                                if numberofAnimationsLeft != 0 {
+                                    self.activePizzaView.removeFromSuperview()
+                                    let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + 6)
+                                    self.activePizzaView = newPizzaView
+                                    self.view.addSubview(self.activePizzaView)
+                                    numberofAnimationsLeft -= 1
+                                }
+
+                            }, completion: { (true) in
+
+                                UIView.animate(withDuration: 0.25, animations: {
+                                    if numberofAnimationsLeft != 0 {
+                                        self.activePizzaView.removeFromSuperview()
+                                        let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + 7)
+                                        self.activePizzaView = newPizzaView
+                                        self.view.addSubview(self.activePizzaView)
+                                        numberofAnimationsLeft -= 1
+                                    }
+
+                                })
+
+                            })
+
+                        })
+                    })
+
+                })
+
+            })
+        }
+        
+        //KEPT THIS IN CASE WE COULDNT FIGURE OUT HOW TO KEEP THE CORNER RADIUS THROUGHOUT THE ANIMATION
+//        self.activePizzaView.removeFromSuperview()
+//        let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: self.slicesInThisPie)
+//        self.activePizzaView = newPizzaView
+//        self.view.addSubview(self.activePizzaView)
     }
     
     func animateCompletedPie() {
@@ -194,6 +287,7 @@ class ViewController: UIViewController {
         saveUserOrder()
         
         if slicesInThisPie < 8 {
+            
             updateSamePie()
             updateOrder()
         } else {
