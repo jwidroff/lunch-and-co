@@ -11,20 +11,12 @@ import UIKit
 class InfoView: UIView {
 
     //Add navigationController to be able to go back and forth between different orders on different days
-    
-//    let tableView = UITableView()
-//    var confirmedOrders = [Order]()
-//    var unconfirmedOrders = [Order]()
-    var orders = [Order]()
 
-    
+    var ordersFormatted = [OrderFormatted]()
     let tableView = UITableView()
 
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,15 +27,31 @@ class InfoView: UIView {
     
     init (frame: CGRect, confirmedOrders: [Order], unconfirmedOrders: [Order]) {
         super.init(frame: frame)
-
-//        self.confirmedOrders = confirmedOrders
-//        self.unconfirmedOrders = unconfirmedOrders
         
-        orders.append(contentsOf: confirmedOrders)
-        orders.append(contentsOf: unconfirmedOrders)
+        var names = [String]()
+        var slices = [String]()
         
-        print(confirmedOrders.map({$0.name}))
-        print(unconfirmedOrders.map({$0.name}))
+        for order in confirmedOrders {
+            
+            names.append(order.name!)
+            slices.append("\(order.slices!)")
+        }
+        
+        let confirmedOrdersFormatted = OrderFormatted(confirmed: "Confirmed", name: names, amountOfSlices: slices)
+        
+        names = [String]()
+        slices = [String]()
+        
+        for order in unconfirmedOrders {
+            
+            names.append(order.name!)
+            slices.append("\(order.slices!)")
+        }
+        
+        let unconfirmedOrdersFormatted = OrderFormatted(confirmed: "Unconfirmed", name: names, amountOfSlices: slices)
+        
+        ordersFormatted.append(unconfirmedOrdersFormatted)
+        ordersFormatted.append(confirmedOrdersFormatted)
 
         tableView.frame = bounds
         self.addSubview(tableView)
@@ -51,22 +59,6 @@ class InfoView: UIView {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
-    
-    
-//    func prepareCell() {
-//        
-//        
-//        
-//        
-//        
-//        
-//        
-//    }
-    
-    
-    
-    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -74,63 +66,45 @@ class InfoView: UIView {
         // Drawing code
     }
     */
-
 }
-
 
 
 extension InfoView: UITableViewDelegate, UITableViewDataSource {
     
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return orders.count
-        
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-//        print("order name = \(orders[indexPath.row].name)")
-        
+
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text = "\(orders[indexPath.row].name ?? "Failed") - \(orders[indexPath.row].slices!)"
+        cell.textLabel?.text = "\(ordersFormatted[indexPath.section].name[indexPath.row]) - \(ordersFormatted[indexPath.section].amountOfSlices[indexPath.row])"
         return cell
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return ordersFormatted[section].name.count
+        
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return ordersFormatted.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        //MARK: Pick back up here - trying to get the unconfirmed and confirmed orders to have their own titles
-        
-        print(orders.map({$0.confirmed}))
-        
-        
-        var title = ""
-        
-        
 
-        if orders[section].confirmed == true {
-            title = "Confirmed"
-        } else {
-            title = "Unconfirmed"
-        }
-        
-        return title
+        return ordersFormatted[section].confirmed
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
-
-    
-    
-    
 }
 
 
+struct OrderFormatted {
+    
+    var confirmed:String
+    var name:[String]
+    var amountOfSlices:[String]
+}
 
 
 

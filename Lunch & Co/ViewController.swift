@@ -209,6 +209,11 @@ class ViewController: UIViewController {
     
     @IBAction func infoButton(_ sender: UIButton) {
         
+        print("confirmed order \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
+
+        print("unconfirmed order \(unconfirmedOrder.map({$0.name})), \(unconfirmedOrder.map({$0.slices}))")
+        
+        
         let x = view.bounds.midX
         let y = view.bounds.midY
         let width = view.frame.width / 10 * 8
