@@ -162,10 +162,7 @@ class ViewController: UIViewController {
         
         confirmedOrder = orderToShow
         orderToShow = [Order]() //This may not be necessary
-        
-        
-        
-        
+
         for order in unconfirmedOrder {
             
             if !orderToShow.contains(where: { (orderX) -> Bool in
@@ -198,6 +195,7 @@ class ViewController: UIViewController {
         
         if slicesInThisPie < 8 {
             updateSamePie()
+            updateOrder()
         } else {
             animateCompletedPie()
             updateNewPie()

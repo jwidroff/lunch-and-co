@@ -58,6 +58,9 @@ class InfoView: UIView {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.sectionIndexBackgroundColor = .black
+//        tableView.color = .black
+
     }
     /*
     // Only override draw() if you perform custom drawing.
