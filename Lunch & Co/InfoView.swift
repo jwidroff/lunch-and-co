@@ -60,6 +60,8 @@ class InfoView: UIView {
         tableView.delegate = self
         tableView.dataSource = self
 //        tableView.color = .black
+        
+        addToolBar()
 
     }
     /*
@@ -69,6 +71,30 @@ class InfoView: UIView {
         // Drawing code
     }
     */
+    
+    
+    func addToolBar() {
+        
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(InfoView.dismissView))
+        toolBar.setItems([doneButton], animated: true)
+        toolBar.isUserInteractionEnabled = true
+        self.addSubview(toolBar)
+        
+        
+        
+    }
+    
+    @objc func dismissView() {
+        
+        removeFromSuperview()
+        
+//        self.dismiss(animated: true, completion: nil)
+        //        view.endEditing(true)
+    }
+    
+    
 }
 
 
