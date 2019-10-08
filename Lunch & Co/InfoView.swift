@@ -15,6 +15,7 @@ class InfoView: UIView {
 
     var ordersFormatted = [OrderFormatted]()
     let tableView = UITableView()
+    let toolbarHeight: CGFloat = 40
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,7 +55,16 @@ class InfoView: UIView {
         ordersFormatted.append(unconfirmedOrdersFormatted)
         ordersFormatted.append(confirmedOrdersFormatted)
 
-        tableView.frame = bounds
+//        let toolbarHeight:CGFloat = toolbarHeight
+        let x = bounds.minX
+        let y = bounds.minY + toolbarHeight
+        let height: CGFloat = frame.height - toolbarHeight
+        let width: CGFloat = frame.width
+        let frameForTableView = CGRect(x: x, y: y, width: width, height: height)
+        
+        
+        
+        tableView.frame = frameForTableView
         self.addSubview(tableView)
         
         tableView.delegate = self
@@ -72,11 +82,12 @@ class InfoView: UIView {
     }
     */
     
-    
     func addToolBar() {
         
         let toolBar = UIToolbar()
-        toolBar.sizeToFit()
+//        toolBar.sizeToFit()
+        toolBar.frame.size = CGSize(width: frame.width, height: 40.0)
+        toolBar.clipsToBounds = true
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(InfoView.dismissView))
         toolBar.setItems([doneButton], animated: true)
         toolBar.isUserInteractionEnabled = true
