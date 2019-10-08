@@ -16,6 +16,9 @@ class InfoView: UIView {
     var ordersFormatted = [OrderFormatted]()
     let tableView = UITableView()
     let toolbarHeight: CGFloat = 40
+    
+    var confirmedOrders = [Order]()
+    var unconfirmedOrders = [Order]()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,6 +32,24 @@ class InfoView: UIView {
     
     init (frame: CGRect, confirmedOrders: [Order], unconfirmedOrders: [Order]) {
         super.init(frame: frame)
+        
+        
+        self.confirmedOrders = confirmedOrders
+        self.unconfirmedOrders = unconfirmedOrders
+        setFormatting()
+        setupView()
+
+    }
+    /*
+    // Only override draw() if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func draw(_ rect: CGRect) {
+        // Drawing code
+    }
+    */
+    
+
+    func setFormatting() {
         
         var names = [String]()
         var slices = [String]()
@@ -54,33 +75,23 @@ class InfoView: UIView {
         
         ordersFormatted.append(unconfirmedOrdersFormatted)
         ordersFormatted.append(confirmedOrdersFormatted)
-
-//        let toolbarHeight:CGFloat = toolbarHeight
+        
+    }
+    
+    func setupView() {
+        
         let x = bounds.minX
         let y = bounds.minY + toolbarHeight
         let height: CGFloat = frame.height - toolbarHeight
         let width: CGFloat = frame.width
         let frameForTableView = CGRect(x: x, y: y, width: width, height: height)
-        
-        
-        
-        tableView.frame = frameForTableView
         self.addSubview(tableView)
-        
+        tableView.frame = frameForTableView
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.color = .black
-        
         addToolBar()
-
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    
     
     func addToolBar() {
         
