@@ -15,6 +15,7 @@
 		BA5A32B32344DB7300A31BA5 /* PizzaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5A32B22344DB7300A31BA5 /* PizzaView.swift */; };
 		BADEE4C62347850900166BF0 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADEE4C52347850900166BF0 /* Order.swift */; };
 		BADEE4CA234A22CF00166BF0 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADEE4C9234A22CF00166BF0 /* InfoView.swift */; };
+		BADEE4EC235129C900166BF0 /* TimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADEE4EB235129C900166BF0 /* TimerLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		BA5A32B22344DB7300A31BA5 /* PizzaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PizzaView.swift; sourceTree = "<group>"; };
 		BADEE4C52347850900166BF0 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		BADEE4C9234A22CF00166BF0 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		BADEE4EB235129C900166BF0 /* TimerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				BADEE4C9234A22CF00166BF0 /* InfoView.swift */,
 				BA5A32A02344D9C800A31BA5 /* AppDelegate.swift */,
 				BA5A32A22344D9C800A31BA5 /* ViewController.swift */,
+				BADEE4EB235129C900166BF0 /* TimerLabel.swift */,
 				BADEE4C52347850900166BF0 /* Order.swift */,
 				BA5A32A42344D9C800A31BA5 /* Main.storyboard */,
 				BA5A32B22344DB7300A31BA5 /* PizzaView.swift */,
@@ -148,6 +151,7 @@
 				BA5A32B32344DB7300A31BA5 /* PizzaView.swift in Sources */,
 				BADEE4C62347850900166BF0 /* Order.swift in Sources */,
 				BADEE4CA234A22CF00166BF0 /* InfoView.swift in Sources */,
+				BADEE4EC235129C900166BF0 /* TimerLabel.swift in Sources */,
 				BA5A32A12344D9C800A31BA5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

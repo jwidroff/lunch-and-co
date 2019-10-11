@@ -36,12 +36,23 @@ class ViewController: UIViewController {
         setupPizzaView()
         setUpTextFields()
         createOverlay()
+        setTimer()
+        
         
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         dismissKeyBoard()
+    }
+    
+    func setTimer() {
+        
+        let timerView = TimerLabel(frame: pizzaView.frame)
+        view.addSubview(timerView)
+        timerView.center = view.center
+        timerView.center.y = infoButton.center.y
+        
     }
     
     func setUpTextFields() {

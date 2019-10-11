@@ -47,7 +47,7 @@ class PizzaView: UIView {
         self.backgroundColor = UIColor.clear
         self.layer.cornerRadius = frame.width / 2
         self.clipsToBounds = true
-        gradientColors(color1: .orange, color2: .red)
+        gradientColors(color1: .yellow, color2: .red)
         let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
         addSubview(slicesView)
 //        createOverlay(frame: self.frame, xOffset: self.frame.width / 2, yOffset: self.frame.height / 2, radius: self.frame.width / 2)
