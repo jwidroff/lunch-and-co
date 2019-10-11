@@ -251,7 +251,7 @@ class ViewController: UIViewController {
 //                self.view.addSubview(self.activePizzaView)
     }
     
-    
+    var xFloat4CompletedPies:CGFloat = -200
     
     func animateCompletedPie() {
 
@@ -268,10 +268,11 @@ class ViewController: UIViewController {
             finishedPizzaView.transform = transform
         }) { (true) in
             UIView.animate(withDuration: 1.0) {
-                let amountToMoveOnBottom:CGFloat = -200
+                let amountToMoveOnBottom:CGFloat = self.xFloat4CompletedPies
                 finishedPizzaView.center.x += amountToMoveOnBottom
             }
         }
+        xFloat4CompletedPies += 50
         
         
     }
@@ -300,12 +301,15 @@ class ViewController: UIViewController {
                 confirmedOrder += unconfirmedOrder
                 unconfirmedOrder = [Order]()
             }
+            for order in confirmedOrder {
+                order.confirmed = true
+            }
         }
         
         orders = [Order]()
     }
     
-    func saveUserOrder() {
+    func divideOrder() {
 
         for _ in 1...selectedSlices {
             let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
@@ -322,8 +326,9 @@ class ViewController: UIViewController {
 
         print("confirmedOrder \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
         
-        
         for order in confirmedOrder {
+            
+            print(order.name)
             
             if !orderToShow.contains(where: { (orderX) -> Bool in
                 orderX.name == order.name
@@ -374,10 +379,11 @@ class ViewController: UIViewController {
     @IBAction func submitPressed(_ sender: Any) {
         
         updateSlices() //Sets slicesInThisPie and totalSlices
-        saveUserOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
+        divideOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
         updateOrder()
         updatePieView()
-//        buildOrderList()
+//        buildOrderList() //Do this all the way at the end. Keep the slices separate in order to allow a user to cancel his/her order and therefore be able to build the new list better (And add slices back if necessary)
+        
     }
     
     @IBAction func infoButton(_ sender: UIButton) {
