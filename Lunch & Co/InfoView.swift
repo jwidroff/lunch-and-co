@@ -11,7 +11,6 @@ import UIKit
 class InfoView: UIView {
 
     //Add navigationController to be able to go back and forth between different orders on different days
-    //Need to add an back button to close the popup
 
     var ordersFormatted = [OrderFormatted]()
     let tableView = UITableView()
@@ -103,17 +102,11 @@ class InfoView: UIView {
         toolBar.setItems([doneButton], animated: true)
         toolBar.isUserInteractionEnabled = true
         self.addSubview(toolBar)
-        
-        
-        
     }
     
     @objc func dismissView() {
         
         removeFromSuperview()
-        
-//        self.dismiss(animated: true, completion: nil)
-        //        view.endEditing(true)
     }
     
     
