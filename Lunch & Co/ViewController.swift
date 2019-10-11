@@ -28,13 +28,14 @@ class ViewController: UIViewController {
     var confirmedOrder = [Order]()
     var unconfirmedOrder = [Order]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         infoButton.layer.cornerRadius = infoButton.frame.width / 2
         setupPizzaView()
         setUpTextFields()
-        createOverlay(frame: pizzaView.frame, xOffset: pizzaView.frame.width / 2, yOffset: pizzaView.frame.height / 2, radius: pizzaView.frame.height / 2)
+        createOverlay()
         
     }
     
@@ -64,17 +65,26 @@ class ViewController: UIViewController {
     
     func setupPizzaView() {
         
-        let pizzaPlateView = UIView(frame: pizzaView.frame)
+        addPizzaPlateView()
+        pizzaView.layer.cornerRadius = pizzaView.frame.height / 2
+        pizzaView.clipsToBounds = true
+        activePizzaView = pizzaView
+    }
+    
+    func addPizzaPlateView() {
+        
+        let x:CGFloat = 0
+        let y:CGFloat = 0
+        let height = pizzaView.frame.height
+        let width = pizzaView.frame.width
+        let frame = CGRect(x: x, y: y, width: width, height: height)
+        
+        let pizzaPlateView = UIView(frame: frame)
         pizzaPlateView.center = view.center
         pizzaPlateView.backgroundColor = UIColor.darkGray
         pizzaPlateView.layer.cornerRadius = pizzaPlateView.frame.width / 2
         pizzaPlateView.clipsToBounds = true
         view.insertSubview(pizzaPlateView, at: 1)
-        
-        
-        pizzaView.layer.cornerRadius = pizzaView.frame.height / 2
-        pizzaView.clipsToBounds = true
-        activePizzaView = pizzaView
     }
     
     func updateSlices() {
@@ -86,27 +96,33 @@ class ViewController: UIViewController {
         totalSlices += selectedSlices
     }
     
-    func createOverlay(frame: CGRect, xOffset: CGFloat, yOffset: CGFloat, radius: CGFloat) {
-        // Step 1
+    func createOverlay() {
+        
+        
+        let x:CGFloat = 0
+        let y:CGFloat = 0
+        let height = pizzaView.frame.height
+        let width = pizzaView.frame.width
+        let frame = CGRect(x: x, y: y, width: width, height: height)
         overlayView = UIView(frame: frame)
-        overlayView.backgroundColor = UIColor.black.withAlphaComponent(1.0)
-        // Step 2
+        overlayView.backgroundColor = UIColor.black
+        let xOffset = pizzaView.frame.width / 2
+        let yOffset = pizzaView.frame.height / 2
+        let radius = pizzaView.frame.height / 2
         let path = CGMutablePath()
         path.addArc(center: CGPoint(x: xOffset, y: yOffset), radius: radius, startAngle: 0.0, endAngle: 2.0 * .pi, clockwise: false)
         path.addRect(CGRect(origin: .zero, size: overlayView.frame.size))
-        // Step 3
+        
         let maskLayer = CAShapeLayer()
         maskLayer.backgroundColor = UIColor.black.cgColor
         maskLayer.path = path
-
         maskLayer.fillRule = .evenOdd
-        // Step 4
+        
         overlayView.layer.mask = maskLayer
         overlayView.clipsToBounds = true
         overlayView.center = view.center
         
         view.insertSubview(overlayView, at: 2)
-        
     }
     
     func updatePieView() {
@@ -126,7 +142,7 @@ class ViewController: UIViewController {
         
         if animationsLeft != 0 {
             
-            UIView.animate(withDuration: 0.25, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.activePizzaView.removeFromSuperview()
                 let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                 self.activePizzaView = newPizzaView
@@ -143,7 +159,7 @@ class ViewController: UIViewController {
             }) { (true) in
                 if animationsLeft != 0 {
                     
-                    UIView.animate(withDuration: 0.25, animations: {
+                    UIView.animate(withDuration: 0.1, animations: {
                         self.activePizzaView.removeFromSuperview()
                         let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                         self.activePizzaView = newPizzaView
@@ -160,7 +176,7 @@ class ViewController: UIViewController {
                     }) { (true) in
                         if animationsLeft != 0 {
                             
-                            UIView.animate(withDuration: 0.25, animations: {
+                            UIView.animate(withDuration: 0.1, animations: {
                                 self.activePizzaView.removeFromSuperview()
                                 let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                 self.activePizzaView = newPizzaView
@@ -177,7 +193,7 @@ class ViewController: UIViewController {
                             }) { (true) in
                                 if animationsLeft != 0 {
                                     
-                                    UIView.animate(withDuration: 0.25, animations: {
+                                    UIView.animate(withDuration: 0.1, animations: {
                                         self.activePizzaView.removeFromSuperview()
                                         let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                         self.activePizzaView = newPizzaView
@@ -194,7 +210,7 @@ class ViewController: UIViewController {
                                     }) { (true) in
                                         if animationsLeft != 0 {
                                             
-                                            UIView.animate(withDuration: 0.25, animations: {
+                                            UIView.animate(withDuration: 0.1, animations: {
                                                 self.activePizzaView.removeFromSuperview()
                                                 let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                                 self.activePizzaView = newPizzaView
@@ -211,7 +227,7 @@ class ViewController: UIViewController {
                                             }) { (true) in
                                                 if animationsLeft != 0 {
                                                     
-                                                    UIView.animate(withDuration: 0.25, animations: {
+                                                    UIView.animate(withDuration: 0.1, animations: {
                                                         self.activePizzaView.removeFromSuperview()
                                                         let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                                         self.activePizzaView = newPizzaView
@@ -228,7 +244,7 @@ class ViewController: UIViewController {
                                                     }) { (true) in
                                                         if animationsLeft != 0 {
                                                             
-                                                            UIView.animate(withDuration: 0.25, animations: {
+                                                            UIView.animate(withDuration: 0.1, animations: {
                                                                 self.activePizzaView.removeFromSuperview()
                                                                 let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                                                 self.activePizzaView = newPizzaView
@@ -245,7 +261,7 @@ class ViewController: UIViewController {
                                                             }) { (true) in
                                                                 if animationsLeft != 0 {
                                                                     
-                                                                    UIView.animate(withDuration: 0.25, animations: {
+                                                                    UIView.animate(withDuration: 0.1, animations: {
                                                                         self.activePizzaView.removeFromSuperview()
                                                                         let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                                                         self.activePizzaView = newPizzaView
@@ -299,25 +315,29 @@ class ViewController: UIViewController {
             amountToMove = (view.bounds.maxY - activePizzaView.center.y) / 2 * 1.25 + yFloat4CompletedPies
         }
         
-        let transform = CGAffineTransform(scaleX: 0.25, y: 0.25)
+        let transform = CGAffineTransform.identity.scaledBy(x: 0.25, y: 0.25)
+//        let identity = CGAffineTransform.identity
+        let rotate = CGAffineTransform.identity.rotated(by: 90.0)
         let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: 0)
         activePizzaView.removeFromSuperview()
         view.insertSubview(newPizzaView, at: 1)
         activePizzaView = newPizzaView
         let finishedPizzaView = PizzaView(frame: activePizzaView.frame, amount: 8)
-        view.insertSubview(finishedPizzaView, at: 2)
+        view.addSubview(finishedPizzaView)
         UIView.animate(withDuration: 1.0, animations: {
+            
             finishedPizzaView.center.y += amountToMove
             finishedPizzaView.transform = transform
+            
         }) { (true) in
+            
             UIView.animate(withDuration: 1.0) {
                 let amountToMoveOnBottom:CGFloat = self.xFloat4CompletedPies
                 finishedPizzaView.center.x += amountToMoveOnBottom
+//                finishedPizzaView.transform = rotate
             }
         }
         xFloat4CompletedPies += 50
-
-        
     }
     
     func updateNewPie() {

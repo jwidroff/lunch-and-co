@@ -29,7 +29,8 @@ class PizzaView: UIView {
     
     var slicesToShow = Int()
     var label:UILabel?
-    
+    var overlayView = UIView()
+
 
     
     override init(frame: CGRect) {
@@ -49,14 +50,12 @@ class PizzaView: UIView {
         gradientColors(color1: .orange, color2: .red)
         let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
         addSubview(slicesView)
+//        createOverlay(frame: self.frame, xOffset: self.frame.width / 2, yOffset: self.frame.height / 2, radius: self.frame.width / 2)
 //        let overlay = createOverlay(frame: frame, xOffset: frame.width / 2, yOffset: frame.height / 2, radius: frame.width / 2)
 //        view.insert(overlay)
         
         
     }
-    
-    
-    
     
     
     func gradientColors(color1: UIColor, color2: UIColor) {
