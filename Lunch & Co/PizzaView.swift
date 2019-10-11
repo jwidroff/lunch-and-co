@@ -9,12 +9,8 @@
 import UIKit
 
 class PizzaView: UIView {
-    
-    //TODO: Add gradient to the pizzaView in the center - like a light orange-ish
-    
-    //TODO: Need to look up how to draw on top of a CAGradientLayer
+        
     //TODO: Need to figure out how to show the amount on the pickerView when the pickerView is originally called (AKA if the pickerView first lands on "1", the textView should update eventhough I didnt change anything yet)
-    //TODO: Make the pizza's come in as an animation, one by one.
     //TODO: Need to make it that a user can delete their order
     //TODO: Need to set up userDefaults
     //TODO: Need to figure out how to not lose the corner radius throughout animations
@@ -34,6 +30,8 @@ class PizzaView: UIView {
     var slicesToShow = Int()
     var label:UILabel?
     
+
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -51,7 +49,15 @@ class PizzaView: UIView {
         gradientColors(color1: .orange, color2: .red)
         let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
         addSubview(slicesView)
+//        let overlay = createOverlay(frame: frame, xOffset: frame.width / 2, yOffset: frame.height / 2, radius: frame.width / 2)
+//        view.insert(overlay)
+        
+        
     }
+    
+    
+    
+    
     
     func gradientColors(color1: UIColor, color2: UIColor) {
         
@@ -80,7 +86,8 @@ class PizzaView: UIView {
 class SlicesView: UIView {
     
     var slicesToShow = Int()
-    
+    let colorTheme = UIColor.darkGray
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -111,7 +118,7 @@ class SlicesView: UIView {
         let pizzaCenter = CGPoint(x: bounds.midX, y: bounds.midY)
         
         context.setLineWidth(3)
-        context.setStrokeColor(UIColor.black.cgColor)
+        context.setStrokeColor(colorTheme.cgColor)
         
         context.beginPath()
         context.move(to: leftCenter)
@@ -151,7 +158,7 @@ class SlicesView: UIView {
             context.move(to: leftCenter)
             context.addLine(to: pizzaCenter)
             context.addLine(to: topLeft)
-            context.setFillColor(UIColor.black.cgColor)
+            context.setFillColor(colorTheme.cgColor)
             context.fillPath()
         case 6:
             context.beginPath()
@@ -159,7 +166,7 @@ class SlicesView: UIView {
             context.addLine(to: pizzaCenter)
             context.addLine(to: topCenter)
             context.addLine(to: topLeft)
-            context.setFillColor(UIColor.black.cgColor)
+            context.setFillColor(colorTheme.cgColor)
             context.fillPath()
         case 5:
             context.beginPath()
@@ -167,7 +174,7 @@ class SlicesView: UIView {
             context.addLine(to: pizzaCenter)
             context.addLine(to: topRight)
             context.addLine(to: topLeft)
-            context.setFillColor(UIColor.black.cgColor)
+            context.setFillColor(colorTheme.cgColor)
             context.fillPath()
         case 4:
             context.beginPath()
@@ -175,7 +182,7 @@ class SlicesView: UIView {
             context.addLine(to: rightCenter)
             context.addLine(to: topRight)
             context.addLine(to: topLeft)
-            context.setFillColor(UIColor.black.cgColor)
+            context.setFillColor(colorTheme.cgColor)
             context.fillPath()
         case 3:
             context.beginPath()
@@ -184,7 +191,7 @@ class SlicesView: UIView {
             context.addLine(to: bottomRight)
             context.addLine(to: topRight)
             context.addLine(to: topLeft)
-            context.setFillColor(UIColor.black.cgColor)
+            context.setFillColor(colorTheme.cgColor)
             context.fillPath()
         case 2:
             context.beginPath()
@@ -194,7 +201,7 @@ class SlicesView: UIView {
             context.addLine(to: bottomRight)
             context.addLine(to: topRight)
             context.addLine(to: topLeft)
-            context.setFillColor(UIColor.black.cgColor)
+            context.setFillColor(colorTheme.cgColor)
             context.fillPath()
         case 1:
             context.beginPath()
@@ -204,7 +211,7 @@ class SlicesView: UIView {
             context.addLine(to: bottomRight)
             context.addLine(to: topRight)
             context.addLine(to: topLeft)
-            context.setFillColor(UIColor.black.cgColor)
+            context.setFillColor(colorTheme.cgColor)
             context.fillPath()
             
         case 0:
@@ -213,7 +220,7 @@ class SlicesView: UIView {
             context.addLine(to: bottomRight)
             context.addLine(to: topRight)
             context.addLine(to: topLeft)
-            context.setFillColor(UIColor.black.cgColor)
+            context.setFillColor(colorTheme.cgColor)
             context.fillPath()
             
         default:

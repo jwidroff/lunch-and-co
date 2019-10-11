@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     var slicesInThisPie = 0
     var totalSlices = 0
     var pickerView = UIPickerView()
+    var overlayView = UIView()
     var users:[String] = ["JSW", "ME", "AK", "EL", "AS", "YD"]
     var activeTextField = UITextField()
     var activePizzaView = PizzaView()
@@ -27,13 +28,14 @@ class ViewController: UIViewController {
     var confirmedOrder = [Order]()
     var unconfirmedOrder = [Order]()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         infoButton.layer.cornerRadius = infoButton.frame.width / 2
         setupPizzaView()
         setUpTextFields()
+        createOverlay(frame: pizzaView.frame, xOffset: pizzaView.frame.width / 2, yOffset: pizzaView.frame.height / 2, radius: pizzaView.frame.height / 2)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -62,6 +64,14 @@ class ViewController: UIViewController {
     
     func setupPizzaView() {
         
+        let pizzaPlateView = UIView(frame: pizzaView.frame)
+        pizzaPlateView.center = view.center
+        pizzaPlateView.backgroundColor = UIColor.darkGray
+        pizzaPlateView.layer.cornerRadius = pizzaPlateView.frame.width / 2
+        pizzaPlateView.clipsToBounds = true
+        view.insertSubview(pizzaPlateView, at: 1)
+        
+        
         pizzaView.layer.cornerRadius = pizzaView.frame.height / 2
         pizzaView.clipsToBounds = true
         activePizzaView = pizzaView
@@ -74,6 +84,29 @@ class ViewController: UIViewController {
             slicesInThisPie = slicesInThisPie % 8
         }
         totalSlices += selectedSlices
+    }
+    
+    func createOverlay(frame: CGRect, xOffset: CGFloat, yOffset: CGFloat, radius: CGFloat) {
+        // Step 1
+        overlayView = UIView(frame: frame)
+        overlayView.backgroundColor = UIColor.black.withAlphaComponent(1.0)
+        // Step 2
+        let path = CGMutablePath()
+        path.addArc(center: CGPoint(x: xOffset, y: yOffset), radius: radius, startAngle: 0.0, endAngle: 2.0 * .pi, clockwise: false)
+        path.addRect(CGRect(origin: .zero, size: overlayView.frame.size))
+        // Step 3
+        let maskLayer = CAShapeLayer()
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.path = path
+
+        maskLayer.fillRule = .evenOdd
+        // Step 4
+        overlayView.layer.mask = maskLayer
+        overlayView.clipsToBounds = true
+        overlayView.center = view.center
+        
+        view.insertSubview(overlayView, at: 2)
+        
     }
     
     func updatePieView() {
@@ -97,7 +130,7 @@ class ViewController: UIViewController {
                 self.activePizzaView.removeFromSuperview()
                 let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                 self.activePizzaView = newPizzaView
-                self.view.addSubview(self.activePizzaView)
+                self.view.insertSubview(self.activePizzaView, at: 1)
                 self.slicesShown += 1
                 counter += 1
                 animationsLeft -= 1
@@ -114,7 +147,7 @@ class ViewController: UIViewController {
                         self.activePizzaView.removeFromSuperview()
                         let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                         self.activePizzaView = newPizzaView
-                        self.view.addSubview(self.activePizzaView)
+                        self.view.insertSubview(self.activePizzaView, at: 1)
                         self.slicesShown += 1
                         counter += 1
                         animationsLeft -= 1
@@ -131,7 +164,7 @@ class ViewController: UIViewController {
                                 self.activePizzaView.removeFromSuperview()
                                 let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                 self.activePizzaView = newPizzaView
-                                self.view.addSubview(self.activePizzaView)
+                                self.view.insertSubview(self.activePizzaView, at: 1)
                                 self.slicesShown += 1
                                 counter += 1
                                 animationsLeft -= 1
@@ -148,7 +181,7 @@ class ViewController: UIViewController {
                                         self.activePizzaView.removeFromSuperview()
                                         let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                         self.activePizzaView = newPizzaView
-                                        self.view.addSubview(self.activePizzaView)
+                                        self.view.insertSubview(self.activePizzaView, at: 1)
                                         self.slicesShown += 1
                                         counter += 1
                                         animationsLeft -= 1
@@ -165,7 +198,7 @@ class ViewController: UIViewController {
                                                 self.activePizzaView.removeFromSuperview()
                                                 let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                                 self.activePizzaView = newPizzaView
-                                                self.view.addSubview(self.activePizzaView)
+                                                self.view.insertSubview(self.activePizzaView, at: 1)
                                                 self.slicesShown += 1
                                                 counter += 1
                                                 animationsLeft -= 1
@@ -182,7 +215,7 @@ class ViewController: UIViewController {
                                                         self.activePizzaView.removeFromSuperview()
                                                         let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                                         self.activePizzaView = newPizzaView
-                                                        self.view.addSubview(self.activePizzaView)
+                                                        self.view.insertSubview(self.activePizzaView, at: 1)
                                                         self.slicesShown += 1
                                                         counter += 1
                                                         animationsLeft -= 1
@@ -199,7 +232,7 @@ class ViewController: UIViewController {
                                                                 self.activePizzaView.removeFromSuperview()
                                                                 let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                                                 self.activePizzaView = newPizzaView
-                                                                self.view.addSubview(self.activePizzaView)
+                                                                self.view.insertSubview(self.activePizzaView, at: 1)
                                                                 self.slicesShown += 1
                                                                 counter += 1
                                                                 animationsLeft -= 1
@@ -216,7 +249,7 @@ class ViewController: UIViewController {
                                                                         self.activePizzaView.removeFromSuperview()
                                                                         let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: originalSlices + counter)
                                                                         self.activePizzaView = newPizzaView
-                                                                        self.view.addSubview(self.activePizzaView)
+                                                                        self.view.insertSubview(self.activePizzaView, at: 1)
                                                                         self.slicesShown += 1
                                                                         counter += 1
                                                                         animationsLeft -= 1
@@ -252,17 +285,27 @@ class ViewController: UIViewController {
     }
     
     var xFloat4CompletedPies:CGFloat = -200
+    var yFloat4CompletedPies:CGFloat = 0
     
     func animateCompletedPie() {
 
-        let amountToMove = (view.bounds.maxY - activePizzaView.center.y) / 2 * 1.25
+        var amountToMove = CGFloat()
+        
+        if xFloat4CompletedPies == 150 {
+            yFloat4CompletedPies += 100
+            amountToMove = (view.bounds.maxY - activePizzaView.center.y) / 2 * 1.25 + yFloat4CompletedPies
+            xFloat4CompletedPies = -200
+        } else {
+            amountToMove = (view.bounds.maxY - activePizzaView.center.y) / 2 * 1.25 + yFloat4CompletedPies
+        }
+        
         let transform = CGAffineTransform(scaleX: 0.25, y: 0.25)
         let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: 0)
         activePizzaView.removeFromSuperview()
-        view.addSubview(newPizzaView)
+        view.insertSubview(newPizzaView, at: 1)
         activePizzaView = newPizzaView
         let finishedPizzaView = PizzaView(frame: activePizzaView.frame, amount: 8)
-        view.addSubview(finishedPizzaView)
+        view.insertSubview(finishedPizzaView, at: 2)
         UIView.animate(withDuration: 1.0, animations: {
             finishedPizzaView.center.y += amountToMove
             finishedPizzaView.transform = transform
@@ -273,7 +316,7 @@ class ViewController: UIViewController {
             }
         }
         xFloat4CompletedPies += 50
-        
+
         
     }
     
@@ -328,8 +371,6 @@ class ViewController: UIViewController {
         
         for order in confirmedOrder {
             
-            print(order.name)
-            
             if !orderToShow.contains(where: { (orderX) -> Bool in
                 orderX.name == order.name
             }) {
@@ -381,7 +422,12 @@ class ViewController: UIViewController {
         updateSlices() //Sets slicesInThisPie and totalSlices
         divideOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
         updateOrder()
+        
+        
         updatePieView()
+        
+        
+        
 //        buildOrderList() //Do this all the way at the end. Keep the slices separate in order to allow a user to cancel his/her order and therefore be able to build the new list better (And add slices back if necessary)
         
     }
