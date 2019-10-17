@@ -50,6 +50,8 @@ class InfoView: UIView {
 
     func setFormatting() {
         
+        ordersFormatted = [OrderFormatted]()
+        
         var names = [String]()
         var slices = [String]()
         
@@ -119,6 +121,8 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
 
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         cell.textLabel?.text = "\(ordersFormatted[indexPath.section].name[indexPath.row]) - \(ordersFormatted[indexPath.section].amountOfSlices[indexPath.row])"
+        
+        print(indexPath.row)
         return cell
     }
     
@@ -140,6 +144,28 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if indexPath.section == 0 { // Unconfirmed Orders
+            print(ordersFormatted.map({$0.name}), ordersFormatted.map({$0.amountOfSlices}))
+            unconfirmedOrders.remove(at: indexPath.row)
+            print(ordersFormatted.map({$0.name}), ordersFormatted.map({$0.amountOfSlices}))
+        } else {
+            print(ordersFormatted.map({$0.name}), ordersFormatted.map({$0.amountOfSlices}))
+            confirmedOrders.remove(at: indexPath.row)
+            print(ordersFormatted.map({$0.name}), ordersFormatted.map({$0.amountOfSlices}))
+        }
+        setFormatting()
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+    }
+    
 }
 
 
