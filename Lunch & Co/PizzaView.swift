@@ -14,6 +14,7 @@ class PizzaView: UIView {
     //TODO: Need to make it that a user can delete their order
     //TODO: Need to set up userDefaults
     //TODO: Need to figure out how to not lose the corner radius throughout animations
+    //TODO: Need to refresh the pizzaView and timer by pulling down on views
     
     var leftCenter = CGPoint()
     var rightCenter = CGPoint()
@@ -43,18 +44,17 @@ class PizzaView: UIView {
     
     init(frame: CGRect, amount: Int) {
         super.init(frame: frame)
-        self.slicesToShow = amount
-        self.backgroundColor = UIColor.clear
-        self.layer.cornerRadius = frame.width / 2
-        self.clipsToBounds = true
+        slicesToShow = amount
+        backgroundColor = UIColor.clear
+        layer.cornerRadius = frame.width / 2
+        clipsToBounds = true
         gradientColors(color1: .yellow, color2: .red)
         let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
         addSubview(slicesView)
 //        createOverlay(frame: self.frame, xOffset: self.frame.width / 2, yOffset: self.frame.height / 2, radius: self.frame.width / 2)
 //        let overlay = createOverlay(frame: frame, xOffset: frame.width / 2, yOffset: frame.height / 2, radius: frame.width / 2)
 //        view.insert(overlay)
-        
-        
+
     }
     
     
@@ -63,7 +63,7 @@ class PizzaView: UIView {
         let gradient = CAGradientLayer()
         gradient.startPoint = .init(x: 0.0, y: 0.0)
         gradient.endPoint = .init(x: 0.0, y: 1.0)
-        gradient.locations = [-0.1, 0.5, 1.1]
+        gradient.locations = [-0.5, 0.5, 1.5]
         gradient.frame = bounds
         gradient.colors = [color1.cgColor, color2.cgColor, color1.cgColor]
         layer.insertSublayer(gradient, at: 1)
@@ -71,7 +71,7 @@ class PizzaView: UIView {
         let gradient2 = CAGradientLayer()
         gradient2.startPoint = .init(x: 0.0, y: 0.0)
         gradient2.endPoint = .init(x: 1.0, y: 0.0)
-        gradient2.locations = [-0.1, 0.5, 1.1]
+        gradient2.locations = [-0.5, 0.5, 1.5]
         gradient2.frame = bounds
         gradient2.colors = [color1.cgColor, UIColor.clear.cgColor, color1.cgColor]
         layer.insertSublayer(gradient2, at: 1)

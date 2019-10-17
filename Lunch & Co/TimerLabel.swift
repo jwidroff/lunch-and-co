@@ -10,12 +10,36 @@ import UIKit
 
 class TimerLabel: UILabel {
 
+    var day = Int()
+    var hour = Int()
+    var tomorrowsMonth = Int()
+    var tomorrowsDay = Int()
+    var tomorrowsYear = Int()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        text = "00:00"
+//        text = "00:00"
         textColor = .white
         textAlignment = .center
         font = UIFont.systemFont(ofSize: 50.0)
+        
+        
+        let now = Date(timeIntervalSinceNow: 0.0)
+        day = Calendar.current.component(.weekday, from: now)
+        hour = Calendar.current.component(.hour, from: now)
+        
+        let calendar = Calendar.current
+        let today = Date()
+        let midnight = calendar.startOfDay(for: today)
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: midnight)!
+        let tomorrowsComponents = calendar.dateComponents([.hour, .minute, .month, .year, .day, .second], from: tomorrow as Date)
+        tomorrowsDay = tomorrowsComponents.day!
+        tomorrowsMonth = tomorrowsComponents.month!
+        tomorrowsYear = tomorrowsComponents.year!
+        check4Tomorrow()
+        
+        
+        
         
     }
     
@@ -25,9 +49,6 @@ class TimerLabel: UILabel {
     }
     
     
-    
-    
-    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -35,5 +56,137 @@ class TimerLabel: UILabel {
         // Drawing code
     }
     */
+    
+    func check4Tomorrow() {
+                
+        switch day {
+            
+        case 1: //sunday
+            text = "Check back on Monday \(tomorrowsMonth)-\(tomorrowsDay)-\(tomorrowsYear)"
+            
+        case 2: //monday
+            
+            if hour > 0 && hour < 12 {
+                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
+            } else {
+                text = "Check back on Tuesday \(tomorrowsMonth)-\(tomorrowsDay)-\(tomorrowsYear)"
+            }
+            
+        case 3: //tuesday
+            if hour > 0 && hour < 12 {
+                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
+            } else {
+                text = "Check back on Wednesday \(tomorrowsMonth)-\(tomorrowsDay)-\(tomorrowsYear)"
+            }
+            
+        case 4: //wednesday
+            
+            if hour > 0 && hour < 12 {
+                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
+            } else {
+                text = "Check back on Thursday \(tomorrowsMonth)-\(tomorrowsDay)-\(tomorrowsYear)"
+            }
+            
+        case 5: //thursday
+            if hour > 0 && hour < 12 {
+                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
+            } else {
+                text = "Check back on Friday \(tomorrowsMonth)-\(tomorrowsDay)-\(tomorrowsYear)"
+            }
+            
+        case 6: //friday
+            if hour > 0 && hour < 12 {
+                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
+            } else {
+                text = "Check back on Monday \(tomorrowsMonth)-\(tomorrowsDay + 2)-\(tomorrowsYear)"
+            }
+            
+        case 7: //saturday
+            text = "Check back on Monday \(tomorrowsMonth)-\(tomorrowsDay + 1)-\(tomorrowsYear)"
+            
+            
+        default:
+            break
+            
+        }
+    }
 
+    @objc func timerCalc() {
+        
+        let date = NSDate()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute, .month, .year, .day, .second], from: date as Date)
+        let currentDate = calendar.date(from: components)
+        let userCalendar = Calendar.current
+        
+        
+        // here we set the due date. When the timer is supposed to finish
+        let competitionDate = NSDateComponents()
+        competitionDate.year = components.year!
+        competitionDate.month = components.month!
+        competitionDate.day = components.day!
+        competitionDate.hour = 12
+        competitionDate.minute = 00
+        competitionDate.second = 00
+        
+        let competitionDay = userCalendar.date(from: competitionDate as DateComponents)!
+        
+        //here we change the seconds to hours,minutes and days
+        let CompetitionDayDifference = calendar.dateComponents([.day, .hour, .minute, .second], from: currentDate!, to: competitionDay)
+        
+        guard CompetitionDayDifference.hour! > 0 || CompetitionDayDifference.minute! > 0 || CompetitionDayDifference.second! > 0 else {
+            
+            check4Tomorrow()
+            return
+        }
+        
+        
+        //finally, here we set the variable to our remaining time
+        var daysLeft:String {
+            get {
+                if "\(CompetitionDayDifference.day!)".count > 1 {
+                    return "\(CompetitionDayDifference.day!)"
+                } else {
+                    return "0\(CompetitionDayDifference.day!)"
+                }
+            }
+        }
+        var hoursLeft:String {
+            get {
+                if "\(CompetitionDayDifference.hour!)".count > 1 {
+                    return "\(CompetitionDayDifference.hour!)"
+                } else {
+                    return "0\(CompetitionDayDifference.hour!)"
+                }
+            }
+        }
+        var minutesLeft:String {
+            get {
+                if "\(CompetitionDayDifference.minute!)".count > 1 {
+                    return "\(CompetitionDayDifference.minute!)"
+                } else {
+                    return "0\(CompetitionDayDifference.minute!)"
+                }
+            }
+        }
+        var secondsLeft:String {
+            get {
+                if "\(CompetitionDayDifference.second!)".count > 1 {
+                    return "\(CompetitionDayDifference.second!)"
+                } else {
+                    return "0\(CompetitionDayDifference.second!)"
+                }
+            }
+        }
+        
+        
+        text = "\(hoursLeft):\(minutesLeft):\(secondsLeft)"
+        
+    }
+
+    
+    
+    
+    
+    
 }

@@ -145,9 +145,9 @@ class ViewController: UIViewController {
         var animationsLeft = selectedSlices
         var counter = 1
         
-        print("slicesInThisPie \(slicesInThisPie)")
-        print("totalSlices \(totalSlices)")
-        print("originalSlices \(originalSlices)")
+//        print("slicesInThisPie \(slicesInThisPie)")
+//        print("totalSlices \(totalSlices)")
+//        print("originalSlices \(originalSlices)")
         
         
         
@@ -328,7 +328,7 @@ class ViewController: UIViewController {
         
         let transform = CGAffineTransform.identity.scaledBy(x: 0.25, y: 0.25)
 //        let identity = CGAffineTransform.identity
-        let rotate = CGAffineTransform.identity.rotated(by: 90.0)
+//        let rotate = CGAffineTransform.identity.rotated(by: 90.0)
         let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: 0)
         activePizzaView.removeFromSuperview()
         view.insertSubview(newPizzaView, at: 1)
@@ -364,12 +364,12 @@ class ViewController: UIViewController {
     
     func updateOrder() {
         
-        print(orders.map({$0.name!}),orders.map({$0.slices!}))
+//        print(orders.map({$0.name!}),orders.map({$0.slices!}))
         
         for order in orders {
             
             unconfirmedOrder.append(order)
-            print(unconfirmedOrder.count)
+//            print(unconfirmedOrder.count)
 
             if unconfirmedOrder.count == 8 {
                 confirmedOrder += unconfirmedOrder
@@ -398,7 +398,7 @@ class ViewController: UIViewController {
         
         var orderToShow = [Order]()
 
-        print("confirmedOrder \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
+//        print("confirmedOrder \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
         
         for order in confirmedOrder {
             
@@ -465,9 +465,9 @@ class ViewController: UIViewController {
     
     @IBAction func infoButton(_ sender: UIButton) {
         
-        print("confirmed order \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
+//        print("confirmed order \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
 
-        print("unconfirmed order \(unconfirmedOrder.map({$0.name})), \(unconfirmedOrder.map({$0.slices}))")
+//        print("unconfirmed order \(unconfirmedOrder.map({$0.name})), \(unconfirmedOrder.map({$0.slices}))")
         
         
         let x = view.bounds.midX
