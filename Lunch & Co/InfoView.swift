@@ -8,6 +8,17 @@
 
 import UIKit
 
+protocol CellDelegate {
+    
+//    func updateSlices() //update slicesInThisPie and totalSlices
+    func updateOrder(orderToRemove: Order, confirmed: Bool) //should add slices to confirmedOrder from unconfirmedOrder
+//    func updatePieView() // Need to display the right amount of pies and slices shown
+    
+    
+}
+
+
+
 class InfoView: UIView {
 
     //Add navigationController to be able to go back and forth between different orders on different days
@@ -18,6 +29,7 @@ class InfoView: UIView {
     
     var confirmedOrders = [Order]()
     var unconfirmedOrders = [Order]()
+    var delegate: CellDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -109,6 +121,7 @@ class InfoView: UIView {
     @objc func dismissView() {
         
         removeFromSuperview()
+        //TODO: Check to see if any
     }
     
     
@@ -151,19 +164,29 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
+//        var orderToBeRemoved = Order()
+        
         if indexPath.section == 0 { // Unconfirmed Orders
-            print(ordersFormatted.map({$0.name}), ordersFormatted.map({$0.amountOfSlices}))
             unconfirmedOrders.remove(at: indexPath.row)
-            print(ordersFormatted.map({$0.name}), ordersFormatted.map({$0.amountOfSlices}))
+            setFormatting()
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
         } else {
-            print(ordersFormatted.map({$0.name}), ordersFormatted.map({$0.amountOfSlices}))
             confirmedOrders.remove(at: indexPath.row)
-            print(ordersFormatted.map({$0.name}), ordersFormatted.map({$0.amountOfSlices}))
+            confirmedOrders.append(unconfirmedOrders[0])
+            unconfirmedOrders.remove(at: 0)
+            setFormatting()
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            if unconfirmedOrders.count != 0 { //MARK: Fix this
+                let indexPathXX = IndexPath(row: 0, section: 0)
+                tableView.deleteRows(at: [indexPathXX], with: .automatic)
+                let indexPathX = IndexPath(row: 7, section: 1)
+                tableView.insertRows(at: [indexPathX], with: .automatic)
+            }
+            tableView.endUpdates()
         }
-        setFormatting()
-        tableView.beginUpdates()
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-        tableView.endUpdates()
     }
     
 }

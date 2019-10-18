@@ -37,8 +37,6 @@ class ViewController: UIViewController {
         setUpTextFields()
         createOverlay()
         setTimer()
-        
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -453,23 +451,13 @@ class ViewController: UIViewController {
         updateSlices() //Sets slicesInThisPie and totalSlices
         divideOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
         updateOrder()
-        
-        
         updatePieView()
-        
-        
         
 //        buildOrderList() //Do this all the way at the end. Keep the slices separate in order to allow a user to cancel his/her order and therefore be able to build the new list better (And add slices back if necessary)
         
     }
     
-    @IBAction func infoButton(_ sender: UIButton) {
-        
-//        print("confirmed order \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
-
-//        print("unconfirmed order \(unconfirmedOrder.map({$0.name})), \(unconfirmedOrder.map({$0.slices}))")
-        
-        
+    func updateInfoView() {
         let x = view.bounds.midX
         let y = view.bounds.midY
         let width = view.frame.width / 10 * 8
@@ -479,6 +467,18 @@ class ViewController: UIViewController {
         infoView.center = view.center
         infoView.backgroundColor = .green
         view.addSubview(infoView)
+    }
+    
+    @IBAction func infoButton(_ sender: UIButton) {
+        
+//        print("confirmed order \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
+
+        updateInfoView()
+
+        
+//        print("unconfirmed order \(unconfirmedOrder.map({$0.name})), \(unconfirmedOrder.map({$0.slices}))")
+        
+        
     }
 }
 
@@ -563,6 +563,33 @@ extension ViewController: UITextFieldDelegate {
         
         dismissKeyBoard()
     }
+    
+    func remove1Slice() {
+        
+        
+        
+        
+    }
+    
 }
 
-
+extension ViewController: CellDelegate {
+    
+    
+    func updateOrder(orderToRemove: Order, confirmed: Bool) {
+        
+        
+        remove1Slice()
+        
+        
+        //update the slices
+        
+        //figure out what s/b confirmed and what shouldnt
+        
+        
+    }
+    
+    
+    
+    
+}

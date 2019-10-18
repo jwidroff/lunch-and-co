@@ -16,6 +16,7 @@
 		BADEE4C62347850900166BF0 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADEE4C52347850900166BF0 /* Order.swift */; };
 		BADEE4CA234A22CF00166BF0 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADEE4C9234A22CF00166BF0 /* InfoView.swift */; };
 		BADEE4EC235129C900166BF0 /* TimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADEE4EB235129C900166BF0 /* TimerLabel.swift */; };
+		BADEE50C235A2B8500166BF0 /* PizzaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADEE50B235A2B8500166BF0 /* PizzaModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		BADEE4C52347850900166BF0 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		BADEE4C9234A22CF00166BF0 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		BADEE4EB235129C900166BF0 /* TimerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabel.swift; sourceTree = "<group>"; };
+		BADEE50B235A2B8500166BF0 /* PizzaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PizzaModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				BADEE4C52347850900166BF0 /* Order.swift */,
 				BA5A32A42344D9C800A31BA5 /* Main.storyboard */,
 				BA5A32B22344DB7300A31BA5 /* PizzaView.swift */,
+				BADEE50B235A2B8500166BF0 /* PizzaModel.swift */,
 				BA5A32A72344D9CC00A31BA5 /* Assets.xcassets */,
 				BA5A32A92344D9CC00A31BA5 /* LaunchScreen.storyboard */,
 				BA5A32AC2344D9CC00A31BA5 /* Info.plist */,
@@ -152,6 +155,7 @@
 				BADEE4C62347850900166BF0 /* Order.swift in Sources */,
 				BADEE4CA234A22CF00166BF0 /* InfoView.swift in Sources */,
 				BADEE4EC235129C900166BF0 /* TimerLabel.swift in Sources */,
+				BADEE50C235A2B8500166BF0 /* PizzaModel.swift in Sources */,
 				BA5A32A12344D9C800A31BA5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
