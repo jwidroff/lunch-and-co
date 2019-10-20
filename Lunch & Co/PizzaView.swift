@@ -16,6 +16,8 @@ class PizzaView: UIView {
     //TODO: Need to figure out how to not lose the corner radius throughout animations
     //TODO: Need to refresh the pizzaView and timer by pulling down on views
     
+    //TODO: Need to fix the delete function with theres only one slice left
+    
     var leftCenter = CGPoint()
     var rightCenter = CGPoint()
     var topCenter = CGPoint()
@@ -28,7 +30,7 @@ class PizzaView: UIView {
     
     var pizzaCenter = CGPoint()
     
-    var slicesToShow = Int()
+    var slicesToShow = Int() // S/b slices in this pie
     var label:UILabel?
     var overlayView = UIView()
 

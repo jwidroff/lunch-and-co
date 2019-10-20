@@ -17,16 +17,17 @@ class ViewController: UIViewController {
     
     var slicesShown = 0
     var selectedSlices = 1
-    var slicesInThisPie = 0
-    var totalSlices = 0
+//    var slicesInThisPie = 0 //
+//    var totalSlices = 0 //
     var pickerView = UIPickerView()
     var overlayView = UIView()
-    var users:[String] = ["JSW", "ME", "AK", "EL", "AS", "YD"]
+//    var users:[String] = ["JSW", "ME", "AK", "EL", "AS", "YD"] //
     var activeTextField = UITextField()
     var activePizzaView = PizzaView()
-    var orders = [Order]()
-    var confirmedOrder = [Order]()
-    var unconfirmedOrder = [Order]()
+//    var orders = [Order]() //
+//    var confirmedOrder = [Order]() //
+//    var unconfirmedOrder = [Order]() //
+    var pizzaModel = PizzaModel()
     
     
     override func viewDidLoad() {
@@ -42,6 +43,12 @@ class ViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         dismissKeyBoard()
+    }
+    
+    func setupModel() {
+        
+        
+        
     }
     
     func setTimer() {
@@ -64,7 +71,7 @@ class ViewController: UIViewController {
         nameTxtFld.inputView = pickerView
         slicesTextField.inputView = pickerView
         
-        users.sort { $0.lowercased() < $1.lowercased() }
+        pizzaModel.users.sort { $0.lowercased() < $1.lowercased() }
     }
     
     @objc func dismissKeyBoard() {
@@ -98,11 +105,11 @@ class ViewController: UIViewController {
     
     func updateSlices() {
         
-        slicesInThisPie += selectedSlices
-        if slicesInThisPie > 8 {
-            slicesInThisPie = slicesInThisPie % 8
+        pizzaModel.slicesInThisPie += selectedSlices
+        if pizzaModel.slicesInThisPie > 8 {
+            pizzaModel.slicesInThisPie = pizzaModel.slicesInThisPie % 8
         }
-        totalSlices += selectedSlices
+//        totalSlices += selectedSlices
     }
     
     func createOverlay() {
@@ -136,7 +143,7 @@ class ViewController: UIViewController {
     
     func updatePieView() {
 
-        var originalSlices = (slicesInThisPie) - selectedSlices
+        var originalSlices = (pizzaModel.slicesInThisPie) - selectedSlices
         if originalSlices < 0 {
             originalSlices = 8 + originalSlices
         }
@@ -351,10 +358,10 @@ class ViewController: UIViewController {
     
     func updateNewPie() {
         
-        let remainder = (slicesInThisPie % 8)
-        slicesInThisPie = remainder
+        let remainder = (pizzaModel.slicesInThisPie % 8)
+        pizzaModel.slicesInThisPie = remainder
         activePizzaView.removeFromSuperview()
-        let oldPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesInThisPie)
+        let oldPizzaView = PizzaView(frame: activePizzaView.frame, amount: pizzaModel.slicesInThisPie)
         oldPizzaView.gradientColors(color1: UIColor.red, color2: UIColor.yellow)
         view.insertSubview(oldPizzaView, at: 1)
         activePizzaView = oldPizzaView
@@ -364,28 +371,28 @@ class ViewController: UIViewController {
         
 //        print(orders.map({$0.name!}),orders.map({$0.slices!}))
         
-        for order in orders {
+        for order in pizzaModel.orders {
             
-            unconfirmedOrder.append(order)
+            pizzaModel.unconfirmedOrder.append(order)
 //            print(unconfirmedOrder.count)
 
-            if unconfirmedOrder.count == 8 {
-                confirmedOrder += unconfirmedOrder
-                unconfirmedOrder = [Order]()
+            if pizzaModel.unconfirmedOrder.count == 8 {
+                pizzaModel.confirmedOrder += pizzaModel.unconfirmedOrder
+                pizzaModel.unconfirmedOrder = [Order]()
             }
-            for order in confirmedOrder {
+            for order in pizzaModel.confirmedOrder {
                 order.confirmed = true
             }
         }
         
-        orders = [Order]()
+        pizzaModel.orders = [Order]()
     }
     
     func divideOrder() {
 
         for _ in 1...selectedSlices {
             let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
-            orders.append(order)
+            pizzaModel.orders.append(order)
         }
     }
     
@@ -398,7 +405,7 @@ class ViewController: UIViewController {
 
 //        print("confirmedOrder \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
         
-        for order in confirmedOrder {
+        for order in pizzaModel.confirmedOrder {
             
             if !orderToShow.contains(where: { (orderX) -> Bool in
                 orderX.name == order.name
@@ -418,10 +425,10 @@ class ViewController: UIViewController {
             }
         }
         
-        confirmedOrder = orderToShow
+        pizzaModel.confirmedOrder = orderToShow
         orderToShow = [Order]() //This may not be necessary
 
-        for order in unconfirmedOrder {
+        for order in pizzaModel.unconfirmedOrder {
             
             if !orderToShow.contains(where: { (orderX) -> Bool in
                 orderX.name == order.name
@@ -441,7 +448,7 @@ class ViewController: UIViewController {
             }
         }
         
-        unconfirmedOrder = orderToShow
+        pizzaModel.unconfirmedOrder = orderToShow
         orderToShow = [Order]()
     }
     
@@ -463,7 +470,7 @@ class ViewController: UIViewController {
         let width = view.frame.width / 10 * 8
         let height = view.frame.height / 10 * 8
         let infoViewFrame = CGRect(x: x, y: y, width: width, height: height)
-        let infoView = InfoView(frame: infoViewFrame, confirmedOrders: confirmedOrder, unconfirmedOrders: unconfirmedOrder)
+        let infoView = InfoView(frame: infoViewFrame, confirmedOrders: pizzaModel.confirmedOrder, unconfirmedOrders: pizzaModel.unconfirmedOrder)
         infoView.center = view.center
         infoView.backgroundColor = .green
         view.addSubview(infoView)
@@ -492,7 +499,7 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         var amount = Int()
         
         if activeTextField == self.nameTxtFld {
-            amount = users.count
+            amount = pizzaModel.users.count
         }
         
         if activeTextField == self.slicesTextField {
@@ -507,7 +514,7 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         var string = String()
         
         if activeTextField == self.nameTxtFld {
-            string = "\(users[row])"
+            string = "\(pizzaModel.users[row])"
         }
         
         if activeTextField == self.slicesTextField {
@@ -520,7 +527,7 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 
         if activeTextField == self.nameTxtFld {
-            nameTxtFld.text = "\(users[row])"
+            nameTxtFld.text = "\(pizzaModel.users[row])"
         }
         
         if activeTextField == self.slicesTextField {
