@@ -8,28 +8,30 @@
 
 import UIKit
 
-protocol CellDelegate {
-    
+//protocol CellDelegate {
+
 //    func updateSlices() //update slicesInThisPie and totalSlices
-    func updateOrder(orderToRemove: Order, confirmed: Bool) //should add slices to confirmedOrder from unconfirmedOrder
+//    func updateOrder(orderToRemove: Order, confirmed: Bool) //should add slices to confirmedOrder from unconfirmedOrder
 //    func updatePieView() // Need to display the right amount of pies and slices shown
     
     
-}
+//}
 
 
 
 class InfoView: UIView {
 
-    //Add navigationController to be able to go back and forth between different orders on different days
+    //Add horizontal picker to be able to go back and forth between different orders on different days
 
     var ordersFormatted = [OrderFormatted]()
     let tableView = UITableView()
     let toolbarHeight: CGFloat = 40
     
-    var confirmedOrders = [Order]()
-    var unconfirmedOrders = [Order]()
-    var delegate: CellDelegate?
+//    var confirmedOrders = [Order]()
+//    var unconfirmedOrders = [Order]()
+//    var delegate: CellDelegate?
+    
+    var pizzaModel = PizzaModel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,12 +43,12 @@ class InfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init (frame: CGRect, confirmedOrders: [Order], unconfirmedOrders: [Order]) {
+    init (frame: CGRect, pizzaModel: PizzaModel) {
         super.init(frame: frame)
         
-        
-        self.confirmedOrders = confirmedOrders
-        self.unconfirmedOrders = unconfirmedOrders
+        self.pizzaModel = pizzaModel
+//        self.confirmedOrders = pizzaModel.confirmedOrder
+//        self.unconfirmedOrders = pizzaModel.unconfirmedOrder
         setFormatting()
         setupView()
 
@@ -67,7 +69,7 @@ class InfoView: UIView {
         var names = [String]()
         var slices = [String]()
         
-        for order in confirmedOrders {
+        for order in pizzaModel.confirmedOrder {
             
             names.append(order.name!)
             slices.append("\(order.slices!)")
@@ -78,7 +80,7 @@ class InfoView: UIView {
         names = [String]()
         slices = [String]()
         
-        for order in unconfirmedOrders {
+        for order in pizzaModel.unconfirmedOrder {
             
             names.append(order.name!)
             slices.append("\(order.slices!)")
@@ -167,19 +169,19 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
 //        var orderToBeRemoved = Order()
         
         if indexPath.section == 0 { // Unconfirmed Orders
-            unconfirmedOrders.remove(at: indexPath.row)
+            pizzaModel.unconfirmedOrder.remove(at: indexPath.row)
             setFormatting()
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
         } else {
-            confirmedOrders.remove(at: indexPath.row)
-            confirmedOrders.append(unconfirmedOrders[0])
-            unconfirmedOrders.remove(at: 0)
+            pizzaModel.confirmedOrder.remove(at: indexPath.row)
+            pizzaModel.confirmedOrder.append(pizzaModel.unconfirmedOrder[0])
+            pizzaModel.unconfirmedOrder.remove(at: 0)
             setFormatting()
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            if unconfirmedOrders.count != 0 { //MARK: Fix this
+            if pizzaModel.unconfirmedOrder.count != 0 { //MARK: Fix this
                 let indexPathXX = IndexPath(row: 0, section: 0)
                 tableView.deleteRows(at: [indexPathXX], with: .automatic)
                 let indexPathX = IndexPath(row: 7, section: 1)

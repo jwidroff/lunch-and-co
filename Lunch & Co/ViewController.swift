@@ -470,7 +470,7 @@ class ViewController: UIViewController {
         let width = view.frame.width / 10 * 8
         let height = view.frame.height / 10 * 8
         let infoViewFrame = CGRect(x: x, y: y, width: width, height: height)
-        let infoView = InfoView(frame: infoViewFrame, confirmedOrders: pizzaModel.confirmedOrder, unconfirmedOrders: pizzaModel.unconfirmedOrder)
+        let infoView = InfoView(frame: infoViewFrame, pizzaModel: pizzaModel)
         infoView.center = view.center
         infoView.backgroundColor = .green
         view.addSubview(infoView)
