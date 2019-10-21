@@ -141,7 +141,7 @@ class ViewController: UIViewController {
         view.insertSubview(overlayView, at: 2)
     }
     
-    func updatePieView() {
+    func updatePieView() { //Need delegate func here
 
         var originalSlices = (pizzaModel.slicesInThisPie) - selectedSlices
         if originalSlices < 0 {
