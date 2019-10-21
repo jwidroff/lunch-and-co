@@ -580,23 +580,23 @@ extension ViewController: UITextFieldDelegate {
     
 }
 
-extension ViewController: CellDelegate {
-    
-    
-    func updateOrder(orderToRemove: Order, confirmed: Bool) {
-        
-        
-        remove1Slice()
-        
-        
-        //update the slices
-        
-        //figure out what s/b confirmed and what shouldnt
-        
-        
-    }
-    
-    
-    
-    
-}
+//extension ViewController: CellDelegate {
+//    
+//    
+//    func updateOrder(orderToRemove: Order, confirmed: Bool) {
+//        
+//        
+//        remove1Slice()
+//        
+//        
+//        //update the slices
+//        
+//        //figure out what s/b confirmed and what shouldnt
+//        
+//        
+//    }
+//    
+//    
+//    
+//    
+//}
