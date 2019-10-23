@@ -174,16 +174,18 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
-        } else {
             
-            print(pizzaModel.unconfirmedOrder.count)
+        } else { //Confirmed Orders
             
+//            print(pizzaModel.unconfirmedOrder.count)
+            
+            // If unconfirmedOrders arent zero, lets take one from unconfirmed orders
             if pizzaModel.unconfirmedOrder.count != 0 {
                 tableView.beginUpdates()
                 tableView.deleteRows(at: [indexPath], with: .automatic)
                 let indexPathXX = IndexPath(row: 0, section: 0)
                 tableView.deleteRows(at: [indexPathXX], with: .automatic)
-                let indexPathX = IndexPath(row: 7, section: 1)
+                let indexPathX = IndexPath(row: pizzaModel.confirmedOrder.count - 1, section: 1)
                 tableView.insertRows(at: [indexPathX], with: .automatic)
                 
                 pizzaModel.confirmedOrder.remove(at: indexPath.row)
@@ -191,16 +193,29 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
                 pizzaModel.unconfirmedOrder.remove(at: 0)
                 setFormatting()
                 tableView.endUpdates()
-            } else {
+            } else { //Unconfirmed orders are zero and we need to take one out from the full pie
 
+                //MARK: FIX THIS - SEEMS LIKE THE WRONG ORDERS ARE BEING DELETED/MOVED AROUND
+                
+                
                 tableView.beginUpdates()
-                for counter in 0..<pizzaModel.confirmedOrder.count {
+                
+                print("pizzaModel.confirmedOrder \(pizzaModel.confirmedOrder)")
+                print("pizzaModel.unconfirmedOrder \(pizzaModel.unconfirmedOrder)")
+                
+                var unconfirmedCounter = 0
+                
+                for counter in ((pizzaModel.confirmedOrder.count - 7) - 1)..<pizzaModel.confirmedOrder.count {
+                    
+                    print("counter \(counter)")
+                    
                     let rowIndexPathAt = IndexPath(row: counter, section: 1)
-                    let rowIndexPathTo = IndexPath(row: counter, section: 0)
+                    let rowIndexPathTo = IndexPath(row: unconfirmedCounter, section: 0)
                     tableView.moveRow(at: rowIndexPathAt, to: rowIndexPathTo)
+                    pizzaModel.unconfirmedOrder.append(pizzaModel.confirmedOrder.last!)
+                    pizzaModel.confirmedOrder.removeLast()
+                    unconfirmedCounter += 1
                 }
-                pizzaModel.unconfirmedOrder = pizzaModel.confirmedOrder
-                pizzaModel.confirmedOrder.removeAll()
                 setFormatting()
                 tableView.endUpdates()
                 
