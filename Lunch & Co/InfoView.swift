@@ -186,7 +186,7 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
                 let indexPathXX = IndexPath(row: 0, section: 0)
                 tableView.deleteRows(at: [indexPathXX], with: .automatic)
                 let indexPathX = IndexPath(row: pizzaModel.confirmedOrder.count - 1, section: 1)
-                tableView.insertRows(at: [indexPathX], with: .automatic)
+                tableView.insertRows(at: [indexPathX], with: .fade)
                 
                 pizzaModel.confirmedOrder.remove(at: indexPath.row)
                 pizzaModel.confirmedOrder.append(pizzaModel.unconfirmedOrder[0])
@@ -197,34 +197,42 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
 
                 //MARK: FIX THIS - SEEMS LIKE THE WRONG ORDERS ARE BEING DELETED/MOVED AROUND
                 
-                
                 tableView.beginUpdates()
+//                let indexPathX = IndexPath(row: indexPath.row, section: 0)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                pizzaModel.confirmedOrder.remove(at: indexPath.row)
+                setFormatting()
+                tableView.endUpdates()
+                
+                
+                print("rows in unconfirmed\(tableView.numberOfRows(inSection: 0))")
+                print("rows in confirmed\(tableView.numberOfRows(inSection: 1))")
+
                 
                 print("pizzaModel.confirmedOrder \(pizzaModel.confirmedOrder)")
                 print("pizzaModel.unconfirmedOrder \(pizzaModel.unconfirmedOrder)")
                 
                 var unconfirmedCounter = 0
                 
-                for counter in ((pizzaModel.confirmedOrder.count - 7) - 1)..<pizzaModel.confirmedOrder.count {
+                for index in 0..<7 {
                     
-                    print("counter \(counter)")
+                    tableView.beginUpdates()
+
                     
-                    let rowIndexPathAt = IndexPath(row: counter, section: 1)
-                    let rowIndexPathTo = IndexPath(row: unconfirmedCounter, section: 0)
-                    tableView.moveRow(at: rowIndexPathAt, to: rowIndexPathTo)
+                    print("index \(index)")
+                    print("pizzaModel.confirmedOrder.count \(pizzaModel.confirmedOrder.count)")
+                    print("pizzaModel.unconfirmedOrder.count \(pizzaModel.unconfirmedOrder.count)")
+
                     pizzaModel.unconfirmedOrder.append(pizzaModel.confirmedOrder.last!)
                     pizzaModel.confirmedOrder.removeLast()
+                    let rowIndexPathAt = IndexPath(row: (pizzaModel.confirmedOrder.count), section: 1)
+                    let rowIndexPathTo = IndexPath(row: unconfirmedCounter, section: 0)
+                    tableView.moveRow(at: rowIndexPathAt, to: rowIndexPathTo)
+                    
                     unconfirmedCounter += 1
+                    setFormatting()
+                    tableView.endUpdates()
                 }
-                setFormatting()
-                tableView.endUpdates()
-                
-                tableView.beginUpdates()
-                let indexPathX = IndexPath(row: indexPath.row, section: 0)
-                tableView.deleteRows(at: [indexPathX], with: .automatic)
-                pizzaModel.unconfirmedOrder.remove(at: indexPathX.row)
-                setFormatting()
-                tableView.endUpdates()
             }
         }
     }
