@@ -8,16 +8,13 @@
 
 import UIKit
 
-//protocol CellDelegate {
+protocol CellDelegate {
 
 //    func updateSlices() //update slicesInThisPie and totalSlices
 //    func updateOrder(orderToRemove: Order, confirmed: Bool) //should add slices to confirmedOrder from unconfirmedOrder
-//    func updatePieView() // Need to display the right amount of pies and slices shown
+    func updatePizzaView() // Need to display the right amount of pies and slices shown
     
-    
-//}
-
-
+}
 
 class InfoView: UIView {
 
@@ -27,9 +24,8 @@ class InfoView: UIView {
     let tableView = UITableView()
     let toolbarHeight: CGFloat = 40
     
-//    var confirmedOrders = [Order]()
-//    var unconfirmedOrders = [Order]()
-//    var delegate: CellDelegate?
+
+    var delegate: CellDelegate?
     
     var pizzaModel = PizzaModel()
 
@@ -44,14 +40,11 @@ class InfoView: UIView {
     }
     
     init (frame: CGRect, pizzaModel: PizzaModel) {
-        super.init(frame: frame)
         
+        super.init(frame: frame)
         self.pizzaModel = pizzaModel
-//        self.confirmedOrders = pizzaModel.confirmedOrder
-//        self.unconfirmedOrders = pizzaModel.unconfirmedOrder
         setFormatting()
         setupView()
-
     }
     /*
     // Only override draw() if you perform custom drawing.
@@ -81,13 +74,11 @@ class InfoView: UIView {
         slices = [String]()
         
         for order in pizzaModel.unconfirmedOrder {
-            
             names.append(order.name!)
             slices.append("\(order.slices!)")
         }
         
         let unconfirmedOrdersFormatted = OrderFormatted(confirmed: "Unconfirmed", name: names, amountOfSlices: slices)
-        
         ordersFormatted.append(unconfirmedOrdersFormatted)
         ordersFormatted.append(confirmedOrdersFormatted)
         
@@ -111,13 +102,72 @@ class InfoView: UIView {
     func addToolBar() {
         
         let toolBar = UIToolbar()
-//        toolBar.sizeToFit()
         toolBar.frame.size = CGSize(width: frame.width, height: 40.0)
         toolBar.clipsToBounds = true
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(InfoView.dismissView))
         toolBar.setItems([doneButton], animated: true)
         toolBar.isUserInteractionEnabled = true
         self.addSubview(toolBar)
+    }
+    
+    func removeOneSliceFromUnconfirmed(indexPath: IndexPath) {
+        
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        let indexPathXX = IndexPath(row: 0, section: 0)
+        tableView.deleteRows(at: [indexPathXX], with: .automatic)
+        let indexPathX = IndexPath(row: pizzaModel.confirmedOrder.count - 1, section: 1)
+        tableView.insertRows(at: [indexPathX], with: .fade)
+        pizzaModel.confirmedOrder.remove(at: indexPath.row)
+        pizzaModel.confirmedOrder.append(pizzaModel.unconfirmedOrder[0])
+        pizzaModel.unconfirmedOrder.remove(at: 0)
+        setFormatting()
+        tableView.endUpdates()
+    }
+    
+    func removeOneUnconfirmedSlice(indexPath: IndexPath) {
+        
+        pizzaModel.unconfirmedOrder.remove(at: indexPath.row)
+        setFormatting()
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+    }
+    
+    func removeConfirmedStatus(indexPath: IndexPath) {
+        
+        //Take one slice first from the confirmed orders
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        pizzaModel.confirmedOrder.remove(at: indexPath.row)
+        setFormatting()
+        tableView.endUpdates()
+        
+//        print("rows in unconfirmed\(tableView.numberOfRows(inSection: 0))")
+//        print("rows in confirmed\(tableView.numberOfRows(inSection: 1))")
+//        print("pizzaModel.confirmedOrder \(pizzaModel.confirmedOrder)")
+//        print("pizzaModel.unconfirmedOrder \(pizzaModel.unconfirmedOrder)")
+        
+        //Move the 7 remaining slices to the unconfirmed status
+        var unconfirmedCounter = 0
+        for index in 0..<7 {
+
+            print("index \(index)")
+            print("pizzaModel.confirmedOrder.count \(pizzaModel.confirmedOrder.count)")
+            print("pizzaModel.unconfirmedOrder.count \(pizzaModel.unconfirmedOrder.count)")
+            
+            tableView.beginUpdates()
+            pizzaModel.unconfirmedOrder.append(pizzaModel.confirmedOrder.last!)
+            pizzaModel.confirmedOrder.removeLast()
+            
+            let rowIndexPathAt = IndexPath(row: (pizzaModel.confirmedOrder.count), section: 1)
+            let rowIndexPathTo = IndexPath(row: unconfirmedCounter, section: 0)
+            tableView.moveRow(at: rowIndexPathAt, to: rowIndexPathTo)
+            
+            unconfirmedCounter += 1
+            setFormatting()
+            tableView.endUpdates()
+        }
     }
     
     @objc func dismissView() {
@@ -137,14 +187,12 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         cell.textLabel?.text = "\(ordersFormatted[indexPath.section].name[indexPath.row]) - \(ordersFormatted[indexPath.section].amountOfSlices[indexPath.row])"
         
-//        print(indexPath.row)
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return ordersFormatted[section].name.count
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -166,73 +214,28 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-//        var orderToBeRemoved = Order()
+        delegate?.updatePizzaView()
         
-        if indexPath.section == 0 { // Unconfirmed Orders
-            pizzaModel.unconfirmedOrder.remove(at: indexPath.row)
-            setFormatting()
-            tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            tableView.endUpdates()
+        if indexPath.section == 0 { // Unconfirmed Orders chosen to be removed by user
+//            pizzaModel.unconfirmedOrder.remove(at: indexPath.row)
+//            setFormatting()
+//            tableView.beginUpdates()
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//            tableView.endUpdates()
             
-        } else { //Confirmed Orders
+            removeOneUnconfirmedSlice(indexPath: indexPath)
             
-//            print(pizzaModel.unconfirmedOrder.count)
+        } else { //Confirmed Order chosen to be removed by user
             
             // If unconfirmedOrders arent zero, lets take one from unconfirmed orders
             if pizzaModel.unconfirmedOrder.count != 0 {
-                tableView.beginUpdates()
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                let indexPathXX = IndexPath(row: 0, section: 0)
-                tableView.deleteRows(at: [indexPathXX], with: .automatic)
-                let indexPathX = IndexPath(row: pizzaModel.confirmedOrder.count - 1, section: 1)
-                tableView.insertRows(at: [indexPathX], with: .fade)
                 
-                pizzaModel.confirmedOrder.remove(at: indexPath.row)
-                pizzaModel.confirmedOrder.append(pizzaModel.unconfirmedOrder[0])
-                pizzaModel.unconfirmedOrder.remove(at: 0)
-                setFormatting()
-                tableView.endUpdates()
+                removeOneSliceFromUnconfirmed(indexPath: indexPath)
+                
             } else { //Unconfirmed orders are zero and we need to take one out from the full pie
 
-                //MARK: FIX THIS - SEEMS LIKE THE WRONG ORDERS ARE BEING DELETED/MOVED AROUND
-                
-                tableView.beginUpdates()
-//                let indexPathX = IndexPath(row: indexPath.row, section: 0)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                pizzaModel.confirmedOrder.remove(at: indexPath.row)
-                setFormatting()
-                tableView.endUpdates()
-                
-                
-                print("rows in unconfirmed\(tableView.numberOfRows(inSection: 0))")
-                print("rows in confirmed\(tableView.numberOfRows(inSection: 1))")
+                removeConfirmedStatus(indexPath: indexPath)
 
-                
-                print("pizzaModel.confirmedOrder \(pizzaModel.confirmedOrder)")
-                print("pizzaModel.unconfirmedOrder \(pizzaModel.unconfirmedOrder)")
-                
-                var unconfirmedCounter = 0
-                
-                for index in 0..<7 {
-                    
-                    tableView.beginUpdates()
-
-                    
-                    print("index \(index)")
-                    print("pizzaModel.confirmedOrder.count \(pizzaModel.confirmedOrder.count)")
-                    print("pizzaModel.unconfirmedOrder.count \(pizzaModel.unconfirmedOrder.count)")
-
-                    pizzaModel.unconfirmedOrder.append(pizzaModel.confirmedOrder.last!)
-                    pizzaModel.confirmedOrder.removeLast()
-                    let rowIndexPathAt = IndexPath(row: (pizzaModel.confirmedOrder.count), section: 1)
-                    let rowIndexPathTo = IndexPath(row: unconfirmedCounter, section: 0)
-                    tableView.moveRow(at: rowIndexPathAt, to: rowIndexPathTo)
-                    
-                    unconfirmedCounter += 1
-                    setFormatting()
-                    tableView.endUpdates()
-                }
             }
         }
     }

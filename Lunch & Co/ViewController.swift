@@ -17,18 +17,12 @@ class ViewController: UIViewController {
     
     var slicesShown = 0
     var selectedSlices = 1
-//    var slicesInThisPie = 0 //
-//    var totalSlices = 0 //
     var pickerView = UIPickerView()
     var overlayView = UIView()
-//    var users:[String] = ["JSW", "ME", "AK", "EL", "AS", "YD"] //
     var activeTextField = UITextField()
     var activePizzaView = PizzaView()
-//    var orders = [Order]() //
-//    var confirmedOrder = [Order]() //
-//    var unconfirmedOrder = [Order]() //
     var pizzaModel = PizzaModel()
-    
+    var finishedPieViews = [UIView]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,11 +103,9 @@ class ViewController: UIViewController {
         if pizzaModel.slicesInThisPie > 8 {
             pizzaModel.slicesInThisPie = pizzaModel.slicesInThisPie % 8
         }
-//        totalSlices += selectedSlices
     }
     
     func createOverlay() {
-        
         
         let x:CGFloat = 0
         let y:CGFloat = 0
@@ -340,6 +332,7 @@ class ViewController: UIViewController {
         activePizzaView = newPizzaView
         let finishedPizzaView = PizzaView(frame: activePizzaView.frame, amount: 8)
         view.addSubview(finishedPizzaView)
+        finishedPieViews.append(finishedPizzaView)
         UIView.animate(withDuration: 1.0, animations: {
             
             finishedPizzaView.center.y += amountToMove
@@ -384,7 +377,6 @@ class ViewController: UIViewController {
                 order.confirmed = true
             }
         }
-        
         pizzaModel.orders = [Order]()
     }
     
@@ -459,6 +451,8 @@ class ViewController: UIViewController {
         divideOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
         updateOrder()
         updatePieView()
+        
+        print(finishedPieViews.map({$0.center}))
         
 //        buildOrderList() //Do this all the way at the end. Keep the slices separate in order to allow a user to cancel his/her order and therefore be able to build the new list better (And add slices back if necessary)
         
@@ -580,23 +574,26 @@ extension ViewController: UITextFieldDelegate {
     
 }
 
-//extension ViewController: CellDelegate {
-//    
-//    
-//    func updateOrder(orderToRemove: Order, confirmed: Bool) {
-//        
-//        
-//        remove1Slice()
-//        
-//        
-//        //update the slices
-//        
-//        //figure out what s/b confirmed and what shouldnt
-//        
-//        
-//    }
-//    
-//    
-//    
-//    
-//}
+extension ViewController: CellDelegate {
+    
+    func updatePizzaView() {
+        
+        
+        
+        //First check to see if zero slices are showing
+        
+            //If yes
+        
+                //Delete current 'plate'
+                //Move pieView back to the 'plate' and make it the current one
+                //Adjust to the correct amount of slices shown
+                //Adjust  slicesShown Int
+        
+            //If no
+        
+                //Remove 1 slice from the current pieView
+                //Adjust  slicesShown Int
+
+        
+    }
+}
