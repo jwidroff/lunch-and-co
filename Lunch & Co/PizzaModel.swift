@@ -14,6 +14,13 @@ class PizzaModel {
     
     var users = [String]()
     var slicesInThisPie = Int()
+    
+//    var slicesInThisPie: Int {
+//        get {
+//           return unconfirmedOrder.count + confirmedOrder.count
+//        }
+//
+//    }
 //    var totalSlices = Int()
     var orders = [Order]()
     var confirmedOrder = [Order]()

@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     var activePizzaView = PizzaView()
     var pizzaModel = PizzaModel()
     var finishedPieViews = [UIView]()
+    var infoView = InfoView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,7 @@ class ViewController: UIViewController {
         setUpTextFields()
         createOverlay()
         setTimer()
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -99,6 +101,8 @@ class ViewController: UIViewController {
     
     func updateSlices() {
         
+        print("pizzaModel.slicesInThisPie \(pizzaModel.slicesInThisPie)")
+        
         pizzaModel.slicesInThisPie += selectedSlices
         if pizzaModel.slicesInThisPie > 8 {
             pizzaModel.slicesInThisPie = pizzaModel.slicesInThisPie % 8
@@ -134,6 +138,8 @@ class ViewController: UIViewController {
     }
     
     func updatePieView() { //Need delegate func here
+        
+        print("pizzaModel.slicesInThisPie \(pizzaModel.slicesInThisPie)")
 
         var originalSlices = (pizzaModel.slicesInThisPie) - selectedSlices
         if originalSlices < 0 {
@@ -451,7 +457,6 @@ class ViewController: UIViewController {
         divideOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
         updateOrder()
         updatePieView()
-        
         print(finishedPieViews.map({$0.center}))
         
 //        buildOrderList() //Do this all the way at the end. Keep the slices separate in order to allow a user to cancel his/her order and therefore be able to build the new list better (And add slices back if necessary)
@@ -464,9 +469,10 @@ class ViewController: UIViewController {
         let width = view.frame.width / 10 * 8
         let height = view.frame.height / 10 * 8
         let infoViewFrame = CGRect(x: x, y: y, width: width, height: height)
-        let infoView = InfoView(frame: infoViewFrame, pizzaModel: pizzaModel)
+        infoView = InfoView(frame: infoViewFrame, pizzaModel: pizzaModel)
         infoView.center = view.center
         infoView.backgroundColor = .green
+        infoView.delegate = self
         view.addSubview(infoView)
     }
     
@@ -476,7 +482,6 @@ class ViewController: UIViewController {
 
         updateInfoView()
 
-        
 //        print("unconfirmed order \(unconfirmedOrder.map({$0.name})), \(unconfirmedOrder.map({$0.slices}))")
         
         
@@ -565,19 +570,28 @@ extension ViewController: UITextFieldDelegate {
         dismissKeyBoard()
     }
     
-    func remove1Slice() {
-        
-        
-        
-        
-    }
-    
 }
 
 extension ViewController: CellDelegate {
     
     func updatePizzaView() {
         
+        
+        print("fire")
+        
+        if slicesShown == 0 {
+            
+            
+            
+        } else {
+            
+            slicesShown -= 1
+            let updatedPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesShown)
+            activePizzaView.removeFromSuperview()
+            activePizzaView = updatedPizzaView
+            view.insertSubview(activePizzaView, at: 1)
+            
+        }
         
         
         //First check to see if zero slices are showing
@@ -591,8 +605,8 @@ extension ViewController: CellDelegate {
         
             //If no
         
-                //Remove 1 slice from the current pieView
                 //Adjust  slicesShown Int
+                //Remove 1 slice from the current pieView
 
         
     }

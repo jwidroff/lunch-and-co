@@ -123,6 +123,8 @@ class InfoView: UIView {
         pizzaModel.unconfirmedOrder.remove(at: 0)
         setFormatting()
         tableView.endUpdates()
+        
+//        pizzaModel.slicesInThisPie -= 1
     }
     
     func removeOneUnconfirmedSlice(indexPath: IndexPath) {
@@ -132,6 +134,9 @@ class InfoView: UIView {
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
+        
+//        pizzaModel.slicesInThisPie -= 1
+
     }
     
     func removeConfirmedStatus(indexPath: IndexPath) {
@@ -168,6 +173,8 @@ class InfoView: UIView {
             setFormatting()
             tableView.endUpdates()
         }
+//        pizzaModel.slicesInThisPie -= 1
+
     }
     
     @objc func dismissView() {
@@ -214,16 +221,13 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
+        pizzaModel.slicesInThisPie -= 1
         delegate?.updatePizzaView()
         
         if indexPath.section == 0 { // Unconfirmed Orders chosen to be removed by user
-//            pizzaModel.unconfirmedOrder.remove(at: indexPath.row)
-//            setFormatting()
-//            tableView.beginUpdates()
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//            tableView.endUpdates()
             
             removeOneUnconfirmedSlice(indexPath: indexPath)
+//            delegate?.updatePizzaView()
             
         } else { //Confirmed Order chosen to be removed by user
             
