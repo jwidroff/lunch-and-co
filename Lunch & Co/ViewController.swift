@@ -467,6 +467,7 @@ class ViewController: UIViewController {
         let updatedPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesShown)
         activePizzaView = updatedPizzaView
         view.insertSubview(updatedPizzaView, at: 1)
+        xFloat4CompletedPies -= 50 //So that a pie added after this goes to the correct spot
     }
     
     
@@ -496,14 +497,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func infoButton(_ sender: UIButton) {
-        
-//        print("confirmed order \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
 
         updateInfoView()
-
-//        print("unconfirmed order \(unconfirmedOrder.map({$0.name})), \(unconfirmedOrder.map({$0.slices}))")
-        
-        
     }
 }
 
@@ -591,12 +586,10 @@ extension ViewController: UITextFieldDelegate {
     
 }
 
+
 extension ViewController: CellDelegate {
     
     func updatePizzaView() {
-        
-        
-//        print("fire")
         
         if slicesShown == 0 {
             
@@ -615,9 +608,6 @@ extension ViewController: CellDelegate {
             
             //Because there are still slices remaining in the current pieView, remove 1 slice from the current pieView
             removeOneSliceFromActivePizzaView()
-
-            
         }
-
     }
 }
