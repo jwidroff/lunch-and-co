@@ -101,7 +101,7 @@ class ViewController: UIViewController {
     
     func updateSlices() {
         
-        print("pizzaModel.slicesInThisPie \(pizzaModel.slicesInThisPie)")
+//        print("pizzaModel.slicesInThisPie \(pizzaModel.slicesInThisPie)")
         
         pizzaModel.slicesInThisPie += selectedSlices
         if pizzaModel.slicesInThisPie > 8 {
@@ -139,7 +139,7 @@ class ViewController: UIViewController {
     
     func updatePieView() { //Need delegate func here
         
-        print("pizzaModel.slicesInThisPie \(pizzaModel.slicesInThisPie)")
+//        print("pizzaModel.slicesInThisPie \(pizzaModel.slicesInThisPie)")
 
         var originalSlices = (pizzaModel.slicesInThisPie) - selectedSlices
         if originalSlices < 0 {
@@ -450,6 +450,25 @@ class ViewController: UIViewController {
         orderToShow = [Order]()
     }
     
+    func removeOneSliceFromActivePizzaView() {
+        
+        slicesShown -= 1
+        activePizzaView.removeFromSuperview()
+        let updatedPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesShown)
+        activePizzaView = updatedPizzaView
+        view.insertSubview(updatedPizzaView, at: 1)
+    }
+    
+    func removeFinishedPizzaView(pieView: UIView) {
+        
+        pieView.removeFromSuperview()
+        slicesShown = 7
+        activePizzaView.removeFromSuperview()
+        let updatedPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesShown)
+        activePizzaView = updatedPizzaView
+        view.insertSubview(updatedPizzaView, at: 1)
+    }
+    
     
     @IBAction func submitPressed(_ sender: Any) {
         
@@ -577,37 +596,28 @@ extension ViewController: CellDelegate {
     func updatePizzaView() {
         
         
-        print("fire")
+//        print("fire")
         
         if slicesShown == 0 {
             
-            
+            if let pieView = finishedPieViews.last {
+                
+                // Since slices shown are zero, first check to see if theres a pie view and if there is, remove it
+                removeFinishedPizzaView(pieView: pieView)
+
+            } else {
+                
+                // Since theres no pieView, reduce the current pie view by one
+                removeOneSliceFromActivePizzaView()
+            }
             
         } else {
             
-            slicesShown -= 1
-            let updatedPizzaView = PizzaView(frame: activePizzaView.frame, amount: slicesShown)
-            activePizzaView.removeFromSuperview()
-            activePizzaView = updatedPizzaView
-            view.insertSubview(activePizzaView, at: 1)
+            //Because there are still slices remaining in the current pieView, remove 1 slice from the current pieView
+            removeOneSliceFromActivePizzaView()
+
             
         }
-        
-        
-        //First check to see if zero slices are showing
-        
-            //If yes
-        
-                //Delete current 'plate'
-                //Move pieView back to the 'plate' and make it the current one
-                //Adjust to the correct amount of slices shown
-                //Adjust  slicesShown Int
-        
-            //If no
-        
-                //Adjust  slicesShown Int
-                //Remove 1 slice from the current pieView
 
-        
     }
 }

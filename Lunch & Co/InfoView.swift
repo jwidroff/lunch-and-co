@@ -157,9 +157,9 @@ class InfoView: UIView {
         var unconfirmedCounter = 0
         for index in 0..<7 {
 
-            print("index \(index)")
-            print("pizzaModel.confirmedOrder.count \(pizzaModel.confirmedOrder.count)")
-            print("pizzaModel.unconfirmedOrder.count \(pizzaModel.unconfirmedOrder.count)")
+//            print("index \(index)")
+//            print("pizzaModel.confirmedOrder.count \(pizzaModel.confirmedOrder.count)")
+//            print("pizzaModel.unconfirmedOrder.count \(pizzaModel.unconfirmedOrder.count)")
             
             tableView.beginUpdates()
             pizzaModel.unconfirmedOrder.append(pizzaModel.confirmedOrder.last!)
