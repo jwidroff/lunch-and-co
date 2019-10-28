@@ -9,32 +9,23 @@
 import UIKit
 
 class PizzaView: UIView {
-        
-    //TODO: Need to figure out how to show the amount on the pickerView when the pickerView is originally called (AKA if the pickerView first lands on "1", the textView should update eventhough I didnt change anything yet)
-    //TODO: Need to make it that a user can delete their order
-    //TODO: Need to set up userDefaults
-    //TODO: Need to figure out how to not lose the corner radius throughout animations
-    //TODO: Need to refresh the pizzaView and timer by pulling down on views
     
-    //TODO: Need to fix the delete function with theres only one slice left
+    //TODO: Need to set up userDefaults
+    //TODO: Need to refresh the pizzaView and timer by pulling down on views
+    //TODO: set up error handler
     
     var leftCenter = CGPoint()
     var rightCenter = CGPoint()
     var topCenter = CGPoint()
     var bottomCenter = CGPoint()
-    
     var topLeft = CGPoint()
     var bottomRight = CGPoint()
     var bottomLeft = CGPoint()
     var topRight = CGPoint()
-    
     var pizzaCenter = CGPoint()
-    
     var slicesToShow = Int() // S/b slices in this pie
     var label:UILabel?
     var overlayView = UIView()
-
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,6 +36,7 @@ class PizzaView: UIView {
     }
     
     init(frame: CGRect, amount: Int) {
+        
         super.init(frame: frame)
         slicesToShow = amount
         backgroundColor = UIColor.clear
@@ -53,10 +45,6 @@ class PizzaView: UIView {
         gradientColors(color1: .yellow, color2: .red)
         let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
         addSubview(slicesView)
-//        createOverlay(frame: self.frame, xOffset: self.frame.width / 2, yOffset: self.frame.height / 2, radius: self.frame.width / 2)
-//        let overlay = createOverlay(frame: frame, xOffset: frame.width / 2, yOffset: frame.height / 2, radius: frame.width / 2)
-//        view.insert(overlay)
-
     }
     
     
@@ -105,7 +93,6 @@ class SlicesView: UIView {
     
     override func draw(_ rect: CGRect) {
         
-        
         guard let context = UIGraphicsGetCurrentContext() else {return}
         
         let leftCenter = CGPoint(x: bounds.minX, y: bounds.midY)
@@ -141,13 +128,12 @@ class SlicesView: UIView {
         context.addLine(to: topRight)
         context.strokePath()
         
-        
-        
         let eclipseHeight = frame.height / 10 * 9
         let eclipseWidth = frame.width / 10 * 9
         let x = (frame.width - eclipseWidth) / 2
         let y = (frame.height - eclipseHeight) / 2
         let rect = CGRect(x: x, y: y, width: eclipseWidth, height: eclipseHeight)
+        
         context.setLineWidth(1)
         context.addEllipse(in: rect)
         context.strokePath()

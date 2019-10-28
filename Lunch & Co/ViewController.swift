@@ -41,19 +41,12 @@ class ViewController: UIViewController {
         dismissKeyBoard()
     }
     
-    func setupModel() {
-        
-        
-        
-    }
-    
     func setTimer() {
         
         let timerView = TimerLabel(frame: pizzaView.frame)
         view.addSubview(timerView)
         timerView.center = view.center
         timerView.center.y = infoButton.center.y
-        
     }
     
     func setUpTextFields() {
@@ -62,10 +55,9 @@ class ViewController: UIViewController {
         pickerView.dataSource = self
         
         slicesTextField.delegate = self
-        nameTxtFld.delegate = self
-        
-        nameTxtFld.inputView = pickerView
         slicesTextField.inputView = pickerView
+        nameTxtFld.delegate = self
+        nameTxtFld.inputView = pickerView
         
         pizzaModel.users.sort { $0.lowercased() < $1.lowercased() }
     }
@@ -90,7 +82,6 @@ class ViewController: UIViewController {
         let height = pizzaView.frame.height
         let width = pizzaView.frame.width
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        
         let pizzaPlateView = UIView(frame: frame)
         pizzaPlateView.center = view.center
         pizzaPlateView.backgroundColor = UIColor.darkGray
@@ -100,8 +91,6 @@ class ViewController: UIViewController {
     }
     
     func updateSlices() {
-        
-//        print("pizzaModel.slicesInThisPie \(pizzaModel.slicesInThisPie)")
         
         pizzaModel.slicesInThisPie += selectedSlices
         if pizzaModel.slicesInThisPie > 8 {
@@ -137,22 +126,14 @@ class ViewController: UIViewController {
         view.insertSubview(overlayView, at: 2)
     }
     
-    func updatePieView() { //Need delegate func here
+    func updatePieView() {
         
-//        print("pizzaModel.slicesInThisPie \(pizzaModel.slicesInThisPie)")
-
         var originalSlices = (pizzaModel.slicesInThisPie) - selectedSlices
         if originalSlices < 0 {
             originalSlices = 8 + originalSlices
         }
         var animationsLeft = selectedSlices
         var counter = 1
-        
-//        print("slicesInThisPie \(slicesInThisPie)")
-//        print("totalSlices \(totalSlices)")
-//        print("originalSlices \(originalSlices)")
-        
-        
         
         if animationsLeft != 0 {
             
@@ -290,7 +271,7 @@ class ViewController: UIViewController {
                                                                             counter = 1
                                                                         }
                                                                     }) { (false) in
-                                                                        print()
+
                                                                     }
                                                                 }
                                                             }
@@ -307,11 +288,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-//        KEPT THIS IN CASE WE COULDNT FIGURE OUT HOW TO KEEP THE CORNER RADIUS THROUGHOUT THE ANIMATION
-//                self.activePizzaView.removeFromSuperview()
-//                let newPizzaView = PizzaView(frame: self.activePizzaView.frame, amount: self.slicesInThisPie)
-//                self.activePizzaView = newPizzaView
-//                self.view.addSubview(self.activePizzaView)
     }
     
     var xFloat4CompletedPies:CGFloat = -200
@@ -330,8 +306,6 @@ class ViewController: UIViewController {
         }
         
         let transform = CGAffineTransform.identity.scaledBy(x: 0.25, y: 0.25)
-//        let identity = CGAffineTransform.identity
-//        let rotate = CGAffineTransform.identity.rotated(by: 90.0)
         let newPizzaView = PizzaView(frame: activePizzaView.frame, amount: 0)
         activePizzaView.removeFromSuperview()
         view.insertSubview(newPizzaView, at: 1)
@@ -349,7 +323,6 @@ class ViewController: UIViewController {
             UIView.animate(withDuration: 1.0) {
                 let amountToMoveOnBottom:CGFloat = self.xFloat4CompletedPies
                 finishedPizzaView.center.x += amountToMoveOnBottom
-//                finishedPizzaView.transform = rotate
             }
         }
         xFloat4CompletedPies += 50
@@ -368,19 +341,13 @@ class ViewController: UIViewController {
     
     func updateOrder() {
         
-//        print(orders.map({$0.name!}),orders.map({$0.slices!}))
-        
         for order in pizzaModel.orders {
             
             pizzaModel.unconfirmedOrder.append(order)
-//            print(unconfirmedOrder.count)
 
             if pizzaModel.unconfirmedOrder.count == 8 {
                 pizzaModel.confirmedOrder += pizzaModel.unconfirmedOrder
                 pizzaModel.unconfirmedOrder = [Order]()
-            }
-            for order in pizzaModel.confirmedOrder {
-                order.confirmed = true
             }
         }
         pizzaModel.orders = [Order]()
@@ -397,19 +364,13 @@ class ViewController: UIViewController {
 
     func buildOrderList() {
         
-        //Need to make this work for incomplete pies
-        
         var orderToShow = [Order]()
-
-//        print("confirmedOrder \(confirmedOrder.map({$0.name})), \(confirmedOrder.map({$0.slices}))")
         
         for order in pizzaModel.confirmedOrder {
             
             if !orderToShow.contains(where: { (orderX) -> Bool in
                 orderX.name == order.name
             }) {
-                
-                order.confirmed = true
                 orderToShow.append(order)
                 
             } else {
@@ -422,7 +383,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-        
         pizzaModel.confirmedOrder = orderToShow
         orderToShow = [Order]() //This may not be necessary
 
@@ -432,7 +392,6 @@ class ViewController: UIViewController {
                 orderX.name == order.name
             }) {
                 
-//                order.confirmed = true
                 orderToShow.append(order)
                 
             } else {
@@ -445,7 +404,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-        
         pizzaModel.unconfirmedOrder = orderToShow
         orderToShow = [Order]()
     }
@@ -476,13 +434,13 @@ class ViewController: UIViewController {
         divideOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
         updateOrder()
         updatePieView()
-        print(finishedPieViews.map({$0.center}))
         
-//        buildOrderList() //Do this all the way at the end. Keep the slices separate in order to allow a user to cancel his/her order and therefore be able to build the new list better (And add slices back if necessary)
+//        buildOrderList() //Do this all the way at the end after the timer has run out
         
     }
     
     func updateInfoView() {
+        
         let x = view.bounds.midX
         let y = view.bounds.midY
         let width = view.frame.width / 10 * 8
@@ -517,7 +475,6 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if activeTextField == self.slicesTextField {
             amount = 8
         }
-        
         return amount
     }
     
@@ -532,7 +489,6 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if activeTextField == self.slicesTextField {
             string = "\(row + 1)"
         }
-        
         return string
     }
     
@@ -549,9 +505,7 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             if row == 0 {
                 
                 sliceOrSlicesText = "Slice"
-                
             }
-            
             slicesTextField.text = "\(row + 1) \(sliceOrSlicesText)"
             selectedSlices = row + 1
         }
@@ -593,7 +547,6 @@ extension ViewController: UITextFieldDelegate {
         
         dismissKeyBoard()
     }
-    
 }
 
 

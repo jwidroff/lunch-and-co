@@ -18,11 +18,11 @@ class TimerLabel: UILabel {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        text = "00:00"
         textColor = .white
         textAlignment = .center
-        font = UIFont.systemFont(ofSize: 50.0)
-        
+//        font = UIFont.systemFont(ofSize: 50.0)
+        font = UIFont(name: "System", size: 50.0)
+
         
         let now = Date(timeIntervalSinceNow: 0.0)
         day = Calendar.current.component(.weekday, from: now)
@@ -37,10 +37,6 @@ class TimerLabel: UILabel {
         tomorrowsMonth = tomorrowsComponents.month!
         tomorrowsYear = tomorrowsComponents.year!
         check4Tomorrow()
-        
-        
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,7 +54,9 @@ class TimerLabel: UILabel {
     */
     
     func check4Tomorrow() {
-                
+        
+        font = UIFont(name: "System", size: 25.0)
+        
         switch day {
             
         case 1: //sunday
@@ -103,7 +101,6 @@ class TimerLabel: UILabel {
             
         case 7: //saturday
             text = "Check back on Monday \(tomorrowsMonth)-\(tomorrowsDay + 1)-\(tomorrowsYear)"
-            
             
         default:
             break
@@ -178,15 +175,6 @@ class TimerLabel: UILabel {
                 }
             }
         }
-        
-        
         text = "\(hoursLeft):\(minutesLeft):\(secondsLeft)"
-        
     }
-
-    
-    
-    
-    
-    
 }

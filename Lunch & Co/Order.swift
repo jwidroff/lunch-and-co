@@ -13,7 +13,6 @@ class Order {
     
     var name: String?
     var slices: Int?
-    var confirmed = false
     
     init(name: String, slices: Int) {
         

@@ -10,8 +10,6 @@ import UIKit
 
 protocol CellDelegate {
 
-//    func updateSlices() //update slicesInThisPie and totalSlices
-//    func updateOrder(orderToRemove: Order, confirmed: Bool) //should add slices to confirmedOrder from unconfirmedOrder
     func updatePizzaView() // Need to display the right amount of pies and slices shown
     
 }
@@ -155,7 +153,7 @@ class InfoView: UIView {
         
         //Move the 7 remaining slices to the unconfirmed status
         var unconfirmedCounter = 0
-        for index in 0..<7 {
+        for _ in 0..<7 {
 
 //            print("index \(index)")
 //            print("pizzaModel.confirmedOrder.count \(pizzaModel.confirmedOrder.count)")
