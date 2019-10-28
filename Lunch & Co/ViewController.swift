@@ -470,7 +470,6 @@ class ViewController: UIViewController {
         xFloat4CompletedPies -= 50 //So that a pie added after this goes to the correct spot
     }
     
-    
     @IBAction func submitPressed(_ sender: Any) {
         
         updateSlices() //Sets slicesInThisPie and totalSlices
@@ -544,7 +543,16 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         }
         
         if activeTextField == self.slicesTextField {
-            slicesTextField.text = "\(row + 1) Slice(s)"
+            
+            var sliceOrSlicesText = "Slices"
+            
+            if row == 0 {
+                
+                sliceOrSlicesText = "Slice"
+                
+            }
+            
+            slicesTextField.text = "\(row + 1) \(sliceOrSlicesText)"
             selectedSlices = row + 1
         }
     }
@@ -559,6 +567,7 @@ extension ViewController: UITextFieldDelegate {
         
         if textField == self.nameTxtFld {
             nameTxtFld.inputView = pickerView
+            nameTxtFld.text = pizzaModel.users.first
             let toolBar = UIToolbar()
             toolBar.sizeToFit()
             let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyBoard))
@@ -569,6 +578,7 @@ extension ViewController: UITextFieldDelegate {
 
         if textField == self.slicesTextField {
             slicesTextField.inputView = pickerView
+            slicesTextField.text = "1 Slice"
             let toolBar = UIToolbar()
             toolBar.sizeToFit()
             let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyBoard))
