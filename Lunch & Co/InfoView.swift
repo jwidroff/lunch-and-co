@@ -10,7 +10,7 @@ import UIKit
 
 protocol CellDelegate {
 
-    func updatePizzaView() // Need to display the right amount of pies and slices shown
+    func updatePizzaView()
     
 }
 
@@ -154,10 +154,6 @@ class InfoView: UIView {
         //Move the 7 remaining slices to the unconfirmed status
         var unconfirmedCounter = 0
         for _ in 0..<7 {
-
-//            print("index \(index)")
-//            print("pizzaModel.confirmedOrder.count \(pizzaModel.confirmedOrder.count)")
-//            print("pizzaModel.unconfirmedOrder.count \(pizzaModel.unconfirmedOrder.count)")
             
             tableView.beginUpdates()
             pizzaModel.unconfirmedOrder.append(pizzaModel.confirmedOrder.last!)
@@ -171,17 +167,12 @@ class InfoView: UIView {
             setFormatting()
             tableView.endUpdates()
         }
-//        pizzaModel.slicesInThisPie -= 1
-
     }
     
     @objc func dismissView() {
         
         removeFromSuperview()
-        //TODO: Check to see if any
     }
-    
-    
 }
 
 

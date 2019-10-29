@@ -54,10 +54,13 @@
                                     <constraint firstAttribute="width" constant="300" id="Pa1-F6-vik"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ujh-eC-oEG">
-                                <rect key="frame" x="37" y="33" width="44" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ujh-eC-oEG">
+                                <rect key="frame" x="24" y="28" width="40" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="FtP-Us-hxI"/>
+                                    <constraint firstAttribute="width" constant="40" id="HJS-A8-epa"/>
+                                </constraints>
                                 <connections>
                                     <action selector="infoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7m5-dn-ctl"/>
                                 </connections>
@@ -67,7 +70,9 @@
                         <constraints>
                             <constraint firstItem="H6Q-fD-fFO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="65" id="9Np-81-wST"/>
                             <constraint firstItem="IhU-yN-q1k" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EDI-gB-yXY"/>
+                            <constraint firstItem="Ujh-eC-oEG" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="8" id="KAX-OH-2fl"/>
                             <constraint firstItem="H6Q-fD-fFO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LZV-LV-opl"/>
+                            <constraint firstItem="Ujh-eC-oEG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="VIy-6u-m9P"/>
                             <constraint firstItem="IhU-yN-q1k" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="hio-UL-0fw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

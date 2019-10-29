@@ -31,9 +31,8 @@ class ViewController: UIViewController {
         infoButton.layer.cornerRadius = infoButton.frame.width / 2
         setupPizzaView()
         setUpTextFields()
-        createOverlay()
+//        createOverlay()
         setTimer()
-
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -67,28 +66,67 @@ class ViewController: UIViewController {
         view.endEditing(true)
     }
     
+    func refreshInfo() {
+        
+        //TODO: Need to set up a refresh func to refresh the app with new data
+        
+        
+        
+        
+    }
+    
+//    func addPanGesture(view: UIView) {
+//        
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(sender:)))
+//        
+//        view.addGestureRecognizer(pan)
+//    }
+//    
+//    @objc func handlePan(sender:UIPanGestureRecognizer){
+//        
+//        let pizzaView = sender.view!
+//        
+//        switch sender.state {
+//        case .began, .changed:
+//            
+//            moveWithPan(view: pizzaView, sender: sender)
+//            
+//        case .ended:
+//            
+//            print()
+////            returnViewToOrigin(view: pizzaView)
+//
+//            
+//        default:
+//            break
+//        }
+//        
+//    }
+//    // helper functions
+//    func moveWithPan(view: UIView, sender: UIPanGestureRecognizer){
+//        
+//        let translation = sender.translation(in: view)
+//        
+//        view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
+//        sender.setTranslation(CGPoint.zero, in: view)
+//        
+//    }
+//    
+//    func returnViewToOrigin(view: UIView){
+//        
+//        UIView.animate(withDuration: 0.9, animations: {self.pizzaView.frame.origin = self.pizzaView.frame.origin})
+//        
+//    }
+    
     func setupPizzaView() {
         
-        addPizzaPlateView()
+//        addPizzaPlateView()
         pizzaView.layer.cornerRadius = pizzaView.frame.height / 2
         pizzaView.clipsToBounds = true
         activePizzaView = pizzaView
+//        addPanGesture(view: pizzaPlateView)
     }
     
-    func addPizzaPlateView() {
-        
-        let x:CGFloat = 0
-        let y:CGFloat = 0
-        let height = pizzaView.frame.height
-        let width = pizzaView.frame.width
-        let frame = CGRect(x: x, y: y, width: width, height: height)
-        let pizzaPlateView = UIView(frame: frame)
-        pizzaPlateView.center = view.center
-        pizzaPlateView.backgroundColor = UIColor.darkGray
-        pizzaPlateView.layer.cornerRadius = pizzaPlateView.frame.width / 2
-        pizzaPlateView.clipsToBounds = true
-        view.insertSubview(pizzaPlateView, at: 1)
-    }
     
     func updateSlices() {
         
@@ -123,7 +161,11 @@ class ViewController: UIViewController {
         overlayView.clipsToBounds = true
         overlayView.center = view.center
         
-        view.insertSubview(overlayView, at: 2)
+//        overlayView.isUserInteractionEnabled = true
+        
+//        addPanGesture(view: overlayView)
+        
+        activePizzaView.insertSubview(overlayView, at: 2)
     }
     
     func updatePieView() {
@@ -143,6 +185,7 @@ class ViewController: UIViewController {
                 self.activePizzaView = newPizzaView
                 self.view.insertSubview(self.activePizzaView, at: 1)
                 self.slicesShown += 1
+                self.activePizzaView.isUserInteractionEnabled = true
                 counter += 1
                 animationsLeft -= 1
                 if self.slicesShown == 8 {
