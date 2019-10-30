@@ -75,48 +75,21 @@ class ViewController: UIViewController {
         
     }
     
-//    func addPanGesture(view: UIView) {
-//        
-//        let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(sender:)))
-//        
-//        view.addGestureRecognizer(pan)
-//    }
-//    
-//    @objc func handlePan(sender:UIPanGestureRecognizer){
-//        
-//        let pizzaView = sender.view!
-//        
-//        switch sender.state {
-//        case .began, .changed:
-//            
-//            moveWithPan(view: pizzaView, sender: sender)
-//            
-//        case .ended:
-//            
-//            print()
-////            returnViewToOrigin(view: pizzaView)
-//
-//            
-//        default:
-//            break
-//        }
-//        
-//    }
-//    // helper functions
-//    func moveWithPan(view: UIView, sender: UIPanGestureRecognizer){
-//        
-//        let translation = sender.translation(in: view)
-//        
-//        view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
-//        sender.setTranslation(CGPoint.zero, in: view)
-//        
-//    }
-//    
-//    func returnViewToOrigin(view: UIView){
-//        
-//        UIView.animate(withDuration: 0.9, animations: {self.pizzaView.frame.origin = self.pizzaView.frame.origin})
-//        
-//    }
+    func addPizzaPlateView() {
+        
+        let x:CGFloat = 0
+        let y:CGFloat = 0
+        let height = pizzaView.frame.height
+        let width = pizzaView.frame.width
+        let frame = CGRect(x: x, y: y, width: width, height: height)
+        let pizzaPlateView = UIView(frame: frame)
+        pizzaPlateView.center = view.center
+        pizzaPlateView.backgroundColor = UIColor.white
+//        pizzaPlateView.layer.cornerRadius = pizzaPlateView.frame.width / 2
+        pizzaPlateView.clipsToBounds = true
+        view.insertSubview(pizzaPlateView, at: 1)
+    }
+    
     
     func setupPizzaView() {
         

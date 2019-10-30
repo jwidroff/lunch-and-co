@@ -60,36 +60,34 @@ class PizzaView: UIView {
     
     @objc func handlePan(sender:UIPanGestureRecognizer){
         
-        let pizzaView = sender.view!
-        
         switch sender.state {
-        case .began, .changed:
-            
-            moveWithPan(view: pizzaView, sender: sender)
-            
+        case .changed://, .changed:
+            moveWithPan(view: self, sender: sender)
         case .ended:
-            
-            returnViewToOrigin(view: pizzaView)
-            
-            
+            returnViewToOrigin(view: self)
         default:
             break
         }
-        
     }
-    // helper functions
+
     func moveWithPan(view: UIView, sender: UIPanGestureRecognizer){
         
         let translation = sender.translation(in: view)
         
-        view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
+        print(translation.y)
+        
+        if translation.y > 50 || translation.y < 0 {
+            view.center.y = (origin.y + 150)
+        } else {
+            view.center = CGPoint(x: view.center.x, y: view.center.y + translation.y)
+        }
         sender.setTranslation(CGPoint.zero, in: view)
         
     }
     
     func returnViewToOrigin(view: UIView){
         
-        UIView.animate(withDuration: 0.9, animations: {self.frame.origin = self.origin})
+        UIView.animate(withDuration: 0.25, animations: {self.frame.origin = self.origin})
         
     }
     
