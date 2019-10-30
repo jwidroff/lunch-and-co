@@ -18,14 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IhU-yN-q1k" customClass="PizzaView" customModule="Lunch_And_Co" customModuleProvider="target">
-                                <rect key="frame" x="37.5" y="183.5" width="300" height="300"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="FL8-lU-9az"/>
-                                    <constraint firstAttribute="width" constant="300" id="qqL-eJ-nk5"/>
-                                </constraints>
-                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="H6Q-fD-fFO">
                                 <rect key="frame" x="37.5" y="85" width="300" height="106"/>
                                 <subviews>
@@ -69,18 +61,15 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="H6Q-fD-fFO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="65" id="9Np-81-wST"/>
-                            <constraint firstItem="IhU-yN-q1k" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EDI-gB-yXY"/>
                             <constraint firstItem="Ujh-eC-oEG" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="8" id="KAX-OH-2fl"/>
                             <constraint firstItem="H6Q-fD-fFO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LZV-LV-opl"/>
                             <constraint firstItem="Ujh-eC-oEG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="VIy-6u-m9P"/>
-                            <constraint firstItem="IhU-yN-q1k" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="hio-UL-0fw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="infoButton" destination="Ujh-eC-oEG" id="Enl-lb-flM"/>
                         <outlet property="nameTxtFld" destination="isx-W2-vtp" id="LWh-uJ-8Qt"/>
-                        <outlet property="pizzaView" destination="IhU-yN-q1k" id="UsL-I8-DaC"/>
                         <outlet property="slicesTextField" destination="YQY-1b-Qkj" id="52L-Jm-zgO"/>
                     </connections>
                 </viewController>

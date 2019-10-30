@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var pizzaView: PizzaView!
+//    @IBOutlet weak var pizzaView: PizzaView!
     @IBOutlet weak var nameTxtFld: UITextField!
     @IBOutlet weak var slicesTextField: UITextField!
     @IBOutlet weak var infoButton: UIButton!
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     
     func setTimer() {
         
-        let timerView = TimerLabel(frame: pizzaView.frame)
+        let timerView = TimerLabel(frame: activePizzaView.frame)
         view.addSubview(timerView)
         timerView.center = view.center
         timerView.center.y = infoButton.center.y
@@ -79,8 +79,8 @@ class ViewController: UIViewController {
         
         let x:CGFloat = 0
         let y:CGFloat = 0
-        let height = pizzaView.frame.height
-        let width = pizzaView.frame.width
+        let height = activePizzaView.frame.height
+        let width = activePizzaView.frame.width
         let frame = CGRect(x: x, y: y, width: width, height: height)
         let pizzaPlateView = UIView(frame: frame)
         pizzaPlateView.center = view.center
@@ -94,8 +94,15 @@ class ViewController: UIViewController {
     func setupPizzaView() {
         
 //        addPizzaPlateView()
+        
+        let widthAndHeight = nameTxtFld.frame.width
+        let x = (view.frame.width - widthAndHeight) / 2
+        let y = (view.frame.height - widthAndHeight) / 2
+        let frame = CGRect(x: x, y: y, width: widthAndHeight, height: widthAndHeight)
+        let pizzaView = PizzaView(frame: frame, amount: 0)
         pizzaView.layer.cornerRadius = pizzaView.frame.height / 2
         pizzaView.clipsToBounds = true
+        view.addSubview(pizzaView)
         activePizzaView = pizzaView
 //        addPanGesture(view: pizzaPlateView)
     }
@@ -113,14 +120,14 @@ class ViewController: UIViewController {
         
         let x:CGFloat = 0
         let y:CGFloat = 0
-        let height = pizzaView.frame.height
-        let width = pizzaView.frame.width
+        let height = activePizzaView.frame.height
+        let width = activePizzaView.frame.width
         let frame = CGRect(x: x, y: y, width: width, height: height)
         overlayView = UIView(frame: frame)
         overlayView.backgroundColor = UIColor.black
-        let xOffset = pizzaView.frame.width / 2
-        let yOffset = pizzaView.frame.height / 2
-        let radius = pizzaView.frame.height / 2
+        let xOffset = activePizzaView.frame.width / 2
+        let yOffset = activePizzaView.frame.height / 2
+        let radius = activePizzaView.frame.height / 2
         let path = CGMutablePath()
         path.addArc(center: CGPoint(x: xOffset, y: yOffset), radius: radius, startAngle: 0.0, endAngle: 2.0 * .pi, clockwise: false)
         path.addRect(CGRect(origin: .zero, size: overlayView.frame.size))
@@ -377,8 +384,9 @@ class ViewController: UIViewController {
         }
     }
     
-
     func buildOrderList() {
+        //TODO: Add this
+        
         
         var orderToShow = [Order]()
         
@@ -434,6 +442,11 @@ class ViewController: UIViewController {
     }
     
     func removeFinishedPizzaView(pieView: UIView) {
+        
+        //TODO: This seems to not work anymore. Fix this. Seems like slicesShown may be the issue
+        
+        print("HI")
+        print(slicesShown)
         
         pieView.removeFromSuperview()
         slicesShown = 7
@@ -573,6 +586,8 @@ extension ViewController: CellDelegate {
         if slicesShown == 0 {
             
             if let pieView = finishedPieViews.last {
+                
+                print(pieView.center)
                 
                 // Since slices shown are zero, first check to see if theres a pie view and if there is, remove it
                 removeFinishedPizzaView(pieView: pieView)
