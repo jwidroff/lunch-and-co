@@ -39,6 +39,7 @@ class InfoView: UIView {
     
     init (frame: CGRect, pizzaModel: PizzaModel) {
         
+        ordersFormatted = [OrderFormatted]()
         super.init(frame: frame)
         self.pizzaModel = pizzaModel
         setFormatting()
@@ -54,6 +55,8 @@ class InfoView: UIView {
     
 
     func setFormatting() {
+        
+//        print(ordersFormatted.count)
         
         ordersFormatted = [OrderFormatted]()
         
@@ -77,6 +80,7 @@ class InfoView: UIView {
         }
         
         let unconfirmedOrdersFormatted = OrderFormatted(confirmed: "Unconfirmed", name: names, amountOfSlices: slices)
+        
         ordersFormatted.append(unconfirmedOrdersFormatted)
         ordersFormatted.append(confirmedOrdersFormatted)
         
@@ -197,7 +201,14 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
-        return ordersFormatted[section].confirmed
+        //Might want to add a delegate here to update when a slice is removed
+        var amountOfSlices = 0
+        if section == 0 {
+            amountOfSlices = pizzaModel.unconfirmedOrder.count
+        } else {
+            amountOfSlices = pizzaModel.confirmedOrder.count
+        }
+        return "\(ordersFormatted[section].confirmed) - \(amountOfSlices)"
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
