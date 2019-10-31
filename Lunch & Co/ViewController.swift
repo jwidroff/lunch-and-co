@@ -143,9 +143,7 @@ class ViewController: UIViewController {
         overlayView.layer.mask = maskLayer
         overlayView.clipsToBounds = true
         overlayView.center = view.center
-        
-//        overlayView.isUserInteractionEnabled = true
-        
+
         addPanGesture()
         
         view.insertSubview(overlayView, at: 2)
@@ -171,41 +169,16 @@ class ViewController: UIViewController {
     }
     
     func moveWithPan(view: UIView, sender: UIPanGestureRecognizer){
-        
-        
-        
+
         let translation = sender.translation(in: activePizzaView)
         
         print(translation.y)
         
-        if translation.y < 50 && translation.y > 0 {//}|| translation.y < 0 {
-//            view.center.y = (origin.y + 150)
-//            activePizzaView.center.y = view.center.y
-//            activePizzaView.center.y = (origin.y + 150)
-            
-            
-//            activePizzaView.center.y = (activePizzaView.center.y + 50)
-//            overlayView.center.y = (overlayView.center.y + 50)
-            
+        if translation.y < 50 && translation.y > 0 {
             activePizzaView.center.y = activePizzaView.center.y + translation.y
             overlayView.center.y = overlayView.center.y + translation.y
-            
-        } else if translation.y < 0{
-            
-//            activePizzaView.center.y = (origin.y)
-//            overlayView.center.y = (origin.y)
-
-        } else {
-//            view.center = CGPoint(x: view.center.x, y: view.center.y + translation.y)
-            
-            
-            
-            
-//            activePizzaView.center.y = activePizzaView.center.y + translation.y
-//            overlayView.center.y = overlayView.center.y + translation.y
         }
         sender.setTranslation(CGPoint.zero, in: activePizzaView)
-        
     }
     
     func returnViewToOrigin(view: UIView){
@@ -388,6 +361,8 @@ class ViewController: UIViewController {
     
     func animateCompletedPie() {
 
+        overlayView.alpha = 0
+        
         var amountToMove = CGFloat()
         
         if xFloat4CompletedPies == 150 {
@@ -404,12 +379,14 @@ class ViewController: UIViewController {
         view.insertSubview(newPizzaView, at: 1)
         activePizzaView = newPizzaView
         let finishedPizzaView = PizzaView(frame: activePizzaView.frame, amount: 8)
-        view.insertSubview(finishedPizzaView, at: 1)
+        view.insertSubview(finishedPizzaView, at: 2)
         finishedPieViews.append(finishedPizzaView)
         UIView.animate(withDuration: 1.0, animations: {
             
             finishedPizzaView.center.y += amountToMove
             finishedPizzaView.transform = transform
+            
+            self.overlayView.alpha = 1
             
         }) { (true) in
             
@@ -419,6 +396,8 @@ class ViewController: UIViewController {
             }
         }
         xFloat4CompletedPies += 50
+       
+
     }
     
     func updateNewPie() {
