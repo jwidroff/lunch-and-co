@@ -46,9 +46,43 @@ class PizzaView: UIView {
         clipsToBounds = true
         gradientColors(color1: .yellow, color2: .red)
         let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
-        addSubview(slicesView)
+//        addSubview(slicesView)
+        insertSubview(slicesView, at: 2)
         origin = self.frame.origin
-        addPanGesture()
+//        addPanGesture()
+//        createOverlay()
+    }
+    
+    func createOverlay() {
+        
+        let x:CGFloat = 0
+        let y:CGFloat = 0
+        let height = self.frame.height
+        let width = self.frame.width
+        let frame = CGRect(x: x, y: y, width: width, height: height)
+        overlayView = UIView(frame: frame)
+        overlayView.backgroundColor = UIColor.black
+        let xOffset = frame.width / 2
+        let yOffset = frame.height / 2
+        let radius = frame.height / 2
+        let path = CGMutablePath()
+        path.addArc(center: CGPoint(x: xOffset, y: yOffset), radius: radius, startAngle: 0.0, endAngle: 2.0 * .pi, clockwise: false)
+        path.addRect(CGRect(origin: .zero, size: overlayView.frame.size))
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.path = path
+        maskLayer.fillRule = .evenOdd
+        
+        overlayView.layer.mask = maskLayer
+        overlayView.clipsToBounds = true
+        overlayView.center = center
+        
+        //        overlayView.isUserInteractionEnabled = true
+        
+        //        addPanGesture(view: overlayView)
+        
+        insertSubview(overlayView, at: 2)
     }
     
     func addPanGesture() {

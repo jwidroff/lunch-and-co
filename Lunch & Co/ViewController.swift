@@ -24,14 +24,15 @@ class ViewController: UIViewController {
     var pizzaModel = PizzaModel()
     var finishedPieViews = [UIView]()
     var infoView = InfoView()
+    var origin = CGPoint()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         infoButton.layer.cornerRadius = infoButton.frame.width / 2
         setupPizzaView()
         setUpTextFields()
-//        createOverlay()
+        createOverlay()
         setTimer()
     }
     
@@ -102,8 +103,10 @@ class ViewController: UIViewController {
         let pizzaView = PizzaView(frame: frame, amount: 0)
         pizzaView.layer.cornerRadius = pizzaView.frame.height / 2
         pizzaView.clipsToBounds = true
-        view.addSubview(pizzaView)
+        view.insertSubview(pizzaView, at: 1)
         activePizzaView = pizzaView
+        
+        origin = activePizzaView.frame.origin
 //        addPanGesture(view: pizzaPlateView)
     }
     
@@ -143,10 +146,77 @@ class ViewController: UIViewController {
         
 //        overlayView.isUserInteractionEnabled = true
         
-//        addPanGesture(view: overlayView)
+        addPanGesture()
         
-        activePizzaView.insertSubview(overlayView, at: 2)
+        view.insertSubview(overlayView, at: 2)
     }
+    
+    func addPanGesture() {
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(PizzaView.handlePan(sender:)))
+        
+        overlayView.addGestureRecognizer(pan)
+    }
+    
+    @objc func handlePan(sender:UIPanGestureRecognizer){
+        
+        switch sender.state {
+        case .changed://, .changed:
+            moveWithPan(view: overlayView, sender: sender)
+        case .ended:
+            returnViewToOrigin(view: overlayView)
+        default:
+            break
+        }
+    }
+    
+    func moveWithPan(view: UIView, sender: UIPanGestureRecognizer){
+        
+        
+        
+        let translation = sender.translation(in: activePizzaView)
+        
+        print(translation.y)
+        
+        if translation.y < 50 && translation.y > 0 {//}|| translation.y < 0 {
+//            view.center.y = (origin.y + 150)
+//            activePizzaView.center.y = view.center.y
+//            activePizzaView.center.y = (origin.y + 150)
+            
+            
+//            activePizzaView.center.y = (activePizzaView.center.y + 50)
+//            overlayView.center.y = (overlayView.center.y + 50)
+            
+            activePizzaView.center.y = activePizzaView.center.y + translation.y
+            overlayView.center.y = overlayView.center.y + translation.y
+            
+        } else if translation.y < 0{
+            
+//            activePizzaView.center.y = (origin.y)
+//            overlayView.center.y = (origin.y)
+
+        } else {
+//            view.center = CGPoint(x: view.center.x, y: view.center.y + translation.y)
+            
+            
+            
+            
+//            activePizzaView.center.y = activePizzaView.center.y + translation.y
+//            overlayView.center.y = overlayView.center.y + translation.y
+        }
+        sender.setTranslation(CGPoint.zero, in: activePizzaView)
+        
+    }
+    
+    func returnViewToOrigin(view: UIView){
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.activePizzaView.frame.origin = self.origin
+            self.overlayView.frame.origin = self.origin
+            
+        })
+    }
+    
     
     func updatePieView() {
         
@@ -334,7 +404,7 @@ class ViewController: UIViewController {
         view.insertSubview(newPizzaView, at: 1)
         activePizzaView = newPizzaView
         let finishedPizzaView = PizzaView(frame: activePizzaView.frame, amount: 8)
-        view.addSubview(finishedPizzaView)
+        view.insertSubview(finishedPizzaView, at: 1)
         finishedPieViews.append(finishedPizzaView)
         UIView.animate(withDuration: 1.0, animations: {
             
