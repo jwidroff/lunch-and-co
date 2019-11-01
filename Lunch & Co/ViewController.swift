@@ -25,20 +25,41 @@ class ViewController: UIViewController {
     var finishedPieViews = [UIView]()
     var infoView = InfoView()
     var origin = CGPoint()
+    var pullDownLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         infoButton.layer.cornerRadius = infoButton.frame.width / 2
         setupPizzaView()
+        
+//        addPizzaPlateView()
+        
         setUpTextFields()
         createOverlay()
         setTimer()
+        addPullDownLabel()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         dismissKeyBoard()
+    }
+    
+    func addPullDownLabel() {
+        
+        let width = nameTxtFld.frame.width
+        let height = nameTxtFld.frame.height
+        let x = (view.frame.width - width) / 2
+        let y = activePizzaView.frame.minY - 30
+        let frame = CGRect(x: x, y: y, width: width, height: height)
+//        let label = UILabel(frame: frame)
+        pullDownLabel.frame = frame
+        pullDownLabel.font = UIFont.systemFont(ofSize: 20)
+        pullDownLabel.text = "⬇️ PULL DOWN TO REFRESH ⬇️"
+        pullDownLabel.textColor = .white
+        pullDownLabel.textAlignment = .center
+        view.addSubview(pullDownLabel)
     }
     
     func setTimer() {
@@ -77,7 +98,7 @@ class ViewController: UIViewController {
     }
     
     func addPizzaPlateView() {
-        
+
         let x:CGFloat = 0
         let y:CGFloat = 0
         let height = activePizzaView.frame.height
@@ -88,7 +109,7 @@ class ViewController: UIViewController {
         pizzaPlateView.backgroundColor = UIColor.white
 //        pizzaPlateView.layer.cornerRadius = pizzaPlateView.frame.width / 2
         pizzaPlateView.clipsToBounds = true
-        view.insertSubview(pizzaPlateView, at: 1)
+        view.insertSubview(pizzaPlateView, at: 0)
     }
     
     
@@ -177,6 +198,7 @@ class ViewController: UIViewController {
         if translation.y < 50 && translation.y > 0 {
             activePizzaView.center.y = activePizzaView.center.y + translation.y
             overlayView.center.y = overlayView.center.y + translation.y
+            pullDownLabel.center.y = pullDownLabel.center.y + translation.y
         }
         sender.setTranslation(CGPoint.zero, in: activePizzaView)
     }
@@ -186,6 +208,7 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 0.25, animations: {
             self.activePizzaView.frame.origin = self.origin
             self.overlayView.frame.origin = self.origin
+            self.pullDownLabel.frame.origin.y = self.origin.y - 30.0
             
         })
     }
@@ -396,8 +419,6 @@ class ViewController: UIViewController {
             }
         }
         xFloat4CompletedPies += 50
-       
-
     }
     
     func updateNewPie() {
