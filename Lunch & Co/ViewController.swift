@@ -33,12 +33,14 @@ class ViewController: UIViewController {
         infoButton.layer.cornerRadius = infoButton.frame.width / 2
         setupPizzaView()
         
-//        addPizzaPlateView()
         
         setUpTextFields()
         createOverlay()
         setTimer()
         addPullDownLabel()
+        
+        addPizzaBackGroundView()
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -51,7 +53,11 @@ class ViewController: UIViewController {
         let width = nameTxtFld.frame.width
         let height = nameTxtFld.frame.height
         let x = (view.frame.width - width) / 2
+        
+        
         let y = activePizzaView.frame.minY - 30
+        
+        
         let frame = CGRect(x: x, y: y, width: width, height: height)
 //        let label = UILabel(frame: frame)
         pullDownLabel.frame = frame
@@ -97,25 +103,36 @@ class ViewController: UIViewController {
         
     }
     
-    func addPizzaPlateView() {
+    func addPizzaBackGroundView() {
 
         let x:CGFloat = 0
         let y:CGFloat = 0
         let height = activePizzaView.frame.height
         let width = activePizzaView.frame.width
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        let pizzaPlateView = UIView(frame: frame)
-        pizzaPlateView.center = view.center
-        pizzaPlateView.backgroundColor = UIColor.white
-//        pizzaPlateView.layer.cornerRadius = pizzaPlateView.frame.width / 2
-        pizzaPlateView.clipsToBounds = true
-        view.insertSubview(pizzaPlateView, at: 0)
+        let pizzaBackGroundView = UIView(frame: frame)
+        pizzaBackGroundView.center = view.center
+        pizzaBackGroundView.backgroundColor = UIColor.lightGray
+        pizzaBackGroundView.layer.cornerRadius = pizzaBackGroundView.frame.width / 2
+        pizzaBackGroundView.clipsToBounds = true
+
+        let lunchAndCoLabel = UILabel(frame: frame)
+        lunchAndCoLabel.textColor = .black
+        lunchAndCoLabel.backgroundColor = .clear
+        lunchAndCoLabel.text = "LUNCH & CO"
+        lunchAndCoLabel.font = UIFont.init(name: "zapfino", size: 20)
+        lunchAndCoLabel.adjustsFontSizeToFitWidth = true
+//        lunchAndCoLabel.font = UIFont.systemFont(ofSize: 50)
+        lunchAndCoLabel.textAlignment = .center
+        
+        view.insertSubview(pizzaBackGroundView, at: 0)
+        pizzaBackGroundView.addSubview(lunchAndCoLabel)
     }
     
     
     func setupPizzaView() {
         
-//        addPizzaPlateView()
+        addPizzaBackGroundView()
         
         let widthAndHeight = nameTxtFld.frame.width
         let x = (view.frame.width - widthAndHeight) / 2
@@ -128,7 +145,7 @@ class ViewController: UIViewController {
         activePizzaView = pizzaView
         
         origin = activePizzaView.frame.origin
-//        addPanGesture(view: pizzaPlateView)
+//        addPanGesture(view: pizzaBackGroundView)
     }
     
     
@@ -180,7 +197,7 @@ class ViewController: UIViewController {
     @objc func handlePan(sender:UIPanGestureRecognizer){
         
         switch sender.state {
-        case .changed://, .changed:
+        case .began, .changed://, .changed:
             moveWithPan(view: overlayView, sender: sender)
         case .ended:
             returnViewToOrigin(view: overlayView)
@@ -197,19 +214,35 @@ class ViewController: UIViewController {
         
         if translation.y < 50 && translation.y > 0 {
             activePizzaView.center.y = activePizzaView.center.y + translation.y
+            
+            overlayView.alpha = 0
+            
             overlayView.center.y = overlayView.center.y + translation.y
-            pullDownLabel.center.y = pullDownLabel.center.y + translation.y
+//            pullDownLabel.center.y = pullDownLabel.center.y + translation.y
         }
         sender.setTranslation(CGPoint.zero, in: activePizzaView)
     }
     
     func returnViewToOrigin(view: UIView){
         
+//        UIView.animate(withDuration: 0.25, animations: {
+//
+//
+//            self.activePizzaView.frame.origin = self.origin
+//            self.overlayView.frame.origin = self.origin
+////            self.pullDownLabel.frame.origin.y = self.origin.y - 30.0
+//            self.overlayView.alpha = 1.0
+//
+//        })
+//
+        
+        
         UIView.animate(withDuration: 0.25, animations: {
             self.activePizzaView.frame.origin = self.origin
             self.overlayView.frame.origin = self.origin
-            self.pullDownLabel.frame.origin.y = self.origin.y - 30.0
-            
+        }, completion: { (true) in
+            self.overlayView.alpha = 1.0
+
         })
     }
     
@@ -384,7 +417,7 @@ class ViewController: UIViewController {
     
     func animateCompletedPie() {
 
-        overlayView.alpha = 0
+//        overlayView.alpha = 0
         
         var amountToMove = CGFloat()
         
@@ -409,7 +442,7 @@ class ViewController: UIViewController {
             finishedPizzaView.center.y += amountToMove
             finishedPizzaView.transform = transform
             
-            self.overlayView.alpha = 1
+//            self.overlayView.alpha = 1
             
         }) { (true) in
             
