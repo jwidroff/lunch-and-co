@@ -14,6 +14,8 @@ class PizzaView: UIView {
     //TODO: Need to refresh the pizzaView and timer by pulling down on views
     //TODO: set up error handler
     //TODO: Save all data and make calculations etc when the timer runs to Zero
+    //TODO: Need to show a breakdown of what people owe
+    //TODO: App needs to try to pull information on start up every time
     
     var leftCenter = CGPoint()
     var rightCenter = CGPoint()

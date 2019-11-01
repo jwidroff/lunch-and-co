@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol UpdateDelegate {
+    
+  func updateDatabase()
+    
+}
+
 class TimerLabel: UILabel {
 
     var day = Int()
@@ -15,6 +21,7 @@ class TimerLabel: UILabel {
     var tomorrowsMonth = Int()
     var tomorrowsDay = Int()
     var tomorrowsYear = Int()
+    var delegate: UpdateDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -140,6 +147,10 @@ class TimerLabel: UILabel {
         let CompetitionDayDifference = calendar.dateComponents([.day, .hour, .minute, .second], from: currentDate!, to: competitionDay)
         
         guard CompetitionDayDifference.hour! > 0 || CompetitionDayDifference.minute! > 0 || CompetitionDayDifference.second! > 0 else {
+            
+            //TODO: Fix this - app crashes when timer has one second left
+            
+            delegate?.updateDatabase()
             
             check4Tomorrow()
             return

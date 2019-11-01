@@ -112,15 +112,15 @@ class ViewController: UIViewController {
         let frame = CGRect(x: x, y: y, width: width, height: height)
         let pizzaBackGroundView = UIView(frame: frame)
         pizzaBackGroundView.center = view.center
-        pizzaBackGroundView.backgroundColor = UIColor.lightGray
+        pizzaBackGroundView.backgroundColor = UIColor.black
         pizzaBackGroundView.layer.cornerRadius = pizzaBackGroundView.frame.width / 2
         pizzaBackGroundView.clipsToBounds = true
 
         let lunchAndCoLabel = UILabel(frame: frame)
-        lunchAndCoLabel.textColor = .black
+        lunchAndCoLabel.textColor = .white
         lunchAndCoLabel.backgroundColor = .clear
-        lunchAndCoLabel.text = "LUNCH & CO"
-        lunchAndCoLabel.font = UIFont.init(name: "zapfino", size: 20)
+        lunchAndCoLabel.text = "Lunch & Co"
+        lunchAndCoLabel.font = UIFont.init(name: "snell roundhand", size: 40)
         lunchAndCoLabel.adjustsFontSizeToFitWidth = true
 //        lunchAndCoLabel.font = UIFont.systemFont(ofSize: 50)
         lunchAndCoLabel.textAlignment = .center
@@ -197,7 +197,7 @@ class ViewController: UIViewController {
     @objc func handlePan(sender:UIPanGestureRecognizer){
         
         switch sender.state {
-        case .began, .changed://, .changed:
+        case .changed://, .changed:
             moveWithPan(view: overlayView, sender: sender)
         case .ended:
             returnViewToOrigin(view: overlayView)
@@ -253,6 +253,8 @@ class ViewController: UIViewController {
         if originalSlices < 0 {
             originalSlices = 8 + originalSlices
         }
+        
+        
         var animationsLeft = selectedSlices
         var counter = 1
         
@@ -580,7 +582,7 @@ class ViewController: UIViewController {
         let infoViewFrame = CGRect(x: x, y: y, width: width, height: height)
         infoView = InfoView(frame: infoViewFrame, pizzaModel: pizzaModel)
         infoView.center = view.center
-        infoView.backgroundColor = .green
+        infoView.backgroundColor = .black
         infoView.delegate = self
         view.addSubview(infoView)
     }
@@ -707,4 +709,15 @@ extension ViewController: CellDelegate {
             removeOneSliceFromActivePizzaView()
         }
     }
+}
+
+
+extension ViewController: UpdateDelegate {
+    
+    
+    
+    func updateDatabase() {
+        print("update database")
+    }
+    
 }
