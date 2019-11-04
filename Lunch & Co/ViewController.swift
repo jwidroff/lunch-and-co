@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class ViewController: UIViewController {
 
-//    @IBOutlet weak var pizzaView: PizzaView!
     @IBOutlet weak var nameTxtFld: UITextField!
     @IBOutlet weak var slicesTextField: UITextField!
     @IBOutlet weak var infoButton: UIButton!
@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     var infoView = InfoView()
     var origin = CGPoint()
     var pullDownLabel = UILabel()
+    
+    var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
