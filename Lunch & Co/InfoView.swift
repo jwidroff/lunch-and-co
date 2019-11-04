@@ -221,13 +221,13 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        pizzaModel.slicesInThisPie -= 1
-        delegate?.updatePizzaView()
+//        pizzaModel.slicesInThisPie -= 1
+//        delegate?.updatePizzaView()
         
         if indexPath.section == 0 { // Unconfirmed Orders chosen to be removed by user
             
             removeOneUnconfirmedSlice(indexPath: indexPath)
-//            delegate?.updatePizzaView()
+            delegate?.updatePizzaView()
             
         } else { //Confirmed Order chosen to be removed by user
             
@@ -235,10 +235,12 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
             if pizzaModel.unconfirmedOrder.count != 0 {
                 
                 removeOneSliceFromUnconfirmed(indexPath: indexPath)
-                
+                delegate?.updatePizzaView()
+
             } else { //Unconfirmed orders are zero and we need to take one out from the full pie
 
                 removeConfirmedStatus(indexPath: indexPath)
+                delegate?.updatePizzaView()
 
             }
         }

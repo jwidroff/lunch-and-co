@@ -152,10 +152,10 @@ class ViewController: UIViewController {
     
     func updateSlices() {
         
-        pizzaModel.slicesInThisPie += selectedSlices
-        if pizzaModel.slicesInThisPie > 8 {
-            pizzaModel.slicesInThisPie = pizzaModel.slicesInThisPie % 8
-        }
+//        pizzaModel.slicesInThisPie += selectedSlices
+//        if pizzaModel.slicesInThisPie > 8 {
+//            pizzaModel.slicesInThisPie = pizzaModel.slicesInThisPie % 8
+//        }
     }
     
     func createOverlay() {
@@ -459,8 +459,8 @@ class ViewController: UIViewController {
     
     func updateNewPie() {
         
-        let remainder = (pizzaModel.slicesInThisPie % 8)
-        pizzaModel.slicesInThisPie = remainder
+//        let remainder = (pizzaModel.slicesInThisPie % 8)
+//        pizzaModel.slicesInThisPie = remainder
         activePizzaView.removeFromSuperview()
         let oldPizzaView = PizzaView(frame: activePizzaView.frame, amount: pizzaModel.slicesInThisPie)
         oldPizzaView.gradientColors(color1: UIColor.red, color2: UIColor.yellow)
@@ -571,6 +571,8 @@ class ViewController: UIViewController {
         updatePieView()
         
 //        buildOrderList() //Do this all the way at the end after the timer has run out
+        
+        print(pizzaModel.slicesInThisPie)
         
     }
     
@@ -717,6 +719,8 @@ extension ViewController: UpdateDelegate {
     
     func updateDatabase() {
         
+        
+        //TODO: Need to set the 
         
         
         print("update database")
