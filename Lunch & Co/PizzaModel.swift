@@ -11,16 +11,12 @@ import Foundation
 class PizzaModel {
         
     var users = [String]()
-//    var slicesInThisPie = Int()
     var orders = [Order]()
     var confirmedOrder = [Order]()
     var unconfirmedOrder = [Order]()
     
-    
     var slicesInThisPie: Int {
-        
-       
-        
+
         get {
             var number2Return = Int()
             if confirmedOrder.count + unconfirmedOrder.count > 8 {
@@ -28,8 +24,6 @@ class PizzaModel {
             } else {
                 number2Return = (confirmedOrder.count + unconfirmedOrder.count)
             }
-            
-            
            return number2Return
         }
     }
@@ -38,7 +32,6 @@ class PizzaModel {
     init() {
         
         users = ["JSW", "ME", "AK", "EL", "AS", "YD"]
-//        slicesInThisPie = 0
     }
 }
 

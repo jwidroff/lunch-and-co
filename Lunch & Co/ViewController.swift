@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     var origin = CGPoint()
     var pullDownLabel = UILabel()
     
-    var ref = Database.database().reference()
+//    var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
