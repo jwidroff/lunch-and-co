@@ -11,7 +11,7 @@ import Foundation
 class PizzaModel {
         
     var users = [String]()
-    var orders = [Order]()
+//    var orders = [Order]()
     var confirmedOrder = [Order]()
     var unconfirmedOrder = [Order]()
     

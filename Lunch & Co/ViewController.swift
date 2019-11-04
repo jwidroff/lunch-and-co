@@ -27,10 +27,13 @@ class ViewController: UIViewController {
     var origin = CGPoint()
     var pullDownLabel = UILabel()
     
-//    var ref = Database.database().reference()
+    var ref:DatabaseReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ref = Database.database().reference()
+        
         
         infoButton.layer.cornerRadius = infoButton.frame.width / 2
         setupPizzaView()
@@ -44,6 +47,7 @@ class ViewController: UIViewController {
         addPizzaBackGroundView()
 
     }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -149,15 +153,6 @@ class ViewController: UIViewController {
         
         origin = activePizzaView.frame.origin
 //        addPanGesture(view: pizzaBackGroundView)
-    }
-    
-    
-    func updateSlices() {
-        
-//        pizzaModel.slicesInThisPie += selectedSlices
-//        if pizzaModel.slicesInThisPie > 8 {
-//            pizzaModel.slicesInThisPie = pizzaModel.slicesInThisPie % 8
-//        }
     }
     
     func createOverlay() {
@@ -471,15 +466,22 @@ class ViewController: UIViewController {
     }
     
     func updateOrder() {
-
+        
         for _ in 1...selectedSlices {
-            let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
-//            pizzaModel.orders.append(order)
             
+            let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
+            ref?.child("unconfirmed").childByAutoId().setValue(nameTxtFld.text ?? "No Name")
             pizzaModel.unconfirmedOrder.append(order)
             
             if pizzaModel.unconfirmedOrder.count == 8 {
+                
                 pizzaModel.confirmedOrder += pizzaModel.unconfirmedOrder
+                
+                for unconfirmedOrder in pizzaModel.unconfirmedOrder {
+                    ref?.child("confirmed").childByAutoId().setValue(unconfirmedOrder.name)
+                }
+
+                ref?.child("unconfirmed").removeValue()
                 pizzaModel.unconfirmedOrder = [Order]()
             }
         }
@@ -560,15 +562,10 @@ class ViewController: UIViewController {
     
     @IBAction func submitPressed(_ sender: Any) {
         
-        updateSlices() //Sets slicesInThisPie and totalSlices
-//        divideOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
         updateOrder()
         updatePieView()
         
 //        buildOrderList() //Do this all the way at the end after the timer has run out
-        
-        print(pizzaModel.slicesInThisPie)
-        
     }
     
     func updateInfoView() {
@@ -683,6 +680,16 @@ extension ViewController: UITextFieldDelegate {
 
 
 extension ViewController: CellDelegate {
+    
+    
+    func updateFirebaseDatabase() {
+        
+//        ref?.child("users").child("user").child("name").setValue("Steve")
+//        ref?.child("users").child("user").child("amountOfSlices").setValue("3")
+        
+    }
+    
+    
     
     func updatePizzaView() {
         

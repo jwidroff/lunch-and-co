@@ -11,6 +11,7 @@ import UIKit
 protocol CellDelegate {
 
     func updatePizzaView()
+    func updateFirebaseDatabase()
     
 }
 
@@ -228,6 +229,7 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
             
             removeOneUnconfirmedSlice(indexPath: indexPath)
             delegate?.updatePizzaView()
+            delegate?.updateFirebaseDatabase()
             
         } else { //Confirmed Order chosen to be removed by user
             
@@ -236,11 +238,15 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
                 
                 removeOneSliceFromUnconfirmed(indexPath: indexPath)
                 delegate?.updatePizzaView()
+                delegate?.updateFirebaseDatabase()
+
 
             } else { //Unconfirmed orders are zero and we need to take one out from the full pie
 
                 removeConfirmedStatus(indexPath: indexPath)
                 delegate?.updatePizzaView()
+                delegate?.updateFirebaseDatabase()
+
 
             }
         }
