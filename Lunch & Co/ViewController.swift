@@ -471,24 +471,17 @@ class ViewController: UIViewController {
     }
     
     func updateOrder() {
-        
-        for order in pizzaModel.orders {
+
+        for _ in 1...selectedSlices {
+            let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
+//            pizzaModel.orders.append(order)
             
             pizzaModel.unconfirmedOrder.append(order)
-
+            
             if pizzaModel.unconfirmedOrder.count == 8 {
                 pizzaModel.confirmedOrder += pizzaModel.unconfirmedOrder
                 pizzaModel.unconfirmedOrder = [Order]()
             }
-        }
-        pizzaModel.orders = [Order]()
-    }
-    
-    func divideOrder() {
-
-        for _ in 1...selectedSlices {
-            let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
-            pizzaModel.orders.append(order)
         }
     }
     
@@ -568,7 +561,7 @@ class ViewController: UIViewController {
     @IBAction func submitPressed(_ sender: Any) {
         
         updateSlices() //Sets slicesInThisPie and totalSlices
-        divideOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
+//        divideOrder() //Takes the order and turns it into multiple tiny orders... all containing one slice each
         updateOrder()
         updatePieView()
         
