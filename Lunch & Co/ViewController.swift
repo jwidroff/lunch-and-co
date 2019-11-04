@@ -74,6 +74,7 @@ class ViewController: UIViewController {
         view.addSubview(timerView)
         timerView.center = view.center
         timerView.center.y = infoButton.center.y
+        timerView.delegate = self
     }
     
     func setUpTextFields() {
@@ -112,7 +113,7 @@ class ViewController: UIViewController {
         let frame = CGRect(x: x, y: y, width: width, height: height)
         let pizzaBackGroundView = UIView(frame: frame)
         pizzaBackGroundView.center = view.center
-        pizzaBackGroundView.backgroundColor = UIColor.black
+        pizzaBackGroundView.backgroundColor = UIColor.lightGray
         pizzaBackGroundView.layer.cornerRadius = pizzaBackGroundView.frame.width / 2
         pizzaBackGroundView.clipsToBounds = true
 
@@ -714,9 +715,10 @@ extension ViewController: CellDelegate {
 
 extension ViewController: UpdateDelegate {
     
-    
-    
     func updateDatabase() {
+        
+        
+        
         print("update database")
     }
     
