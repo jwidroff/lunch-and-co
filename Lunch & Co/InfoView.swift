@@ -12,6 +12,7 @@ protocol CellDelegate {
 
     func updatePizzaView()
     func updateFirebaseDatabase()
+    func downloadFromDatabase()
     
 }
 
@@ -115,6 +116,7 @@ class InfoView: UIView {
     
     func removeOneSliceFromUnconfirmed(indexPath: IndexPath) {
         
+        
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .automatic)
         let indexPathXX = IndexPath(row: 0, section: 0)
@@ -216,6 +218,14 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
         return 30
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        <#code#>
+//    }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -227,27 +237,47 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 0 { // Unconfirmed Orders chosen to be removed by user
             
+            //Need to refresh the database before and after calculation
+            
+            delegate?.downloadFromDatabase()
+            
             removeOneUnconfirmedSlice(indexPath: indexPath)
-            delegate?.updatePizzaView()
+            
             delegate?.updateFirebaseDatabase()
+
+            delegate?.updatePizzaView()
+            
+            tableView.headerView(forSection: 0)?.textLabel?.text = "Unconfirmed - \(pizzaModel.unconfirmedOrder.count)"
             
         } else { //Confirmed Order chosen to be removed by user
             
             // If unconfirmedOrders arent zero, lets take one from unconfirmed orders
             if pizzaModel.unconfirmedOrder.count != 0 {
                 
-                removeOneSliceFromUnconfirmed(indexPath: indexPath)
-                delegate?.updatePizzaView()
-                delegate?.updateFirebaseDatabase()
+                //Need to refresh the database before and after calculation
 
+                delegate?.downloadFromDatabase()
+
+                removeOneSliceFromUnconfirmed(indexPath: indexPath)
+                delegate?.updateFirebaseDatabase()
+                delegate?.updatePizzaView()
+                
+                tableView.headerView(forSection: 1)?.textLabel?.text = "Confirmed - \(pizzaModel.confirmedOrder.count)"
+
+                tableView.headerView(forSection: 0)?.textLabel?.text = "Unconfirmed - \(pizzaModel.unconfirmedOrder.count)"
 
             } else { //Unconfirmed orders are zero and we need to take one out from the full pie
 
+                //Need to refresh the database before and after calculation
+
+                delegate?.downloadFromDatabase()
+
                 removeConfirmedStatus(indexPath: indexPath)
-                delegate?.updatePizzaView()
                 delegate?.updateFirebaseDatabase()
+                delegate?.updatePizzaView()
 
 
+                tableView.headerView(forSection: 1)?.textLabel?.text = "Confirmed - \(pizzaModel.confirmedOrder.count)"
             }
         }
     }

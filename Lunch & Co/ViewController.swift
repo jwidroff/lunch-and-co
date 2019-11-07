@@ -695,9 +695,50 @@ extension ViewController: CellDelegate {
     
     func updateFirebaseDatabase() {
   
-        //TODO: Need to get a unique identifier for the children in order to remove them using the infoView
+        
+//        print("QQQQQQQQ")
+
+        
+        //MARK: DO THIS WHEN YOU HAVE INTERNET CONNECTION
+        
+        //TODO:
+        
+        //First need to download whats on the database,
+        
+        //Then compare it with what we have
+        
+        //Then update accordingly
+        
+        //Then update the database with our additions/subtractions
         
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    func downloadFromDatabase() {
+        
+        //TODO: Reset the pizzaModel to the downloaded [latest] value
+        
+        ref?.child("unconfirmed").observe(.value, with: { (snapshot) in
+            
+            //Downcasting the value to string
+            let text = snapshot.value as? [String]
+            
+            //Safely unwrapping
+            if let text = text {
+                
+                //Setting the text label to the retrieved text
+                print(text)
+            }
+        })
     }
     
     
