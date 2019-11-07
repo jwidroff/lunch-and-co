@@ -465,22 +465,33 @@ class ViewController: UIViewController {
         activePizzaView = oldPizzaView
     }
     
+    var unconfirmedOrderID = 0
+    var confirmedOrderID = 0
+    
+    
+    
     func updateOrder() {
+        
+        //TODO: Need to get a unique identifier for the children in order to remove them using the infoView
         
         for _ in 1...selectedSlices {
             
             let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
-            ref?.child("unconfirmed").childByAutoId().setValue(nameTxtFld.text ?? "No Name")
+            ref?.child("unconfirmed").child("unconfirmedID\(unconfirmedOrderID)").setValue(nameTxtFld.text ?? "No Name")
             pizzaModel.unconfirmedOrder.append(order)
+            
+            unconfirmedOrderID += 1
             
             if pizzaModel.unconfirmedOrder.count == 8 {
                 
                 pizzaModel.confirmedOrder += pizzaModel.unconfirmedOrder
                 
                 for unconfirmedOrder in pizzaModel.unconfirmedOrder {
-                    ref?.child("confirmed").childByAutoId().setValue(unconfirmedOrder.name)
+                    ref?.child("confirmed").child("confirmedID\(confirmedOrderID)").setValue(unconfirmedOrder.name)
+                    confirmedOrderID += 1
                 }
 
+                unconfirmedOrderID = 0
                 ref?.child("unconfirmed").removeValue()
                 pizzaModel.unconfirmedOrder = [Order]()
             }
@@ -683,9 +694,9 @@ extension ViewController: CellDelegate {
     
     
     func updateFirebaseDatabase() {
+  
+        //TODO: Need to get a unique identifier for the children in order to remove them using the infoView
         
-//        ref?.child("users").child("user").child("name").setValue("Steve")
-//        ref?.child("users").child("user").child("amountOfSlices").setValue("3")
         
     }
     

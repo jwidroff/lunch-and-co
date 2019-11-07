@@ -46,10 +46,14 @@ class PizzaView: UIView {
         backgroundColor = UIColor.clear
         layer.cornerRadius = frame.width / 2
         clipsToBounds = true
-        gradientColors(color1: .yellow, color2: .red)
+        gradientColors(color1: .red, color2: .yellow)
+        
         let slicesView = SlicesView(frame: bounds, slicesToShow: slicesToShow)
-//        addSubview(slicesView)
         insertSubview(slicesView, at: 2)
+        let pepperoniView = PepperoniView(frame: bounds)
+        insertSubview(pepperoniView, at: 2)
+        
+        
         origin = self.frame.origin
 //        addPanGesture()
 //        createOverlay()
@@ -150,7 +154,164 @@ class PizzaView: UIView {
     }
 }
 
+class PepperoniView: UIView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .clear
 
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func draw(_ rect: CGRect) {
+        
+        guard let context = UIGraphicsGetCurrentContext() else {return}
+        
+        context.setFillColor(UIColor.red.cgColor)
+        context.setLineWidth(1)
+        let eclipseHeight = frame.height / 8
+        let eclipseWidth = frame.width / 8
+        let fraction = ((frame.width - eclipseWidth) / 16)
+//        let spot1 = CGPoint(x: fraction * 1.5 , y: fraction * 8)
+//        let spot2 = CGPoint(x: fraction * 14.5 , y: fraction * 8)
+//        let spot3 = CGPoint(x: fraction * 8 , y: fraction * 1.5)
+//        let spot4 = CGPoint(x: fraction * 8 , y: fraction * 14.5)
+//        let spot5 = CGPoint(x: fraction * 3.5, y: fraction * 12.5)
+//        let spot6 = CGPoint(x: fraction * 3.5, y: fraction * 3.5)
+//        let spot7 = CGPoint(x: fraction * 12.5, y: fraction * 12.5)
+//        let spot8 = CGPoint(x: fraction * 12.5, y: fraction * 3.5)
+        let spot1 = CGPoint(x: fraction * 6.5, y: fraction * 4.5)
+        let spot2 = CGPoint(x: fraction * 4.5, y: fraction * 6.5)
+        let spot3 = CGPoint(x: fraction * 9.5, y: fraction * 11.5)
+        let spot4 = CGPoint(x: fraction * 11.5 , y: fraction * 9.5)
+        let spot5 = CGPoint(x: fraction * 11.5 , y: fraction * 6.5)
+        let spot6 = CGPoint(x: fraction * 6.5 , y: fraction * 11.5)
+        let spot7 = CGPoint(x: fraction * 4.5, y: fraction * 9.5)
+        let spot8 = CGPoint(x: fraction * 9.5, y: fraction * 4.5)
+        let spot9 = CGPoint(x: fraction * 4.25, y: fraction * 13.75)
+        let spot10 = CGPoint(x: fraction * 6.75, y: fraction * 14.75)
+        let spot11 = CGPoint(x: fraction * 13.75, y: fraction * 4.25)
+        let spot12 = CGPoint(x: fraction * 14.75, y: fraction * 6.75)
+        let spot13 = CGPoint(x: fraction * 9.25, y: fraction * 14.75)
+        let spot14 = CGPoint(x: fraction * 11.75, y: fraction * 13.75)
+        let spot15 = CGPoint(x: fraction * 2.25, y: fraction * 4.25)
+        let spot16 = CGPoint(x: fraction * 1.25, y: fraction * 6.75)
+        let spot17 = CGPoint(x: fraction * 4.25, y: fraction * 2.25)
+        let spot18 = CGPoint(x: fraction * 6.75, y: fraction * 1.25)
+        let spot19 = CGPoint(x: fraction * 11.75, y: fraction * 2.25)
+        let spot20 = CGPoint(x: fraction * 9.25, y: fraction * 1.25)
+        let spot21 = CGPoint(x: fraction * 1.25, y: fraction * 9.25)
+        let spot22 = CGPoint(x: fraction * 2.25, y: fraction * 11.75)
+        let spot23 = CGPoint(x: fraction * 13.75, y: fraction * 11.75)
+        let spot24 = CGPoint(x: fraction * 14.75, y: fraction * 9.25)
+        let spot25 = CGPoint(x: fraction * 8, y: fraction * 8)
+
+
+
+        let rect1 = CGRect(x: spot1.x, y: spot1.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect1)
+        context.fillEllipse(in: rect1)
+
+        let rect2 = CGRect(x: spot2.x, y: spot2.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect2)
+        context.fillEllipse(in: rect2)
+//
+        let rect3 = CGRect(x: spot3.x, y: spot3.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect3)
+        context.fillEllipse(in: rect3)
+
+        let rect4 = CGRect(x: spot4.x, y: spot4.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect4)
+        context.fillEllipse(in: rect4)
+//
+        let rect5 = CGRect(x: spot5.x, y: spot5.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect5)
+        context.fillEllipse(in: rect5)
+//
+        let rect6 = CGRect(x: spot6.x, y: spot6.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect6)
+        context.fillEllipse(in: rect6)
+
+        let rect7 = CGRect(x: spot7.x, y: spot7.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect7)
+        context.fillEllipse(in: rect7)
+
+        let rect8 = CGRect(x: spot8.x, y: spot8.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect8)
+        context.fillEllipse(in: rect8)
+
+        let rect9 = CGRect(x: spot9.x, y: spot9.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect9)
+        context.fillEllipse(in: rect9)
+
+        let rect10 = CGRect(x: spot10.x, y: spot10.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect10)
+        context.fillEllipse(in: rect10)
+//
+        let rect11 = CGRect(x: spot11.x, y: spot11.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect11)
+        context.fillEllipse(in: rect11)
+
+        let rect12 = CGRect(x: spot12.x, y: spot12.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect12)
+        context.fillEllipse(in: rect12)
+
+        let rect13 = CGRect(x: spot13.x, y: spot13.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect13)
+        context.fillEllipse(in: rect13)
+
+        let rect14 = CGRect(x: spot14.x, y: spot14.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect14)
+        context.fillEllipse(in: rect14)
+
+        let rect15 = CGRect(x: spot15.x, y: spot15.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect15)
+        context.fillEllipse(in: rect15)
+
+        let rect16 = CGRect(x: spot16.x, y: spot16.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect16)
+        context.fillEllipse(in: rect16)
+        
+        let rect17 = CGRect(x: spot17.x, y: spot17.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect17)
+        context.fillEllipse(in: rect17)
+        
+        let rect18 = CGRect(x: spot18.x, y: spot18.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect18)
+        context.fillEllipse(in: rect18)
+        
+        let rect19 = CGRect(x: spot19.x, y: spot19.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect19)
+        context.fillEllipse(in: rect19)
+        
+        let rect20 = CGRect(x: spot20.x, y: spot20.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect20)
+        context.fillEllipse(in: rect20)
+        
+        let rect21 = CGRect(x: spot21.x, y: spot21.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect21)
+        context.fillEllipse(in: rect21)
+        
+        let rect22 = CGRect(x: spot22.x, y: spot22.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect22)
+        context.fillEllipse(in: rect22)
+        
+        let rect23 = CGRect(x: spot23.x, y: spot23.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect23)
+        context.fillEllipse(in: rect23)
+        
+        let rect24 = CGRect(x: spot24.x, y: spot24.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect24)
+        context.fillEllipse(in: rect24)
+        
+        let rect25 = CGRect(x: spot25.x, y: spot25.y, width: eclipseWidth, height: eclipseHeight)
+        context.addEllipse(in: rect25)
+        context.fillEllipse(in: rect25)
+    }
+}
 
 class SlicesView: UIView {
     
