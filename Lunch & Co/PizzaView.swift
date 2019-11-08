@@ -175,14 +175,6 @@ class PepperoniView: UIView {
         let eclipseHeight = frame.height / 8
         let eclipseWidth = frame.width / 8
         let fraction = ((frame.width - eclipseWidth) / 16)
-//        let spot1 = CGPoint(x: fraction * 1.5 , y: fraction * 8)
-//        let spot2 = CGPoint(x: fraction * 14.5 , y: fraction * 8)
-//        let spot3 = CGPoint(x: fraction * 8 , y: fraction * 1.5)
-//        let spot4 = CGPoint(x: fraction * 8 , y: fraction * 14.5)
-//        let spot5 = CGPoint(x: fraction * 3.5, y: fraction * 12.5)
-//        let spot6 = CGPoint(x: fraction * 3.5, y: fraction * 3.5)
-//        let spot7 = CGPoint(x: fraction * 12.5, y: fraction * 12.5)
-//        let spot8 = CGPoint(x: fraction * 12.5, y: fraction * 3.5)
         let spot1 = CGPoint(x: fraction * 6.5, y: fraction * 4.5)
         let spot2 = CGPoint(x: fraction * 4.5, y: fraction * 6.5)
         let spot3 = CGPoint(x: fraction * 9.5, y: fraction * 11.5)
@@ -218,7 +210,7 @@ class PepperoniView: UIView {
         let rect2 = CGRect(x: spot2.x, y: spot2.y, width: eclipseWidth, height: eclipseHeight)
         context.addEllipse(in: rect2)
         context.fillEllipse(in: rect2)
-//
+
         let rect3 = CGRect(x: spot3.x, y: spot3.y, width: eclipseWidth, height: eclipseHeight)
         context.addEllipse(in: rect3)
         context.fillEllipse(in: rect3)
@@ -226,11 +218,11 @@ class PepperoniView: UIView {
         let rect4 = CGRect(x: spot4.x, y: spot4.y, width: eclipseWidth, height: eclipseHeight)
         context.addEllipse(in: rect4)
         context.fillEllipse(in: rect4)
-//
+
         let rect5 = CGRect(x: spot5.x, y: spot5.y, width: eclipseWidth, height: eclipseHeight)
         context.addEllipse(in: rect5)
         context.fillEllipse(in: rect5)
-//
+
         let rect6 = CGRect(x: spot6.x, y: spot6.y, width: eclipseWidth, height: eclipseHeight)
         context.addEllipse(in: rect6)
         context.fillEllipse(in: rect6)
@@ -250,7 +242,7 @@ class PepperoniView: UIView {
         let rect10 = CGRect(x: spot10.x, y: spot10.y, width: eclipseWidth, height: eclipseHeight)
         context.addEllipse(in: rect10)
         context.fillEllipse(in: rect10)
-//
+
         let rect11 = CGRect(x: spot11.x, y: spot11.y, width: eclipseWidth, height: eclipseHeight)
         context.addEllipse(in: rect11)
         context.fillEllipse(in: rect11)

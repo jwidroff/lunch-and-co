@@ -34,20 +34,15 @@ class ViewController: UIViewController {
         
         ref = Database.database().reference()
         
-        
         infoButton.layer.cornerRadius = infoButton.frame.width / 2
+        addPizzaBackGroundView()
         setupPizzaView()
-        
-        
         setUpTextFields()
         createOverlay()
         setTimer()
         addPullDownLabel()
-        
         addPizzaBackGroundView()
-
     }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -59,13 +54,8 @@ class ViewController: UIViewController {
         let width = nameTxtFld.frame.width
         let height = nameTxtFld.frame.height
         let x = (view.frame.width - width) / 2
-        
-        
         let y = activePizzaView.frame.minY - 30
-        
-        
         let frame = CGRect(x: x, y: y, width: width, height: height)
-//        let label = UILabel(frame: frame)
         pullDownLabel.frame = frame
         pullDownLabel.font = UIFont.systemFont(ofSize: 20)
         pullDownLabel.text = "⬇️ PULL DOWN TO REFRESH ⬇️"
@@ -87,12 +77,10 @@ class ViewController: UIViewController {
         
         pickerView.delegate = self
         pickerView.dataSource = self
-        
         slicesTextField.delegate = self
         slicesTextField.inputView = pickerView
         nameTxtFld.delegate = self
         nameTxtFld.inputView = pickerView
-        
         pizzaModel.users.sort { $0.lowercased() < $1.lowercased() }
     }
     
@@ -124,7 +112,7 @@ class ViewController: UIViewController {
         pizzaBackGroundView.clipsToBounds = true
 
         let lunchAndCoLabel = UILabel(frame: frame)
-        lunchAndCoLabel.textColor = .white
+        lunchAndCoLabel.textColor = .black
         lunchAndCoLabel.backgroundColor = .clear
         lunchAndCoLabel.text = "Lunch & Co"
         lunchAndCoLabel.font = UIFont.init(name: "snell roundhand", size: 40)
@@ -139,8 +127,6 @@ class ViewController: UIViewController {
     
     func setupPizzaView() {
         
-        addPizzaBackGroundView()
-        
         let widthAndHeight = nameTxtFld.frame.width
         let x = (view.frame.width - widthAndHeight) / 2
         let y = (view.frame.height - widthAndHeight) / 2
@@ -150,9 +136,7 @@ class ViewController: UIViewController {
         pizzaView.clipsToBounds = true
         view.insertSubview(pizzaView, at: 1)
         activePizzaView = pizzaView
-        
         origin = activePizzaView.frame.origin
-//        addPanGesture(view: pizzaBackGroundView)
     }
     
     func createOverlay() {
@@ -179,16 +163,13 @@ class ViewController: UIViewController {
         overlayView.layer.mask = maskLayer
         overlayView.clipsToBounds = true
         overlayView.center = view.center
-
         addPanGesture()
-        
         view.insertSubview(overlayView, at: 2)
     }
     
     func addPanGesture() {
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(PizzaView.handlePan(sender:)))
-        
         overlayView.addGestureRecognizer(pan)
     }
     
@@ -199,6 +180,7 @@ class ViewController: UIViewController {
             moveWithPan(view: overlayView, sender: sender)
         case .ended:
             returnViewToOrigin(view: overlayView)
+            // DOWNLOAD FROM THE DATABASE
         default:
             break
         }
@@ -212,38 +194,21 @@ class ViewController: UIViewController {
         
         if translation.y < 50 && translation.y > 0 {
             activePizzaView.center.y = activePizzaView.center.y + translation.y
-            
             overlayView.alpha = 0
-            
             overlayView.center.y = overlayView.center.y + translation.y
-//            pullDownLabel.center.y = pullDownLabel.center.y + translation.y
         }
         sender.setTranslation(CGPoint.zero, in: activePizzaView)
     }
     
     func returnViewToOrigin(view: UIView){
         
-//        UIView.animate(withDuration: 0.25, animations: {
-//
-//
-//            self.activePizzaView.frame.origin = self.origin
-//            self.overlayView.frame.origin = self.origin
-////            self.pullDownLabel.frame.origin.y = self.origin.y - 30.0
-//            self.overlayView.alpha = 1.0
-//
-//        })
-//
-        
-        
         UIView.animate(withDuration: 0.25, animations: {
             self.activePizzaView.frame.origin = self.origin
             self.overlayView.frame.origin = self.origin
         }, completion: { (true) in
             self.overlayView.alpha = 1.0
-
         })
     }
-    
     
     func updatePieView() {
         
@@ -251,11 +216,8 @@ class ViewController: UIViewController {
         if originalSlices < 0 {
             originalSlices = 8 + originalSlices
         }
-        
-        
         var animationsLeft = selectedSlices
         var counter = 1
-        
         if animationsLeft != 0 {
             
             UIView.animate(withDuration: 0.1, animations: {
@@ -416,8 +378,6 @@ class ViewController: UIViewController {
     var yFloat4CompletedPies:CGFloat = 0
     
     func animateCompletedPie() {
-
-//        overlayView.alpha = 0
         
         var amountToMove = CGFloat()
         
@@ -442,8 +402,6 @@ class ViewController: UIViewController {
             finishedPizzaView.center.y += amountToMove
             finishedPizzaView.transform = transform
             
-//            self.overlayView.alpha = 1
-            
         }) { (true) in
             
             UIView.animate(withDuration: 1.0) {
@@ -456,8 +414,6 @@ class ViewController: UIViewController {
     
     func updateNewPie() {
         
-//        let remainder = (pizzaModel.slicesInThisPie % 8)
-//        pizzaModel.slicesInThisPie = remainder
         activePizzaView.removeFromSuperview()
         let oldPizzaView = PizzaView(frame: activePizzaView.frame, amount: pizzaModel.slicesInThisPie)
         oldPizzaView.gradientColors(color1: UIColor.red, color2: UIColor.yellow)
@@ -467,9 +423,7 @@ class ViewController: UIViewController {
     
     var unconfirmedOrderID = 0
     var confirmedOrderID = 0
-    
-    
-    
+
     func updateOrder() {
         
         //TODO: Need to get a unique identifier for the children in order to remove them using the infoView
@@ -557,11 +511,6 @@ class ViewController: UIViewController {
     
     func removeFinishedPizzaView(pieView: UIView) {
         
-        //TODO: This seems to not work anymore. Fix this. Seems like slicesShown may be the issue
-        
-        print("HI")
-        print(slicesShown)
-        
         pieView.removeFromSuperview()
         slicesShown = 7
         activePizzaView.removeFromSuperview()
@@ -573,6 +522,9 @@ class ViewController: UIViewController {
     
     @IBAction func submitPressed(_ sender: Any) {
         
+        //MARK: Download from the database first
+        
+        
         updateOrder()
         updatePieView()
         
@@ -580,6 +532,8 @@ class ViewController: UIViewController {
     }
     
     func updateInfoView() {
+        
+        //MARK: Download from the database first
         
         let x = view.bounds.midX
         let y = view.bounds.midY
@@ -595,6 +549,7 @@ class ViewController: UIViewController {
     
     @IBAction func infoButton(_ sender: UIButton) {
 
+        //MARK: DOWNLOAD FROM THE DATABASE FIRST
         updateInfoView()
     }
 }
@@ -694,10 +649,6 @@ extension ViewController: CellDelegate {
     
     
     func updateFirebaseDatabase() {
-  
-        
-//        print("QQQQQQQQ")
-
         
         //MARK: DO THIS WHEN YOU HAVE INTERNET CONNECTION
         
@@ -711,20 +662,11 @@ extension ViewController: CellDelegate {
         
         //Then update the database with our additions/subtractions
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     func downloadFromDatabase() {
         
+        //MARK: Not sure if this works until we get internet
         //TODO: Reset the pizzaModel to the downloaded [latest] value
         
         ref?.child("unconfirmed").observe(.value, with: { (snapshot) in
@@ -740,8 +682,6 @@ extension ViewController: CellDelegate {
             }
         })
     }
-    
-    
     
     func updatePizzaView() {
         
@@ -772,10 +712,6 @@ extension ViewController: CellDelegate {
 extension ViewController: UpdateDelegate {
     
     func updateDatabase() {
-        
-        
-        //TODO: Need to set the 
-        
         
         print("update database")
     }

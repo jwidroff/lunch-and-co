@@ -11,10 +11,8 @@ import Foundation
 class PizzaModel {
         
     var users = [String]()
-//    var orders = [Order]()
     var confirmedOrder = [Order]()
     var unconfirmedOrder = [Order]()
-    
     var slicesInThisPie: Int {
 
         get {
@@ -27,7 +25,6 @@ class PizzaModel {
            return number2Return
         }
     }
-
     
     init() {
         

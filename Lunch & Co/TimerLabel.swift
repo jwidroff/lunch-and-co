@@ -75,11 +75,7 @@ class TimerLabel: UILabel {
         case 2: //monday
             
             if hour > 0 && hour < 12 {
-//                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
-                
                 runTimer()
-                
-                
             } else {
                 text = "Check back on Tuesday \(tomorrowsMonth)-\(tomorrowsDay)-\(tomorrowsYear)"
                 font = UIFont.systemFont(ofSize: 30.0)
@@ -87,10 +83,7 @@ class TimerLabel: UILabel {
             
         case 3: //tuesday
             if hour > 0 && hour < 12 {
-//                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
-                
                 runTimer()
-                
             } else {
                 text = "Check back on Wednesday \(tomorrowsMonth)-\(tomorrowsDay)-\(tomorrowsYear)"
                 font = UIFont.systemFont(ofSize: 30.0)
@@ -99,11 +92,7 @@ class TimerLabel: UILabel {
         case 4: //wednesday
             
             if hour > 0 && hour < 12 {
-//                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
-                
-
                 runTimer()
-                
             } else {
                 text = "Check back on Thursday \(tomorrowsMonth)-\(tomorrowsDay)-\(tomorrowsYear)"
                 font = UIFont.systemFont(ofSize: 30.0)
@@ -111,10 +100,7 @@ class TimerLabel: UILabel {
             
         case 5: //thursday
             if hour > 0 && hour < 12 {
-//                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
-                
                 runTimer()
-                
             } else {
                 text = "Check back on Friday \(tomorrowsMonth)-\(tomorrowsDay)-\(tomorrowsYear)"
                 font = UIFont.systemFont(ofSize: 30.0)
@@ -122,10 +108,7 @@ class TimerLabel: UILabel {
             
         case 6: //friday
             if hour > 0 && hour < 12 { //MARK: Change back
-//                Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: true)
-                
                 runTimer()
-                
             } else {
                 text = "Check back on Monday \(tomorrowsMonth)-\(tomorrowsDay + 2)-\(tomorrowsYear)"
                 font = UIFont.systemFont(ofSize: 30.0)
@@ -134,17 +117,14 @@ class TimerLabel: UILabel {
         case 7: //saturday
             text = "Check back on Monday \(tomorrowsMonth)-\(tomorrowsDay + 1)-\(tomorrowsYear)"
             font = UIFont.systemFont(ofSize: 30.0)
-
         default:
             break
-            
         }
     }
     
     func runTimer() {
         
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCalc), userInfo: nil, repeats: false)
-
     }
 
     @objc func timerCalc() {
@@ -154,7 +134,6 @@ class TimerLabel: UILabel {
         let components = calendar.dateComponents([.hour, .minute, .month, .year, .day, .second], from: date as Date)
         let currentDate = calendar.date(from: components)
         let userCalendar = Calendar.current
-        
         
         // here we set the due date. When the timer is supposed to finish
         let competitionDate = NSDateComponents()
@@ -174,14 +153,11 @@ class TimerLabel: UILabel {
         
         if CompetitionDayDifference.hour! == 0 && CompetitionDayDifference.minute! == 0 && CompetitionDayDifference.second! == 0 {
             
-            delegate?.updateDatabase()
+            delegate?.updateDatabase()  //TODO
             timer.invalidate()
             return
-            
         } else {
-            
             check4Tomorrow()
-            
         }
         
         //finally, here we set the variable to our remaining time
