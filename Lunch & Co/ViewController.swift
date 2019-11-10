@@ -99,7 +99,7 @@ class ViewController: UIViewController {
     }
     
     func addPizzaBackGroundView() {
-
+        
         let x:CGFloat = 0
         let y:CGFloat = 0
         let height = activePizzaView.frame.height
@@ -107,17 +107,23 @@ class ViewController: UIViewController {
         let frame = CGRect(x: x, y: y, width: width, height: height)
         let pizzaBackGroundView = UIView(frame: frame)
         pizzaBackGroundView.center = view.center
-        pizzaBackGroundView.backgroundColor = UIColor.lightGray
+        pizzaBackGroundView.backgroundColor = UIColor.black
         pizzaBackGroundView.layer.cornerRadius = pizzaBackGroundView.frame.width / 2
-        pizzaBackGroundView.clipsToBounds = true
-
+        //        pizzaBackGroundView.clipsToBounds = true //MARK: Change this back if you dont like + get rid of the shadow below
+        
+        pizzaBackGroundView.layer.shadowOpacity = 1
+        pizzaBackGroundView.layer.shadowPath = CGPath(rect: pizzaBackGroundView.bounds, transform: nil)
+        pizzaBackGroundView.layer.shadowColor = UIColor.white.cgColor
+        pizzaBackGroundView.layer.shadowOffset = CGSize(width: 1, height: 1)
+        pizzaBackGroundView.layer.shadowRadius = 5
+        
         let lunchAndCoLabel = UILabel(frame: frame)
-        lunchAndCoLabel.textColor = .black
+        lunchAndCoLabel.textColor = .white
         lunchAndCoLabel.backgroundColor = .clear
         lunchAndCoLabel.text = "Lunch & Co"
         lunchAndCoLabel.font = UIFont.init(name: "snell roundhand", size: 40)
         lunchAndCoLabel.adjustsFontSizeToFitWidth = true
-//        lunchAndCoLabel.font = UIFont.systemFont(ofSize: 50)
+        //        lunchAndCoLabel.font = UIFont.systemFont(ofSize: 50)
         lunchAndCoLabel.textAlignment = .center
         
         view.insertSubview(pizzaBackGroundView, at: 0)

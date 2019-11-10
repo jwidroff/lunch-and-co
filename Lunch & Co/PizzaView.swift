@@ -308,7 +308,7 @@ class PepperoniView: UIView {
 class SlicesView: UIView {
     
     var slicesToShow = Int()
-    let colorTheme = UIColor.darkGray
+    let colorTheme = UIColor.black
 
     override init(frame: CGRect) {
         super.init(frame: frame)
