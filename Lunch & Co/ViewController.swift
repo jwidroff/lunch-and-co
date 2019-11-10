@@ -672,21 +672,43 @@ extension ViewController: CellDelegate {
     
     func downloadFromDatabase() {
         
-        //MARK: Not sure if this works until we get internet
-        //TODO: Reset the pizzaModel to the downloaded [latest] value
-        
-        ref?.child("unconfirmed").observe(.value, with: { (snapshot) in
+        ref?.child("unconfirmed").observeSingleEvent(of: .value, with: { (snapshot) in
             
-            //Downcasting the value to string
-            let text = snapshot.value as? [String]
+            let unconfirmedOrders = snapshot.value as! [String : String]
             
-            //Safely unwrapping
-            if let text = text {
+            self.pizzaModel.unconfirmedOrder = [Order]()
+            
+            for unconfirmedOrder in unconfirmedOrders.sorted(by: {$0.key < $1.key}) {
                 
-                //Setting the text label to the retrieved text
-                print(text)
+//                print(unconfirmedOrder.value)
+                
+                let order = Order(name: unconfirmedOrder.value, slices: 1)
+                
+                self.pizzaModel.unconfirmedOrder.append(order)
+                
             }
         })
+        
+        ref?.child("confirmed").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let confirmedOrders = snapshot.value as! [String : String]
+            
+            self.pizzaModel.confirmedOrder = [Order]()
+            
+            for confirmedOrder in confirmedOrders.sorted(by: {$0.key < $1.key}) {
+                
+//                print(confirmedOrder.value)
+                
+                let order = Order(name: confirmedOrder.value, slices: 1)
+
+                self.pizzaModel.confirmedOrder.append(order)
+
+            }
+        })
+        
+        
+        
+        
     }
     
     func updatePizzaView() {

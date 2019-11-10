@@ -367,7 +367,7 @@ class SlicesView: UIView {
         let y = (frame.height - eclipseHeight) / 2
         let rect = CGRect(x: x, y: y, width: eclipseWidth, height: eclipseHeight)
         
-        context.setLineWidth(1)
+        context.setLineWidth(3)
         context.addEllipse(in: rect)
         context.strokePath()
         
