@@ -207,7 +207,7 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 { // Unconfirmed Orders chosen to be removed by user
             
             //MARK: Download from the database first
-            delegate?.downloadFromDatabase()
+//            delegate?.downloadFromDatabase()
             removeOneUnconfirmedSlice(indexPath: indexPath)
             delegate?.updateFirebaseDatabase()
             delegate?.updatePizzaView()
@@ -219,7 +219,7 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
             if pizzaModel.unconfirmedOrder.count != 0 {
                 
                 //MARK: Download from the database first
-                delegate?.downloadFromDatabase()
+//                delegate?.downloadFromDatabase()
                 removeOneSliceFromUnconfirmed(indexPath: indexPath)
                 delegate?.updateFirebaseDatabase()
                 delegate?.updatePizzaView()
@@ -229,7 +229,7 @@ extension InfoView: UITableViewDelegate, UITableViewDataSource {
             } else { //Unconfirmed orders are zero and we need to take one out from the full pie
 
                 //MARK: Download from the database first
-                delegate?.downloadFromDatabase()
+//                delegate?.downloadFromDatabase()
                 removeConfirmedStatus(indexPath: indexPath)
                 delegate?.updateFirebaseDatabase()
                 delegate?.updatePizzaView()

@@ -656,21 +656,30 @@ extension ViewController: CellDelegate {
     
     func updateFirebaseDatabase() {
         
-        //MARK: DO THIS WHEN YOU HAVE INTERNET CONNECTION
         
-        //TODO:
+        var counter = 0
+        ref?.child("unconfirmed").removeValue()
+        for unconfirmedOrder in pizzaModel.unconfirmedOrder {
+            ref?.child("unconfirmed").child("unconfirmedID\(counter)").setValue(unconfirmedOrder.name)
+            counter += 1
+        }
         
-        //First need to download whats on the database,
+        counter = 0
         
-        //Then compare it with what we have
+        ref?.child("confirmed").removeValue()
+        for confirmedOrder in pizzaModel.confirmedOrder {
+            ref?.child("confirmed").child("confirmedID\(counter)").setValue(confirmedOrder.name)
+            counter += 1
+        }
         
-        //Then update accordingly
         
-        //Then update the database with our additions/subtractions
+        
+        
+        
         
     }
     
-    func downloadFromDatabase() {
+    func downloadFromDatabase() {  //THIS ISNT WORKING
         
         ref?.child("unconfirmed").observeSingleEvent(of: .value, with: { (snapshot) in
             
@@ -680,7 +689,7 @@ extension ViewController: CellDelegate {
             
             for unconfirmedOrder in unconfirmedOrders.sorted(by: {$0.key < $1.key}) {
                 
-//                print(unconfirmedOrder.value)
+                print(unconfirmedOrder.value)
                 
                 let order = Order(name: unconfirmedOrder.value, slices: 1)
                 
@@ -689,22 +698,22 @@ extension ViewController: CellDelegate {
             }
         })
         
-        ref?.child("confirmed").observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            let confirmedOrders = snapshot.value as! [String : String]
-            
-            self.pizzaModel.confirmedOrder = [Order]()
-            
-            for confirmedOrder in confirmedOrders.sorted(by: {$0.key < $1.key}) {
-                
-//                print(confirmedOrder.value)
-                
-                let order = Order(name: confirmedOrder.value, slices: 1)
-
-                self.pizzaModel.confirmedOrder.append(order)
-
-            }
-        })
+//        ref?.child("confirmed").observeSingleEvent(of: .value, with: { (snapshot) in
+//            
+//            let confirmedOrders = snapshot.value as! [String : String]
+//            
+//            self.pizzaModel.confirmedOrder = [Order]()
+//            
+//            for confirmedOrder in confirmedOrders.sorted(by: {$0.key < $1.key}) {
+//                
+////                print(confirmedOrder.value)
+//                
+//                let order = Order(name: confirmedOrder.value, slices: 1)
+//
+//                self.pizzaModel.confirmedOrder.append(order)
+//
+//            }
+//        })
         
         
         

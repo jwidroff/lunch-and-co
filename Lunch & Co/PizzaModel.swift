@@ -9,7 +9,7 @@
 import Foundation
 
 class PizzaModel {
-        
+
     var users = [String]()
     var confirmedOrder = [Order]()
     var unconfirmedOrder = [Order]()
@@ -31,9 +31,6 @@ class PizzaModel {
         users = ["JSW", "ME", "AK", "EL", "AS", "YD"]
     }
 }
-
-
-
 
 
 
