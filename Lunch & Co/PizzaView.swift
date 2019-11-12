@@ -114,7 +114,7 @@ class PizzaView: UIView {
         
         let translation = sender.translation(in: view)
         
-        print(translation.y)
+//        print(translation.y)
         
         if translation.y > 50 || translation.y < 0 {
             view.center.y = (origin.y + 150)

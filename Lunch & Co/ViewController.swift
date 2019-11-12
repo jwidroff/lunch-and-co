@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         ref = Database.database().reference()
+        pizzaModel = PizzaModel(databaseReference: ref!)
         
         infoButton.layer.cornerRadius = infoButton.frame.width / 2
         addPizzaBackGroundView()
@@ -196,7 +197,7 @@ class ViewController: UIViewController {
 
         let translation = sender.translation(in: activePizzaView)
         
-        print(translation.y)
+//        print(translation.y)
         
         if translation.y < 50 && translation.y > 0 {
             activePizzaView.center.y = activePizzaView.center.y + translation.y
@@ -218,7 +219,14 @@ class ViewController: UIViewController {
     
     func updatePieView() {
         
+        
+        print(pizzaModel.slicesInThisPie)
+        
         var originalSlices = (pizzaModel.slicesInThisPie) - selectedSlices
+//        var originalSlices = (pizzaModel.unconfirmedOrder.count) - selectedSlices
+
+        print(originalSlices)
+        
         if originalSlices < 0 {
             originalSlices = 8 + originalSlices
         }
@@ -432,27 +440,25 @@ class ViewController: UIViewController {
 
     func updateOrder() {
         
-        //TODO: Need to get a unique identifier for the children in order to remove them using the infoView
-        
         for _ in 1...selectedSlices {
             
             let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
-            ref?.child("unconfirmed").child("unconfirmedID\(unconfirmedOrderID)").setValue(nameTxtFld.text ?? "No Name")
+//            ref?.child("unconfirmed").child("unconfirmedID\(unconfirmedOrderID)").setValue(nameTxtFld.text ?? "No Name")
             pizzaModel.unconfirmedOrder.append(order)
             
-            unconfirmedOrderID += 1
+//            unconfirmedOrderID += 1
             
             if pizzaModel.unconfirmedOrder.count == 8 {
                 
                 pizzaModel.confirmedOrder += pizzaModel.unconfirmedOrder
                 
-                for unconfirmedOrder in pizzaModel.unconfirmedOrder {
-                    ref?.child("confirmed").child("confirmedID\(confirmedOrderID)").setValue(unconfirmedOrder.name)
-                    confirmedOrderID += 1
-                }
+//                for unconfirmedOrder in pizzaModel.unconfirmedOrder {
+//                    ref?.child("confirmed").child("confirmedID\(confirmedOrderID)").setValue(unconfirmedOrder.name)
+//                    confirmedOrderID += 1
+//                }
 
-                unconfirmedOrderID = 0
-                ref?.child("unconfirmed").removeValue()
+//                unconfirmedOrderID = 0
+//                ref?.child("unconfirmed").removeValue()
                 pizzaModel.unconfirmedOrder = [Order]()
             }
         }
@@ -657,21 +663,21 @@ extension ViewController: CellDelegate {
     func updateFirebaseDatabase() {
         
         
-        var counter = 0
-        ref?.child("unconfirmed").removeValue()
-        for unconfirmedOrder in pizzaModel.unconfirmedOrder {
-            ref?.child("unconfirmed").child("unconfirmedID\(counter)").setValue(unconfirmedOrder.name)
-            counter += 1
-        }
-        
-        counter = 0
-        
-        ref?.child("confirmed").removeValue()
-        for confirmedOrder in pizzaModel.confirmedOrder {
-            ref?.child("confirmed").child("confirmedID\(counter)").setValue(confirmedOrder.name)
-            counter += 1
-        }
-        
+//        var counter = 0
+//        ref?.child("unconfirmed").removeValue()
+//        for unconfirmedOrder in pizzaModel.unconfirmedOrder {
+//            ref?.child("unconfirmed").child("unconfirmedID\(counter)").setValue(unconfirmedOrder.name)
+//            counter += 1
+//        }
+//
+//        counter = 0
+//
+//        ref?.child("confirmed").removeValue()
+//        for confirmedOrder in pizzaModel.confirmedOrder {
+//            ref?.child("confirmed").child("confirmedID\(counter)").setValue(confirmedOrder.name)
+//            counter += 1
+//        }
+//
         
         
         
@@ -681,42 +687,23 @@ extension ViewController: CellDelegate {
     
     func downloadFromDatabase() {  //THIS ISNT WORKING
         
-        ref?.child("unconfirmed").observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            let unconfirmedOrders = snapshot.value as! [String : String]
-            
-            self.pizzaModel.unconfirmedOrder = [Order]()
-            
-            for unconfirmedOrder in unconfirmedOrders.sorted(by: {$0.key < $1.key}) {
-                
-                print(unconfirmedOrder.value)
-                
-                let order = Order(name: unconfirmedOrder.value, slices: 1)
-                
-                self.pizzaModel.unconfirmedOrder.append(order)
-                
-            }
-        })
-        
-//        ref?.child("confirmed").observeSingleEvent(of: .value, with: { (snapshot) in
+//        ref?.child("unconfirmed").observeSingleEvent(of: .value, with: { (snapshot) in
 //            
-//            let confirmedOrders = snapshot.value as! [String : String]
+//            let unconfirmedOrders = snapshot.value as! [String : String]
 //            
-//            self.pizzaModel.confirmedOrder = [Order]()
+//            self.pizzaModel.unconfirmedOrder = [Order]()
 //            
-//            for confirmedOrder in confirmedOrders.sorted(by: {$0.key < $1.key}) {
+//            for unconfirmedOrder in unconfirmedOrders.sorted(by: {$0.key < $1.key}) {
 //                
-////                print(confirmedOrder.value)
+//                print(unconfirmedOrder.value)
 //                
-//                let order = Order(name: confirmedOrder.value, slices: 1)
-//
-//                self.pizzaModel.confirmedOrder.append(order)
-//
+//                let order = Order(name: unconfirmedOrder.value, slices: 1)
+//                
+//                self.pizzaModel.unconfirmedOrder.append(order)
+//                
 //            }
 //        })
-        
-        
-        
+
         
     }
     
@@ -726,7 +713,7 @@ extension ViewController: CellDelegate {
             
             if let pieView = finishedPieViews.last {
                 
-                print(pieView.center)
+//                print(pieView.center)
                 
                 // Since slices shown are zero, first check to see if theres a pie view and if there is, remove it
                 removeFinishedPizzaView(pieView: pieView)
