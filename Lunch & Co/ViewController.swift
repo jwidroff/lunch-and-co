@@ -220,12 +220,12 @@ class ViewController: UIViewController {
     func updatePieView() {
         
         
-        print(pizzaModel.slicesInThisPie)
+//        print(pizzaModel.slicesInThisPie)
         
         var originalSlices = (pizzaModel.slicesInThisPie) - selectedSlices
 //        var originalSlices = (pizzaModel.unconfirmedOrder.count) - selectedSlices
 
-        print(originalSlices)
+//        print(originalSlices)
         
         if originalSlices < 0 {
             originalSlices = 8 + originalSlices
@@ -442,11 +442,20 @@ class ViewController: UIViewController {
         
         for _ in 1...selectedSlices {
             
-            let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
+//            let order = Order(name: nameTxtFld.text ?? "No Name", slices:  1)
 //            ref?.child("unconfirmed").child("unconfirmedID\(unconfirmedOrderID)").setValue(nameTxtFld.text ?? "No Name")
-            pizzaModel.unconfirmedOrder.append(order)
+            pizzaModel.unconfirmedOrder.append(Order(name: nameTxtFld.text ?? "No Name", slices:  1))
             
 //            unconfirmedOrderID += 1
+            
+            
+            let delayedTime = DispatchTime.now() + .milliseconds(Int(2.5 * 1000))
+            DispatchQueue.main.asyncAfter(deadline: delayedTime) {
+                
+                print("pizzaModel.unconfirmedOrder.count \(self.pizzaModel.unconfirmedOrder.count)")
+            }
+            
+            
             
             if pizzaModel.unconfirmedOrder.count == 8 {
                 
@@ -538,7 +547,16 @@ class ViewController: UIViewController {
         
         
         updateOrder()
-        updatePieView()
+        
+        
+        let delayedTime = DispatchTime.now() + .milliseconds(Int(0.25 * 1000))
+        DispatchQueue.main.asyncAfter(deadline: delayedTime) {
+            
+            self.updatePieView()
+        }
+        
+        
+        
         
 //        buildOrderList() //Do this all the way at the end after the timer has run out
     }
