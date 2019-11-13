@@ -220,7 +220,7 @@ class ViewController: UIViewController {
     func updatePieView() {
         
         
-//        print(pizzaModel.slicesInThisPie)
+        print(pizzaModel.slicesInThisPie)
         
         var originalSlices = (pizzaModel.slicesInThisPie) - selectedSlices
 //        var originalSlices = (pizzaModel.unconfirmedOrder.count) - selectedSlices
@@ -460,14 +460,7 @@ class ViewController: UIViewController {
             if pizzaModel.unconfirmedOrder.count == 8 {
                 
                 pizzaModel.confirmedOrder += pizzaModel.unconfirmedOrder
-                
-//                for unconfirmedOrder in pizzaModel.unconfirmedOrder {
-//                    ref?.child("confirmed").child("confirmedID\(confirmedOrderID)").setValue(unconfirmedOrder.name)
-//                    confirmedOrderID += 1
-//                }
 
-//                unconfirmedOrderID = 0
-//                ref?.child("unconfirmed").removeValue()
                 pizzaModel.unconfirmedOrder = [Order]()
             }
         }
